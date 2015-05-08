@@ -9,7 +9,7 @@
   mvn install:install-file -Dfile=../tacoco.jar -DgroupId=tacoco -DartifactId=tacoco -Dversion=0.1 -Dpackaging=jar
 
 3. add tacoco listener to surefire plugin
-
+  ~~~xml
   <dependencies>
   ...
   <dependency>
@@ -38,3 +38,4 @@
       </configuration>
      </plugin>
     ...
+    ~~~
