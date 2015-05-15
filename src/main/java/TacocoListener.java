@@ -30,7 +30,7 @@ public class TacocoListener extends RunListener
 	}
 	public void testFinished(Description description) throws java.lang.Exception
 	{
-		int sleepLength = 1000;
+		int sleepLength = 10;
 		System.out.println("Test case finished.");
 		agent.dump(true);
 		System.out.println("Going to sleep for "+sleepLength+" ms.");
@@ -38,7 +38,7 @@ public class TacocoListener extends RunListener
 		Thread.sleep(sleepLength);
 		System.out.println("Done sleeping.");
 		System.out.flush();
-		Thread.sleep(1000);
+		Thread.sleep(10);
 
 	}
 }
