@@ -45,4 +45,4 @@
 ## Running ExecDump utility to read the `jacoco.exec` file
 
 0. Change the path of the jacoco.exec in pom.xml, where specified.
-1. Use the following maven command on the command line: `mvn exec:java`
+1. Use the following maven command on the command line: `mvn exec:java -Dexec.args="/path/to/your/jacoco.exec"`

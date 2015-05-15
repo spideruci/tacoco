@@ -15,10 +15,6 @@
 				<version>1.4.0</version>
 				<configuration>
 					<mainClass>ExecDump</mainClass>
-					<arguments>
-						<!-- Change the following argument to the appropriate file path of your .exec file. -->
-						<argument>jacoco.exec</argument> 
-					</arguments>
 				</configuration>
 			</plugin>
 		</plugins>
