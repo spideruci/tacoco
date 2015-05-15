@@ -1,17 +1,15 @@
 # tacoco
 
 ## Getting started...
-
-1. get fresh tacoco.jar. Type followings from your project root folder.
+0. get fresh tacoco.jar. Type followings from your project root folder.
 ~~~
   git clone https://github.com/inf295uci-2015/tacoco
   cd tacoco
   mvn package
   cd ..
 ~~~
-  
-2. change your pom.xml  
-  ~~~xml
+1. change your pom.xml  
+~~~xml
   <build>
     <plugins>
     ...
@@ -57,12 +55,11 @@
         </executions>
       </plugin>
     ...
-    ~~~
-
-3. run your testcase and get jacoco.exec file
-   ~~~
+~~~
+2. run your testcase and get jacoco.exec file
+~~~
    mvn test
-   ~~~
+~~~
 
 ## Running ExecDump utility to read the `jacoco.exec` file
 
