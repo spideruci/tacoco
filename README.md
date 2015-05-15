@@ -60,7 +60,14 @@
 ~~~
    mvn test
 ~~~
-
+3. If it works, add followings to your .travis.yml
+~~~
+before_install:
+  - git clone https://github.com/inf295uci-2015/tacoco
+  - cd tacoco
+  - mvn package
+  - cd ../
+~~~
 ## Running ExecDump utility to read the `jacoco.exec` file
 
 0. Change the path of the jacoco.exec in pom.xml, where specified.
