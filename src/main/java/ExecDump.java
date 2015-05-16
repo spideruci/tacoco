@@ -11,15 +11,28 @@
  *******************************************************************************/
 //package org.jacoco.examples;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 
+import org.jacoco.core.analysis.Analyzer;
+import org.jacoco.core.analysis.CoverageBuilder;
+import org.jacoco.core.analysis.IBundleCoverage;
+import org.jacoco.core.analysis.IClassCoverage;
+import org.jacoco.core.analysis.ICounter;
+import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
+import org.jacoco.core.analysis.IPackageCoverage;
+import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.ExecutionDataReader;
+import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.IExecutionDataVisitor;
 import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
+import org.spiderlab.tacoco.CoveragePrettyPrinter;
+import org.spiderlab.tacoco.ExecutionDataParser;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
@@ -27,7 +40,7 @@ import com.cedarsoftware.util.io.JsonWriter;
  * This example reads given execution data files and dumps their content.
  */
 public final class ExecDump {
-
+  
 	/**
 	 * Reads all execution data files specified as the arguments and dumps the
 	 * content.
@@ -37,12 +50,13 @@ public final class ExecDump {
 	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws IOException {
-		for (final String file : args) {
-			dumpContent(file);
-		}
+	  ExecDump dump = new ExecDump();
+	  ExecutionDataParser parser = new ExecutionDataParser(new File(args[0]));
+	  dump.dumpContent(args[1], parser);
 	}
 
-	private static void dumpContent(final String file) throws IOException {
+	private void dumpContent(final String file,
+	    final ExecutionDataParser parser) throws IOException {
 		System.out.printf("exec file: %s%n", file);
 		System.out.println("CLASS ID         HITS/PROBES   CLASS NAME");
 		
@@ -51,35 +65,33 @@ public final class ExecDump {
 		
 		reader.setSessionInfoVisitor(new ISessionInfoVisitor() {
 			public void visitSessionInfo(final SessionInfo info) {
-				System.out.printf("Session \"%s\": %s - %s%n", info.getId(),
-						new Date(info.getStartTimeStamp()),
-						new Date(info.getDumpTimeStamp()));
+			  String sessionName = String.format("Session \"%s\": %s - %s", 
+			      info.getId(),
+            new Date(info.getStartTimeStamp()),
+            new Date(info.getDumpTimeStamp()));
+			  parser.resetExecDataStore();
+			  parser.setCoverageTitle(sessionName);
+				System.out.println("\n" + sessionName);
 			}
 		});
 		
-		reader.setExecutionDataVisitor(new IExecutionDataVisitor() {
-			public void visitClassExecution(final ExecutionData data) {
-				System.out.printf("%016x  %3d of %3d   %s%n",
-						Long.valueOf(data.getId()),
-						Integer.valueOf(getHitCount(data.getProbes())),
-						Integer.valueOf(data.getProbes().length), data.getName());
-			}
-		});
+		reader.setExecutionDataVisitor(parser);
 		reader.read();
+		
+		int count = 0;
+		for(IBundleCoverage coverage : parser.getCoverageBundles()) {
+      CoveragePrettyPrinter printer = new CoveragePrettyPrinter(coverage);
+      printer.printCoverageTitle();
+      printer.printSourceLineCoverage();
+      count += 1;
+      System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
+      System.out.printf("completed printing %d coverage bundles.%n%n", count);
+    }
+		
 		in.close();
 		System.out.println();
 	}
 
-	private static int getHitCount(final boolean[] data) {
-		int count = 0;
-		for (final boolean hit : data) {
-			if (hit) {
-				count++;
-			}
-		}
-		return count;
-	}
+	
 
-	private ExecDump() {
-	}
 }
