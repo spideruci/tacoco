@@ -1,3 +1,5 @@
+package org.spideruci.tacoco;
+
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;

@@ -1,3 +1,5 @@
+package org.spideruci.tacoco;
+
 import org.junit.runner.JUnitCore;
 
 

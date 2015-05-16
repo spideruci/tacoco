@@ -1,3 +1,4 @@
+package org.spideruci.tacoco.reporting;
 /*******************************************************************************
  * Copyright (c) 2009, 2013 Mountainminds GmbH & Co. KG and Contributors
  * All rights reserved. This program and the accompanying materials
@@ -14,27 +15,12 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Date;
 
-import org.jacoco.core.analysis.Analyzer;
-import org.jacoco.core.analysis.CoverageBuilder;
 import org.jacoco.core.analysis.IBundleCoverage;
-import org.jacoco.core.analysis.IClassCoverage;
-import org.jacoco.core.analysis.ICounter;
-import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
-import org.jacoco.core.analysis.IPackageCoverage;
-import org.jacoco.core.analysis.ISourceFileCoverage;
-import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.ExecutionDataReader;
-import org.jacoco.core.data.ExecutionDataStore;
-import org.jacoco.core.data.IExecutionDataVisitor;
 import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
-import org.spiderlab.tacoco.CoveragePrettyPrinter;
-import org.spiderlab.tacoco.ExecutionDataParser;
-
-import com.cedarsoftware.util.io.JsonWriter;
 
 /**
  * This example reads given execution data files and dumps their content.
@@ -58,7 +44,7 @@ public final class ExecDump {
 	private void dumpContent(final String file,
 	    final ExecutionDataParser parser) throws IOException {
 		System.out.printf("exec file: %s%n", file);
-		System.out.println("CLASS ID         HITS/PROBES   CLASS NAME");
+//		System.out.println("CLASS ID         HITS/PROBES   CLASS NAME");
 		
 		final FileInputStream in = new FileInputStream(file);
 		final ExecutionDataReader reader = new ExecutionDataReader(in);
@@ -80,7 +66,8 @@ public final class ExecDump {
 		
 		int count = 0;
 		for(IBundleCoverage coverage : parser.getCoverageBundles()) {
-      CoveragePrettyPrinter printer = new CoveragePrettyPrinter(coverage);
+      CoveragePrettyPrinter printer = 
+          new CoveragePrettyPrinter(coverage, System.out);
       printer.printCoverageTitle();
       printer.printSourceLineCoverage();
       count += 1;
