@@ -1,3 +1,4 @@
+package org.spideruci.tacoco.reporting.misc;
 import java.util.*;
 import java.io.*;
 

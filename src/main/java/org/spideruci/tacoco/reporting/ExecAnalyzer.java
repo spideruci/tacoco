@@ -10,11 +10,11 @@ package org.spideruci.tacoco.reporting;
  *    Marc R. Hoffmann - initial API and implementation
  *    
  *******************************************************************************/
-//package org.jacoco.examples;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Date;
 
 import org.jacoco.core.analysis.IBundleCoverage;
@@ -25,7 +25,7 @@ import org.jacoco.core.data.SessionInfo;
 /**
  * This example reads given execution data files and dumps their content.
  */
-public final class ExecDump {
+public final class ExecAnalyzer {
   
 	/**
 	 * Reads all execution data files specified as the arguments and dumps the
@@ -36,7 +36,7 @@ public final class ExecDump {
 	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws IOException {
-	  ExecDump dump = new ExecDump();
+	  ExecAnalyzer dump = new ExecAnalyzer();
 	  ExecutionDataParser parser = new ExecutionDataParser(new File(args[0]));
 	  dump.dumpContent(args[1], parser);
 	}
@@ -65,20 +65,19 @@ public final class ExecDump {
 		reader.read();
 		
 		int count = 0;
+		PrintStream out = System.out;
 		for(IBundleCoverage coverage : parser.getCoverageBundles()) {
-      CoveragePrettyPrinter printer = 
-          new CoveragePrettyPrinter(coverage, System.out);
+      CoverageJsonPrinter printer = 
+          new CoverageJsonPrinter(coverage, out);
       printer.printCoverageTitle();
-      printer.printSourceLineCoverage();
+      printer.printCoverage();
+//      printer.printSourceLineCoverage();
       count += 1;
-      System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
-      System.out.printf("completed printing %d coverage bundles.%n%n", count);
+      out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
+      out.printf("completed printing %d coverage bundles.%n%n", count);
     }
 		
 		in.close();
 		System.out.println();
 	}
-
-	
-
 }

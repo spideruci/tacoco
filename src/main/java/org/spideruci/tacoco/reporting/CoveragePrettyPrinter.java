@@ -10,7 +10,7 @@ import org.jacoco.core.analysis.ILine;
 import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.core.analysis.ISourceFileCoverage;
 
-public class CoveragePrettyPrinter {
+public class CoveragePrettyPrinter implements ICoveragePrintable {
   
   private final IBundleCoverage coverage;
   private final PrintStream out;
@@ -20,45 +20,13 @@ public class CoveragePrettyPrinter {
     this.out = out; 
   }
   
+  @Override
   public void printCoverageTitle() {
     out.println(coverage.getName());
   }
   
-  public void printPackageCoverage() {
-    Collection<IPackageCoverage> packages = coverage.getPackages();
-    for(IPackageCoverage packageCoverage : packages) {
-      out.println(packageCoverage.getName() + 
-          " ... " + prettyCoverageCount(packageCoverage.getClassCounter()));
-    }
-  }
-  
-  public void printClassCoverage() {
-    Collection<IPackageCoverage> packages = coverage.getPackages();
-    for(IPackageCoverage packageCoverage : packages) {
-      out.println(packageCoverage.getName() + 
-          " ... " + prettyCoverageCount(packageCoverage.getClassCounter()));
-      Collection<IClassCoverage> classes = packageCoverage.getClasses();
-      for(IClassCoverage classCoverage : classes) {
-        out.println("\t" + classCoverage.getName() + 
-            " ... " + prettyCoverageCount(classCoverage.getClassCounter()));
-      }
-    }
-  }
-  
-  public void printSourceFileCoverage() {
-    Collection<IPackageCoverage> packages = coverage.getPackages();
-    for(IPackageCoverage packageCoverage : packages) {
-      out.println(packageCoverage.getName() + 
-          " ... " + prettyCoverageCount(packageCoverage.getClassCounter()));
-      Collection<ISourceFileCoverage> sources = packageCoverage.getSourceFiles();
-      for(ISourceFileCoverage sourceCoverage : sources) {
-        out.println("\t" + sourceCoverage.getName() + 
-            " ... " + prettyCoverageCount(sourceCoverage.getClassCounter()));
-      }
-    }
-  }
-  
-  public void printSourceLineCoverage() {
+  @Override
+  public void printCoverage() {
     Collection<IPackageCoverage> packages = coverage.getPackages();
     for(IPackageCoverage packageCoverage : packages) {
       out.println(packageCoverage.getName() + 
@@ -107,6 +75,38 @@ public class CoveragePrettyPrinter {
       }
     }
     
-
+    public void printPackageCoverage() {
+      Collection<IPackageCoverage> packages = coverage.getPackages();
+      for(IPackageCoverage packageCoverage : packages) {
+        out.println(packageCoverage.getName() + 
+            " ... " + prettyCoverageCount(packageCoverage.getClassCounter()));
+      }
+    }
+    
+    public void printClassCoverage() {
+      Collection<IPackageCoverage> packages = coverage.getPackages();
+      for(IPackageCoverage packageCoverage : packages) {
+        out.println(packageCoverage.getName() + 
+            " ... " + prettyCoverageCount(packageCoverage.getClassCounter()));
+        Collection<IClassCoverage> classes = packageCoverage.getClasses();
+        for(IClassCoverage classCoverage : classes) {
+          out.println("\t" + classCoverage.getName() + 
+              " ... " + prettyCoverageCount(classCoverage.getClassCounter()));
+        }
+      }
+    }
+    
+    public void printSourceFileCoverage() {
+      Collection<IPackageCoverage> packages = coverage.getPackages();
+      for(IPackageCoverage packageCoverage : packages) {
+        out.println(packageCoverage.getName() + 
+            " ... " + prettyCoverageCount(packageCoverage.getClassCounter()));
+        Collection<ISourceFileCoverage> sources = packageCoverage.getSourceFiles();
+        for(ISourceFileCoverage sourceCoverage : sources) {
+          out.println("\t" + sourceCoverage.getName() + 
+              " ... " + prettyCoverageCount(sourceCoverage.getClassCounter()));
+        }
+      }
+    }
 
 }

@@ -1,3 +1,4 @@
+package org.spideruci.tacoco.reporting;
 /*******************************************************************************
  * Copyright (c) 2009, 2015 Mountainminds GmbH & Co. KG and Contributors
  * All rights reserved. This program and the accompanying materials
@@ -24,7 +25,6 @@ import org.jacoco.report.FileMultiReportOutput;
 import org.jacoco.report.IReportVisitor;
 import org.jacoco.report.html.HTMLFormatter;
 
-import com.cedarsoftware.util.io.JsonWriter;
 
 /**
  * This example creates a HTML report for eclipse like projects based on a
@@ -78,10 +78,6 @@ public class ReportGenerator {
     final IBundleCoverage bundleCoverage = analyzeStructure();
 
     createReport(bundleCoverage);
-    Map<String, Object> args = new HashMap<>();
-    args.put(JsonWriter.PRETTY_PRINT, true);
-    System.out.println(JsonWriter.objectToJson(bundleCoverage, args));
-
   }
 
   private void createReport(final IBundleCoverage bundleCoverage)
