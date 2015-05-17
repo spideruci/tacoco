@@ -21,6 +21,7 @@ import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
+import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
 /**
  * This example reads given execution data files and dumps their content.
@@ -36,15 +37,14 @@ public final class ExecAnalyzer {
 	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws IOException {
-	  ExecAnalyzer dump = new ExecAnalyzer();
+	  ExecAnalyzer execAnalyzer = new ExecAnalyzer();
 	  ExecutionDataParser parser = new ExecutionDataParser(new File(args[0]));
-	  dump.dumpContent(args[1], parser);
+	  execAnalyzer.dumpContent(args[1], parser);
 	}
 
 	private void dumpContent(final String file,
 	    final ExecutionDataParser parser) throws IOException {
 		System.out.printf("exec file: %s%n", file);
-//		System.out.println("CLASS ID         HITS/PROBES   CLASS NAME");
 		
 		final FileInputStream in = new FileInputStream(file);
 		final ExecutionDataReader reader = new ExecutionDataReader(in);
@@ -67,14 +67,12 @@ public final class ExecAnalyzer {
 		int count = 0;
 		PrintStream out = System.out;
 		for(IBundleCoverage coverage : parser.getCoverageBundles()) {
-      CoverageJsonPrinter printer = 
-          new CoverageJsonPrinter(coverage, out);
+      ICoveragePrintable printer = new CoverageJsonPrinter(coverage, out, false, LineCoverageFormat.COMPACT);
       printer.printCoverageTitle();
       printer.printCoverage();
-//      printer.printSourceLineCoverage();
       count += 1;
-      out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
-      out.printf("completed printing %d coverage bundles.%n%n", count);
+      System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
+      System.out.printf("completed printing %d coverage bundle(s).%n%n", count);
     }
 		
 		in.close();
