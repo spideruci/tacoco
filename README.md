@@ -78,5 +78,4 @@ before_install:
 1. Run `mvn test` as a sanity check to make sure that the encoders are working properly.
 
 ### Running ExecAnalyzer
-0. Change the path of the jacoco.exec in pom.xml, where specified.
-1. Use the following maven command on the command line: `mvn exec:java -Dexec.args="/path/to/your/jacoco.exec"`
+1. Use the following maven command on the command line: `mvn exec:java -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec"`

@@ -20,7 +20,18 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
   
   public ExecutionDataParser(final File projectDirectory) {
     this.coverageTitle = projectDirectory.getName();
-    this.classesDirectory = new File(projectDirectory, "target/classes");
+    File tempDirRef = new File(projectDirectory, "target/classes");
+    if(!tempDirRef.exists() || !tempDirRef.isDirectory()) {
+      tempDirRef = new File(projectDirectory, "bin");
+      if(!tempDirRef.exists() || !tempDirRef.isDirectory()) {
+        throw new RuntimeException("unable to find `target/classes/` or `bin/` "
+            + "directories in the specified project-directory:" 
+            + projectDirectory.getPath());
+      }
+    }
+    
+    this.classesDirectory = tempDirRef;
+    tempDirRef = null;
     coverageBundles = new ArrayList<>();
   }
 
