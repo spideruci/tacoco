@@ -1,3 +1,5 @@
+
+*.exec
 /bin
 *.class
 *swp

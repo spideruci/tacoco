@@ -1,14 +1,16 @@
 # tacoco
 
 ## Getting started...
-0. get fresh tacoco.jar. Type followings from your project root folder.
+
+
+* Get fresh tacoco.jar. Type followings from your project root folder.
 ~~~
   git clone https://github.com/inf295uci-2015/tacoco
   cd tacoco
   mvn package
   cd ..
 ~~~
-1. change your pom.xml  
+* Change your pom.xml  
 ~~~xml
   <build>
     <plugins>
@@ -56,11 +58,11 @@
       </plugin>
     ...
 ~~~
-2. run your testcase and get jacoco.exec file
+* Run your testcase and get jacoco.exec file
 ~~~
    mvn test
 ~~~
-3. If it works, add followings to your .travis.yml
+* If it works, add followings to your .travis.yml
 ~~~
 before_install:
   - git clone https://github.com/inf295uci-2015/tacoco
@@ -68,7 +70,13 @@ before_install:
   - mvn package
   - cd ../
 ~~~
-## Running ExecDump utility to read the `jacoco.exec` file
 
+## Compiling and Running ExecAnalyzer utility to read the `jacoco.exec` file
+
+### Compiling ExecAnalyzer
+0. Install [Primitive Hamcrest (https://github.com/inf295uci-2015/primitive-hamcrest)](https://github.com/inf295uci-2015/primitive-hamcrest) in your local repository (check instruction in given in primitive-hamcrest's Readme.md).
+1. Run `mvn test` as a sanity check to make sure that the encoders are working properly.
+
+### Running ExecAnalyzer
 0. Change the path of the jacoco.exec in pom.xml, where specified.
 1. Use the following maven command on the command line: `mvn exec:java -Dexec.args="/path/to/your/jacoco.exec"`
