@@ -24,11 +24,11 @@ public class LineCoverageCoder {
   
   int[] decode(int code) {
     int bm = code & MASK;
-    code = code >> SHIFT;
+    code = code >>> SHIFT;
     int bc = code & MASK;
-    code = code >> SHIFT;
+    code = code >>> SHIFT;
     int im = code & MASK;
-    code = code >> SHIFT;
+    code = code >>> SHIFT;
     int ic = code & MASK;
     
     return new int[] {ic, im, bc, bm};

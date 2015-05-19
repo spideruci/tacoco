@@ -67,7 +67,7 @@ public final class ExecAnalyzer {
 		int count = 0;
 		PrintStream out = System.out;
 		for(IBundleCoverage coverage : parser.getCoverageBundles()) {
-      ICoveragePrintable printer = new CoverageJsonPrinter(coverage, out, false, LineCoverageFormat.COMPACT);
+      ICoveragePrintable printer = new CoverageJsonPrinter(coverage, out, false, LineCoverageFormat.DENSE);
       printer.printCoverageTitle();
       printer.printCoverage();
       count += 1;

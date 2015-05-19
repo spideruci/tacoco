@@ -26,11 +26,6 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
 
   public void visitClassExecution(final ExecutionData data) {
     if(data == null) return;
-//    System.out.println(coverageTitle);
-//    System.out.printf("%016x  %3d of %3d   %s%n",
-//        Long.valueOf(data.getId()),
-//        Integer.valueOf(getHitCount(data.getProbes())),
-//        Integer.valueOf(data.getProbes().length), data.getName());
     System.out.printf("adding exec-data for: %s %d%n", 
         data.getName(), 
         getHitCount(data.getProbes()));

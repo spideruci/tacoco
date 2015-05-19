@@ -30,6 +30,7 @@ public class TacocoListener extends RunListener
 		System.out.println("Setting sessionId to "+description.getDisplayName());
 		agent.setSessionId(description.getDisplayName());
 	}
+	
 	public void testFinished(Description description) throws java.lang.Exception
 	{
 		int sleepLength = 10;
@@ -41,6 +42,5 @@ public class TacocoListener extends RunListener
 		System.out.println("Done sleeping.");
 		System.out.flush();
 		Thread.sleep(10);
-
 	}
 }

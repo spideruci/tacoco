@@ -67,7 +67,15 @@ public class CoverageJsonPrinter implements ICoveragePrintable {
         return sourcefiles;
       }
       case DENSE:
-        throw new UnsupportedOperationException("DENSE coding is a TODO.");
+      {
+        SourceFileCoverage[] sourcefiles = new SourceFileCoverage[sourcefileCount];
+        int counter = 0;
+        for(ISourceFileCoverage cov : sourcefilesCoverage) {
+          sourcefiles[counter] = SourceFileCoverageBuilder.buildDense(cov);
+          counter ++;
+        }
+        return sourcefiles;
+      }
       default:
         throw new RuntimeException("Unknonw format! --- " + format.toString());
       }

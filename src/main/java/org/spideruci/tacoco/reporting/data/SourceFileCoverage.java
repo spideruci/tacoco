@@ -3,33 +3,33 @@ package org.spideruci.tacoco.reporting.data;
 
 public class SourceFileCoverage {
   
-  private final String fileName;
-  private final String packageName;
+  private final String name;
+  private final String packagename;
   private final LineCoverageFormat format;
   private final int firstLine;
-  private final int[] linesCoverage;
+  private final int[] lines;
   
   SourceFileCoverage(String fileName, String packageName, int firstLine, 
       LineCoverageFormat format, int[] linesCoverage) {
-    this.fileName = fileName;
-    this.packageName = packageName;
+    this.name = fileName;
+    this.packagename = packageName;
     this.firstLine = firstLine;
     this.format = format;
-    this.linesCoverage = linesCoverage;
+    this.lines = linesCoverage;
   }
   
   /**
    * @return the fileName
    */
   public String getFileName() {
-    return fileName;
+    return name;
   }
 
   /**
    * @return the packageName
    */
   public String getPackageName() {
-    return packageName;
+    return packagename;
   }
 
   /**
@@ -50,7 +50,7 @@ public class SourceFileCoverage {
    * @return the linesCoverage
    */
   public int[] getLinesCoverage() {
-    return linesCoverage;
+    return lines;
   }
 
   public static enum LineCoverageFormat {

@@ -1,7 +1,10 @@
 package org.spideruci.tacoco.reporting.data;
 
-import org.jacoco.core.analysis.ISourceFileCoverage;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import org.jacoco.core.analysis.ILine;
+import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
 public class SourceFileCoverageBuilder {
@@ -25,6 +28,26 @@ public class SourceFileCoverageBuilder {
     
     SourceFileCoverage cov = new SourceFileCoverage(sourcefileName, 
         packageName, firstLine, LineCoverageFormat.COMPACT, linesCoverage);
+    return cov;
+  }
+  
+  public static SourceFileCoverage buildDense(ISourceFileCoverage coverage) {
+    String packageName = coverage.getPackageName();
+    String sourcefileName = coverage.getName();
+    int firstLine = coverage.getFirstLine();
+    int lastLine = coverage.getLastLine();
+    
+    Collection<ILine> linesCoverage = new ArrayList<>();
+    if(firstLine != -1) {
+      for(int i = firstLine; i <= lastLine; i += 1) {
+        linesCoverage.add(coverage.getLine(i));
+      }      
+    }
+    
+    LinesStatusCoder coder = new LinesStatusCoder();
+    int[] lineStatuses = coder.encode(linesCoverage);
+    SourceFileCoverage cov = new SourceFileCoverage(sourcefileName, 
+        packageName, firstLine, LineCoverageFormat.DENSE, lineStatuses);
     return cov;
   }
   
