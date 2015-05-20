@@ -1,31 +1,16 @@
 package org.spideruci.tacoco.reporting;
-/*******************************************************************************
- * Copyright (c) 2009, 2013 Mountainminds GmbH & Co. KG and Contributors
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Marc R. Hoffmann - initial API and implementation
- *    
- *******************************************************************************/
+
+import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Date;
 
-import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
-import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
-/**
- * This example reads given execution data files and dumps their content.
- */
 public final class ExecAnalyzer {
   
 	/**
@@ -33,11 +18,11 @@ public final class ExecAnalyzer {
 	 * content.
 	 * 
 	 * @param args
-	 *            list of execution data files
+	 *            
 	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws IOException {
-	  String projectRoot = args[0];
+	  File projectRoot = new File(args[0]);
 	  String execFile = args[1];
 	  String jsonFilePath = args.length < 3 ? null : args[2];
 	  String format = 
@@ -46,8 +31,11 @@ public final class ExecAnalyzer {
 	  String prettyPrint = 
 	      (args.length < 5 || args[4] == null) 
 	      ? null : args[4].trim().toLowerCase();
+	  ExecDataPrintManager printManager = 
+	      createPrintManager(jsonFilePath, format, prettyPrint);
+	  ExecutionDataParser parser = 
+	      new ExecutionDataParser(projectRoot, printManager);
 	  ExecAnalyzer execAnalyzer = new ExecAnalyzer();
-	  ExecutionDataParser parser = new ExecutionDataParser(new File(projectRoot));
 	  execAnalyzer.dumpContent(execFile, parser, jsonFilePath, format, prettyPrint);
 	}
 
@@ -77,26 +65,6 @@ public final class ExecAnalyzer {
 		reader.setExecutionDataVisitor(parser);
 		reader.read();
 		
-		int count = 0;
-		
-		PrintStream out = 
-		    (jsonFilePath == null || jsonFilePath.isEmpty())
-		    ? System.out : new PrintStream(jsonFilePath);
-		LineCoverageFormat format = 
-		    (formatString == null || formatString.isEmpty()) 
-		    ? LineCoverageFormat.DENSE : LineCoverageFormat.valueOf(formatString);
-		boolean isPretty = 
-		    (prettyString == null || prettyString.isEmpty()) 
-		    ? false : Boolean.parseBoolean(prettyString);
-		for(IBundleCoverage coverage : parser.getCoverageBundles()) {
-      ICoveragePrintable printer = 
-          new CoverageJsonPrinter(coverage, out, isPretty, format);
-      printer.printCoverageTitle();
-      printer.printCoverage();
-      count += 1;
-      System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
-      System.out.printf("completed printing %d coverage bundle(s).%n%n", count);
-    }
 		
 		in.close();
 		System.out.println();

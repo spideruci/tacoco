@@ -14,11 +14,12 @@ import org.jacoco.core.data.IExecutionDataVisitor;
 public class ExecutionDataParser implements IExecutionDataVisitor {
   
   private final File classesDirectory;
+  private final ExecDataPrintManager printManager;
   private String coverageTitle;
-  private final ArrayList<IBundleCoverage> coverageBundles;
   private ExecutionDataStore execDataStore = new ExecutionDataStore();
   
-  public ExecutionDataParser(final File projectDirectory) {
+  public ExecutionDataParser(final File projectDirectory,
+      final ExecDataPrintManager printManager) {
     this.coverageTitle = projectDirectory.getName();
     File tempDirRef = new File(projectDirectory, "target/classes");
     if(!tempDirRef.exists() || !tempDirRef.isDirectory()) {
@@ -31,8 +32,8 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     }
     
     this.classesDirectory = tempDirRef;
+    this.printManager = printManager;
     tempDirRef = null;
-    coverageBundles = new ArrayList<>();
   }
 
   public void visitClassExecution(final ExecutionData data) {
@@ -41,7 +42,6 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
         data.getName(), 
         getHitCount(data.getProbes()));
     execDataStore.put(data);
-    
   }
   
   public void resetExecDataStore() {
@@ -53,8 +53,7 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     try {
       System.out.printf("analyzing exec-data for: %s%n", coverageTitle);
       IBundleCoverage coverage = this.analyzeStructure(execDataStore);
-      coverageBundles.add(coverage);
-      
+      printCoverage(coverage);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -62,21 +61,25 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     execDataStore = new ExecutionDataStore();
   }
   
+  private int count = 0; 
+  private void printCoverage(IBundleCoverage coverage) {
+    ICoveragePrintable printer = 
+        new CoverageJsonPrinter(coverage, printManager.jsonOut(),
+            printManager.isPrettyPrint(), printManager.format());
+    printer.printCoverageTitle();
+    printer.printCoverage();
+    System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
+    System.out.printf("completed printing %d coverage bundle(s).%n%n", ++count);
+  }
+  
   public void setCoverageTitle(final String title) {
     this.coverageTitle = title;
   }
   
-  public ArrayList<IBundleCoverage> getCoverageBundles() {
-    return coverageBundles;
-  }
-  
   private IBundleCoverage analyzeStructure(final ExecutionDataStore data) throws IOException {
     final CoverageBuilder coverageBuilder = new CoverageBuilder();
-    
     final Analyzer analyzer = new Analyzer(data, coverageBuilder);
-
     analyzer.analyzeAll(classesDirectory);
-
     return coverageBuilder.getBundle(coverageTitle);
   }
   
