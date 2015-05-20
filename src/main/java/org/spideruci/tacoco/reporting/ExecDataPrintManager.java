@@ -16,9 +16,7 @@ public class ExecDataPrintManager {
   public static ExecDataPrintManager createPrintManager(final String jsonFilePath,
       final String formatString,
       final String prettyString) {
-    
     PrintStream out = null;
-    
     if(jsonFilePath == null || jsonFilePath.isEmpty()) {
       out = System.out;
     } else {
@@ -26,7 +24,8 @@ public class ExecDataPrintManager {
       try {
         jsonFile.createNewFile();
         if(jsonFile.exists() && !jsonFile.isFile()) {
-          System.err.println("Json file path is not a file. Switching to STDOUT");
+          System.err.printf("Json-output destination (%s) is not a file. "
+              + "Switching to STDOUT%n", jsonFile.getPath());
           out = System.out;
         } else {
           out = new PrintStream(jsonFile);
@@ -45,6 +44,8 @@ public class ExecDataPrintManager {
         ? false : Boolean.parseBoolean(prettyString);
     ExecDataPrintManager printMgr = 
         new ExecDataPrintManager(out, format, isPretty);
+    System.out.printf("json:%s,format:%s,pretty:%s%n", 
+        jsonFilePath, formatString, prettyString);
     return printMgr;
   }
   
