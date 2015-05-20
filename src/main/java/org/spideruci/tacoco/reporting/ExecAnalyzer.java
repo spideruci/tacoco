@@ -72,6 +72,7 @@ public final class ExecAnalyzer {
 		reader.setExecutionDataVisitor(parser);
 		reader.read();
 		in.close();
+		parser.close();
 	}
 	
 	

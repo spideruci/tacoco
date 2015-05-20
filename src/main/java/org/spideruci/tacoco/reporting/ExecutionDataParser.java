@@ -75,7 +75,8 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     this.coverageTitle = title;
   }
   
-  private IBundleCoverage analyzeStructure(final ExecutionDataStore data) throws IOException {
+  private IBundleCoverage analyzeStructure(final ExecutionDataStore data) 
+      throws IOException {
     final CoverageBuilder coverageBuilder = new CoverageBuilder();
     final Analyzer analyzer = new Analyzer(data, coverageBuilder);
     analyzer.analyzeAll(classesDirectory);
@@ -91,6 +92,10 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
       }
     }
     return count;
+  }
+
+  public void close() {
+    this.printManager.closeJsonStream();
   }
 
 }

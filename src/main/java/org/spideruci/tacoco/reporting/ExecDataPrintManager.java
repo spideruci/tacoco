@@ -56,7 +56,7 @@ public class ExecDataPrintManager {
     this.isPrettyPrint = isPrettyPrint;
   }
   
-  public void closePrintStream() {
+  public void closeJsonStream() {
     jsonOut.flush();
     jsonOut.close();
   }

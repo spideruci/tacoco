@@ -1,18 +1,20 @@
 package org.spideruci.tacoco.reporting.data;
 
 
-public class SourceFileCoverage {
+public class SourceFileCoverage<T> {
   
   private final String name;
   private final String packagename;
+  private final String sessionName;
   private final LineCoverageFormat format;
   private final int firstLine;
-  private final int[] lines;
+  private final T[] lines;
   
-  SourceFileCoverage(String fileName, String packageName, int firstLine, 
-      LineCoverageFormat format, int[] linesCoverage) {
+  SourceFileCoverage(String fileName, String packageName, String sessionName, 
+      int firstLine, LineCoverageFormat format, T[] linesCoverage) {
     this.name = fileName;
     this.packagename = packageName;
+    this.sessionName = sessionName;
     this.firstLine = firstLine;
     this.format = format;
     this.lines = linesCoverage;
@@ -30,6 +32,13 @@ public class SourceFileCoverage {
    */
   public String getPackageName() {
     return packagename;
+  }
+  
+  /**
+   * @return the sessionName
+   */
+  public String getSessionName() {
+    return sessionName;
   }
 
   /**
@@ -49,7 +58,7 @@ public class SourceFileCoverage {
   /**
    * @return the linesCoverage
    */
-  public int[] getLinesCoverage() {
+  public T[] getLinesCoverage() {
     return lines;
   }
 
