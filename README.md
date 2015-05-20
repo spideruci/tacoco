@@ -78,4 +78,11 @@ before_install:
 1. Run `mvn test` as a sanity check to make sure that the encoders are working properly.
 
 ### Running ExecAnalyzer
-1. Use the following maven command on the command line: `mvn exec:java -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec"`
+1. Use the following maven command on the command line: `mvn exec:java -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec /path/to/your/json/output-file.json <compression-opt> <pretty-print>"`
+    * You have 3 choices for `<compression-opt>`: **`LOOSE`, `COMPACT`, `DENSE`**
+    * You have 2 choices for `<pretty-print>`: **`true`** or **`false`**
+    * The last three arguments, i.e. `/path/to/your/json/output-file.json` `<compression-opt>` `<pretty-print>` are optional. Not specifying those options will result in the selection of default options for each of those arguments.
+    * The default options for the last three commands are:
+        * `/path/to/your/json/output-file.json` -- **`System.out` i.e. Standard-Out**
+        * `<compression-opt>` -- **`DENSE`**
+        * `<pretty-print>` -- **`false`**

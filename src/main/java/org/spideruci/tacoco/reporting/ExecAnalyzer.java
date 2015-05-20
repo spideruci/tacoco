@@ -37,14 +37,27 @@ public final class ExecAnalyzer {
 	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws IOException {
+	  String projectRoot = args[0];
+	  String execFile = args[1];
+	  String jsonFilePath = args.length < 3 ? null : args[2];
+	  String format = 
+	      (args.length < 4 || args[3] == null) 
+	      ? null : args[3].trim().toUpperCase();
+	  String prettyPrint = 
+	      (args.length < 5 || args[4] == null) 
+	      ? null : args[4].trim().toLowerCase();
 	  ExecAnalyzer execAnalyzer = new ExecAnalyzer();
-	  ExecutionDataParser parser = new ExecutionDataParser(new File(args[0]));
-	  execAnalyzer.dumpContent(args[1], parser);
+	  ExecutionDataParser parser = new ExecutionDataParser(new File(projectRoot));
+	  execAnalyzer.dumpContent(execFile, parser, jsonFilePath, format, prettyPrint);
 	}
 
 	private void dumpContent(final String file,
-	    final ExecutionDataParser parser) throws IOException {
-		System.out.printf("exec file: %s%n", file);
+	    final ExecutionDataParser parser,
+	    final String jsonFilePath,
+	    final String formatString,
+	    final String prettyString) throws IOException {
+		System.out.printf("exec:%s,json:%s,format:%s,pretty:%s%n", 
+		    file, jsonFilePath, formatString, prettyString);
 		
 		final FileInputStream in = new FileInputStream(file);
 		final ExecutionDataReader reader = new ExecutionDataReader(in);
@@ -65,9 +78,19 @@ public final class ExecAnalyzer {
 		reader.read();
 		
 		int count = 0;
-		PrintStream out = System.out;
+		
+		PrintStream out = 
+		    (jsonFilePath == null || jsonFilePath.isEmpty())
+		    ? System.out : new PrintStream(jsonFilePath);
+		LineCoverageFormat format = 
+		    (formatString == null || formatString.isEmpty()) 
+		    ? LineCoverageFormat.DENSE : LineCoverageFormat.valueOf(formatString);
+		boolean isPretty = 
+		    (prettyString == null || prettyString.isEmpty()) 
+		    ? false : Boolean.parseBoolean(prettyString);
 		for(IBundleCoverage coverage : parser.getCoverageBundles()) {
-      ICoveragePrintable printer = new CoverageJsonPrinter(coverage, out, false, LineCoverageFormat.DENSE);
+      ICoveragePrintable printer = 
+          new CoverageJsonPrinter(coverage, out, isPretty, format);
       printer.printCoverageTitle();
       printer.printCoverage();
       count += 1;
