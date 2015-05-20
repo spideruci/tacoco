@@ -1,3 +1,4 @@
+package org.spideruci.tacoco.reporting.misc;
 import java.util.*;
 import java.io.*;
 
@@ -68,14 +69,14 @@ public class PerJUnitTestCaseVisitor implements ISessionInfoVisitor,IExecutionDa
 		Collection<ISourceFileCoverage> sourceFiles = coverageBuilder.getSourceFiles();	
 
 		results.put(currentInfo, sourceFiles);
-		/*
+		
 		for(ISourceFileCoverage sourceFile : sourceFiles)
 		{
 			ExecAnalyze.print_counters(sourceFile);
 			
 			ExecAnalyze.print_source_counter_verbose(sourceFile);
 		}
-		*/
+		
 	}
 
 

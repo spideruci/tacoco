@@ -1,3 +1,4 @@
+package org.spideruci.tacoco.reporting.misc;
 import java.io.*;
 import java.util.*;
 
@@ -32,35 +33,34 @@ public class ExecAnalyze
 		this.results = new HashMap<SessionInfo, Collection<ISourceFileCoverage>>();
 	}
 
-	/*
-	public void create() throws IOException
-	{
-		loadExecutionData();
-		IBundleCoverage bundleCoverage = analyzeStructure();
 
-		Collection<IPackageCoverage> packages = bundleCoverage.getPackages();
-
-		//System.out.println("Package Count: "+packages.size());
-		
-
-		for(IPackageCoverage my_package : packages)
-		{
-			Collection<ISourceFileCoverage> sourceFiles = my_package.getSourceFiles();
-			for(ISourceFileCoverage sourceFile : sourceFiles)
-			{
-				//print_counters(sourceFile);
-				//print_source_counter(sourceFile);
-				
-				//print_source_counter_verbose(sourceFile);
-
-				
-			}
-		}
-
-
-		//print_counters(bundleCoverage);
-	}
-	*/
+//	public void create() throws IOException
+//	{
+//		loadExecutionData();
+//		IBundleCoverage bundleCoverage = analyzeStructure();
+//
+//		Collection<IPackageCoverage> packages = bundleCoverage.getPackages();
+//
+//		//System.out.println("Package Count: "+packages.size());
+//		
+//
+//		for(IPackageCoverage my_package : packages)
+//		{
+//			Collection<ISourceFileCoverage> sourceFiles = my_package.getSourceFiles();
+//			for(ISourceFileCoverage sourceFile : sourceFiles)
+//			{
+//				//print_counters(sourceFile);
+//				//print_source_counter(sourceFile);
+//				
+//				//print_source_counter_verbose(sourceFile);
+//
+//				
+//			}
+//		}
+//
+//
+//		//print_counters(bundleCoverage);
+//	}
 
 	public static void print_source_counter_verbose(ISourceNode source)
 	{
@@ -124,28 +124,28 @@ public class ExecAnalyze
 
 	}
 
-	/*
-	//private void loadExecutionData(final String executionFile) throws IOException
-	private void loadExecutionData() throws IOException
-	{
-		final FileInputStream fis = new FileInputStream(executionDataFile);
 
-		final ExecutionDataReader executionDataReader = new ExecutionDataReader(fis);
+//	//private void loadExecutionData(final String executionFile) throws IOException
+//	private void loadExecutionData() throws IOException
+//	{
+//		final FileInputStream fis = new FileInputStream(executionDataFile);
+//
+//		final ExecutionDataReader executionDataReader = new ExecutionDataReader(fis);
+//
+//		executionDataStore = new ExecutionDataStore();
+//		sessionInfoStore = new SessionInfoStore();
+//
+//		executionDataReader.setSessionInfoVisitor(myVisitor);
+//		executionDataReader.setExecutionDataVisitor(myVisitor);
+//
+//		while(executionDataReader.read())
+//		{
+//		}
+//		//myVisitor.analyzeCurrentDataStore();
+//
+//		fis.close();
+//	}
 
-		executionDataStore = new ExecutionDataStore();
-		sessionInfoStore = new SessionInfoStore();
-
-		executionDataReader.setSessionInfoVisitor(myVisitor);
-		executionDataReader.setExecutionDataVisitor(myVisitor);
-
-		while(executionDataReader.read())
-		{
-		}
-		//myVisitor.analyzeCurrentDataStore();
-
-		fis.close();
-	}
-	*/
 
 	public void analyze() throws IOException
 	{
