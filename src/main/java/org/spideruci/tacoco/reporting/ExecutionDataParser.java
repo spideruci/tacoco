@@ -1,8 +1,7 @@
 package org.spideruci.tacoco.reporting;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import org.jacoco.core.analysis.Analyzer;
 import org.jacoco.core.analysis.CoverageBuilder;
 import org.jacoco.core.analysis.IBundleCoverage;
@@ -38,9 +37,9 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
 
   public void visitClassExecution(final ExecutionData data) {
     if(data == null) return;
-    System.out.printf("adding exec-data for: %s %d%n", 
-        data.getName(), 
-        getHitCount(data.getProbes()));
+//    System.out.printf("adding exec-data for: %s %d%n", 
+//        data.getName(), 
+//        getHitCount(data.getProbes()));
     execDataStore.put(data);
   }
   
@@ -83,6 +82,7 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     return coverageBuilder.getBundle(coverageTitle);
   }
   
+  @SuppressWarnings("unused")
   private int getHitCount(final boolean[] data) {
     int count = 0;
     for (final boolean hit : data) {
