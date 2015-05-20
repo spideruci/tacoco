@@ -7,15 +7,17 @@ public class SourceFileCoverage<T> {
   private final String packagename;
   private final String sessionName;
   private final LineCoverageFormat format;
-  private final int firstLine;
+  private final int firstLine, lastLine;
   private final T[] lines;
   
   SourceFileCoverage(String fileName, String packageName, String sessionName, 
-      int firstLine, LineCoverageFormat format, T[] linesCoverage) {
+      int firstLine, int lastLine, LineCoverageFormat format, 
+      T[] linesCoverage) {
     this.name = fileName;
     this.packagename = packageName;
     this.sessionName = sessionName;
     this.firstLine = firstLine;
+    this.lastLine = lastLine;
     this.format = format;
     this.lines = linesCoverage;
   }
@@ -60,6 +62,13 @@ public class SourceFileCoverage<T> {
    */
   public T[] getLinesCoverage() {
     return lines;
+  }
+
+  /**
+   * @return the lastLine
+   */
+  public int getLastLine() {
+    return lastLine;
   }
 
   public static enum LineCoverageFormat {

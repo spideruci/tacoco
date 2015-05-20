@@ -59,13 +59,9 @@ public final class ExecAnalyzer {
 		
 		reader.setSessionInfoVisitor(new ISessionInfoVisitor() {
 			public void visitSessionInfo(final SessionInfo info) {
-			  String sessionName = String.format("Session \"%s\": %s - %s", 
-			      info.getId(),
-            new Date(info.getStartTimeStamp()),
-            new Date(info.getDumpTimeStamp()));
-			  parser.resetExecDataStore();
-			  parser.setCoverageTitle(sessionName);
-				System.out.println("\n" + sessionName);
+			  String nextSessionName = info.getId();
+			  parser.resetExecDataStore(nextSessionName);
+				System.out.println("\n" + nextSessionName);
 			}
 		});
 		

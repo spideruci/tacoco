@@ -2,6 +2,8 @@ package org.spideruci.tacoco.reporting;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+
 import org.jacoco.core.analysis.Analyzer;
 import org.jacoco.core.analysis.CoverageBuilder;
 import org.jacoco.core.analysis.IBundleCoverage;
@@ -43,7 +45,7 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     execDataStore.put(data);
   }
   
-  public void resetExecDataStore() {
+  public void resetExecDataStore(String nextSessionName) {
     if(execDataStore.getContents().size() == 0) {
       execDataStore = new ExecutionDataStore();
       return;
@@ -52,6 +54,7 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     try {
       System.out.printf("analyzing exec-data for: %s%n", coverageTitle);
       IBundleCoverage coverage = this.analyzeStructure(execDataStore);
+      this.setCoverageTitle(nextSessionName);
       printCoverage(coverage);
     } catch (IOException e) {
       e.printStackTrace();
@@ -65,8 +68,18 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     ICoveragePrintable printer = 
         new CoverageJsonPrinter(coverage, printManager.jsonOut(),
             printManager.isPrettyPrint(), printManager.format());
-    printer.printCoverageTitle();
+    PrintStream out = printManager.jsonOut();
+    if(count == 0) {
+      out.print('[');
+    }
     printer.printCoverage();
+    if(this.coverageTitle == null
+        || this.coverageTitle.isEmpty()
+        || this.coverageTitle.equals("end")) {
+      out.print("]");
+    } else {
+      out.println(",");
+    }
     System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
     System.out.printf("completed printing %d coverage bundle(s).%n%n", ++count);
   }

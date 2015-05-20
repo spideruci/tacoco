@@ -28,7 +28,7 @@ public class SourceFileCoverageBuilder {
     
     SourceFileCoverage<ILine> cov = 
         new SourceFileCoverage<>(sourcefileName, packageName, sessionName, 
-            firstLine, LineCoverageFormat.LOOSE, linesCoverage);
+            firstLine, lastLine, LineCoverageFormat.LOOSE, linesCoverage);
     return cov;
   }
   
@@ -53,7 +53,7 @@ public class SourceFileCoverageBuilder {
     
     SourceFileCoverage<Integer> cov = 
         new SourceFileCoverage<>(sourcefileName, packageName, sessionName, 
-            firstLine, LineCoverageFormat.COMPACT, linesCoverage);
+            firstLine, lastLine, LineCoverageFormat.COMPACT, linesCoverage);
     return cov;
   }
   
@@ -82,7 +82,7 @@ public class SourceFileCoverageBuilder {
     
     SourceFileCoverage<Integer> cov = 
         new SourceFileCoverage<>(sourcefileName, packageName, sessionName, 
-            firstLine, LineCoverageFormat.DENSE, lineStatuses);
+            firstLine, lastLine, LineCoverageFormat.DENSE, lineStatuses);
     return cov;
   }
 }
