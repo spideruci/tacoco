@@ -65,6 +65,11 @@
 * If it works, add followings to your .travis.yml
 ~~~
 before_install:
+  
+  - git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
+    cd primitive-hamcrest  
+    mvn install 
+    cd ../
   - git clone https://github.com/inf295uci-2015/tacoco
   - cd tacoco
   - mvn package
