@@ -8,7 +8,7 @@ public class LineCoverageCoder {
   private final static int SHIFT = 8; 
   private final static int MASK = 0b11111111;
    
-  int encode(ILine lineCoverage) {
+  public int encode(ILine lineCoverage) {
     int code = 0;
     ICounter insnCounter = lineCoverage.getInstructionCounter();
     code = code | insnCounter.getCoveredCount();
@@ -22,7 +22,7 @@ public class LineCoverageCoder {
     return code;
   }
   
-  int[] decode(int code) {
+  public int[] decode(int code) {
     int bm = code & MASK;
     code = code >>> SHIFT;
     int bc = code & MASK;

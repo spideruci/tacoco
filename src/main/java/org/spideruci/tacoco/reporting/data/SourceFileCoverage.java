@@ -10,6 +10,13 @@ public class SourceFileCoverage<T> {
   private final int firstLine, lastLine;
   private final T[] lines;
   
+  public SourceFileCoverage() {
+    lines = null;
+    format = null;
+    firstLine = lastLine = -1;
+    name = packagename = sessionName = null;
+  }
+  
   SourceFileCoverage(String fileName, String packageName, String sessionName, 
       int firstLine, int lastLine, LineCoverageFormat format, 
       T[] linesCoverage) {
