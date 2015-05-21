@@ -11,14 +11,14 @@ public class CoverageMatrix {
   private final HashMap<SourceFile, Integer> sourceFileIndex;
   private final ArrayList<Integer> sourceFileRanges;
   private final LineCoverageFormat format;
-  private final int[][] testStmtmatrix;
+  private final ArrayList<int[]> testStmtmatrix;
   
-  public CoverageMatrix(LineCoverageFormat fmt, int testCount) {
+  public CoverageMatrix(LineCoverageFormat fmt) {
     testNameIndex = new HashMap<>();
     sourceFileIndex = new HashMap<>();
     sourceFileRanges = new ArrayList<>();
     format = fmt;
-    testStmtmatrix = new int[testCount][];
+    testStmtmatrix = new ArrayList<>();
   }
 
   private int nextAvailSourceId = 0;
@@ -62,8 +62,8 @@ public class CoverageMatrix {
   }
   
   public void addStmtCoverage(String testName, int[] coverage) {
-    int index = testNameIndex.get(testName);
-    testStmtmatrix[index] = coverage;
+    int index = testNameIndex.get(testName); // TODO
+    testStmtmatrix.add(coverage);
   }
   
   public void printMatrix() {
