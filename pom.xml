@@ -56,14 +56,16 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.4.0</version>
 				<configuration>
-					<mainClass>org.spideruci.tacoco.reporting.ExecAnalyzer</mainClass>
+					<mainClass>org.spideruci.tacoco.TacocoRunner</mainClass>
 				</configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 </project>
