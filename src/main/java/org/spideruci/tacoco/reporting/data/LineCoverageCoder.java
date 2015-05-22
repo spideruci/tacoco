@@ -2,6 +2,7 @@ package org.spideruci.tacoco.reporting.data;
 
 import org.jacoco.core.analysis.ICounter;
 import org.jacoco.core.analysis.ILine;
+import org.jacoco.core.internal.analysis.CounterImpl;
 
 public class LineCoverageCoder {
   
@@ -22,6 +23,18 @@ public class LineCoverageCoder {
     return code;
   }
   
+  public int encode(int ic, int im, int bc, int bm) {
+    int code = 0;
+    code = code | ic;
+    code = code << SHIFT;
+    code = code | im;
+    code = code << SHIFT;
+    code = code | bc;
+    code = code << SHIFT;
+    code = code | bm;
+    return code;
+  }
+  
   public int[] decode(int code) {
     int bm = code & MASK;
     code = code >>> SHIFT;
@@ -32,6 +45,16 @@ public class LineCoverageCoder {
     int ic = code & MASK;
     
     return new int[] {ic, im, bc, bm};
+  }
+  
+  public int decodeStatus(int[] counters) {
+    int bm = counters[3];
+    int bc = counters[2];
+    int im = counters[1];
+    int ic = counters[0];
+    ICounter insnCounter = CounterImpl.getInstance(im, ic);
+    ICounter branchCounter = CounterImpl.getInstance(bm, bc);
+    return insnCounter.getStatus() | branchCounter.getStatus();
   }
 
 }

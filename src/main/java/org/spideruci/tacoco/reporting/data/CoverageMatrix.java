@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
+import com.google.gson.Gson;
+
 public class CoverageMatrix {
   
   private final HashMap<String, Integer> testNameIndex;
@@ -67,18 +69,49 @@ public class CoverageMatrix {
   }
   
   public void printMatrix() {
+    System.out.println(format);
     for(int[] test : testStmtmatrix) {
-      for(int codedCoverage : test) {
-        System.out.print(codedCoverage + "\t");
+      int[] decodedCoverge = 
+          (format == LineCoverageFormat.DENSE) 
+          ? decodeDense(test) : decodeCompact(test);
+      for(int coverage : decodedCoverge) {
+        System.out.print(coverage + " ");
       }
       System.out.println();
     }
   }
+  
+  public void dumpMatrix() {
+    Gson gson = new Gson();
+    String json = gson.toJson(this);
+    System.out.println(json);
+  }
+  
+    private int[] decodeCompact(int[] codedCoverages) {
+      LineCoverageCoder coder = new LineCoverageCoder();
+      int[] decodedCoverage = new int[codedCoverages.length];
+      
+      int count = 0;
+      for(int codedCoverage : codedCoverages) {
+        int[] counts = coder.decode(codedCoverage);
+        int status = coder.decodeStatus(counts);
+        decodedCoverage[count] = status;
+        count += 1;
+      }
+      
+      return decodedCoverage;
+    }
+    
+    private int[] decodeDense(int[] codedCoverage) {
+      LinesStatusCoder coder = new LinesStatusCoder();
+      int[] decodedCoverage = coder.decode(codedCoverage);
+      return decodedCoverage;
+    }
 
   public static class SourceFile {
-    private final String fullName;
-    private final int firstLine;
-    private final int lastLine;
+    final String fullName;
+    final int firstLine;
+    final int lastLine;
     
     public SourceFile(String fullName, int firstLine, int lastLine) {
       this.fullName = fullName;
