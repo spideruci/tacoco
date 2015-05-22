@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import org.junit.runner.JUnitCore;
 
 
-public class TacocoRunner extends JUnitCore
+public final class TacocoRunner
 {
 	public static void main(String[] args)
 	{
@@ -40,7 +40,7 @@ public class TacocoRunner extends JUnitCore
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		JUnitCore core = new TacocoRunner();
+		JUnitCore core = new JUnitCore();
 		core.addListener(new TacocoListener());
 
 		for(String testClass : getClasses(args[0])){
@@ -74,9 +74,9 @@ public class TacocoRunner extends JUnitCore
 			    @Override
 			    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 			        String str = file.toString();
-			        if(str.endsWith(".class")) {
-			        	
-			        	ret.add(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.'));
+			        if(str.endsWith(".class") && !str.matches("(.*)\\$(.*)")) {
+			        	System.out.println(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class","")); 
+			        	ret.add(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class",""));
 			        }
 			        return FileVisitResult.CONTINUE;
 			    }
