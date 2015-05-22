@@ -25,19 +25,6 @@ mvn dependency:copy-dependencies -DoutputDirectory=lib
 java -javaagent:lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false org.spideruci.tacoco.TacocoRunner {your project absolute path}target/test-classes
 ~~~
 
-* If it works, add followings to your .travis.yml
-~~~
-before_install:
-  
-  - git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
-  - cd primitive-hamcrest  
-  - mvn install 
-  - cd ../
-  - git clone https://github.com/inf295uci-2015/tacoco
-  - cd tacoco
-  - mvn package
-  - cd ../
-~~~
 
 ## Compiling and Running ExecAnalyzer utility to read the `jacoco.exec` file
 
