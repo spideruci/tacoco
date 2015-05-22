@@ -47,7 +47,6 @@ public final class TacocoRunner
 			try {
 				core.run(Class.forName(testClass));
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -84,7 +83,6 @@ public final class TacocoRunner
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return ret;
 	}			
 
