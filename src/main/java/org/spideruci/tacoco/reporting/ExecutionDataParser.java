@@ -48,18 +48,19 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
   public void resetExecDataStore(String nextSessionName) {
     if(execDataStore.getContents().size() == 0) {
       execDataStore = new ExecutionDataStore();
+      this.setCoverageTitle(nextSessionName);
       return;
     }
     
     try {
       System.out.printf("analyzing exec-data for: %s%n", coverageTitle);
       IBundleCoverage coverage = this.analyzeStructure(execDataStore);
-      this.setCoverageTitle(nextSessionName);
       printCoverage(coverage);
     } catch (IOException e) {
       e.printStackTrace();
     }
     
+    this.setCoverageTitle(nextSessionName);
     execDataStore = new ExecutionDataStore();
   }
   

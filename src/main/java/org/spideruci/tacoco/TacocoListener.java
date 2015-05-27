@@ -1,9 +1,7 @@
 package org.spideruci.tacoco;
 
-
 import org.junit.runner.Description;
 import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.jacoco.agent.rt.RT;
 import org.jacoco.agent.rt.IAgent;

@@ -67,9 +67,8 @@ public final class ExecAnalyzer {
 		reader.setExecutionDataVisitor(parser);
 		while(reader.read()) {};
 		
-		if(!parser.getCoverageTitle().equals("end")) {
-		  parser.forcePrintEnd();
-		}
+		parser.resetExecDataStore(parser.getCoverageTitle());
+		parser.forcePrintEnd();
 		
 		in.close();
 		parser.close();

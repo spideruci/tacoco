@@ -1,11 +1,6 @@
 package org.spideruci.tacoco;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +10,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 
 import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
 
 
 public final class TacocoRunner {
@@ -31,17 +25,13 @@ public final class TacocoRunner {
 		TacocoListener listener = new TacocoListener();
 		core.addListener(listener);
 
-		Result result = null;
 		for(String testClass : getClasses(args[0])){
 			try {
-				result = core.run(Class.forName(testClass));
+				core.run(Class.forName(testClass));
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		
-    listener.testRunFinished(result);
 		
 		//System.out.println(System.getProperty("java.class.path"));
 	}

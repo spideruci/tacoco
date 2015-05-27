@@ -55,3 +55,5 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+cp.txt
