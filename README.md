@@ -24,9 +24,13 @@ java -javaagent:lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jac
 ~~~
 * Alternatively use the `export-sut-cp` to Run tacoco
 ~~~
+## make sure that you run `mvn test` on your project
+cd /to/your/project/root
+mvn test
+## switch to tacoco and run export-sut-cp
 cd /to/tacoco/project/root
 cd scripts
-chmod +x export-sut-cp
+chmod +x export-sut-cp # you need to do this just once.
 ./export-sut-cp absolute/path/of/your/project/root absolute/path/of/tacoco/root
 ## this should create a jacoco.exec file in the `absolute/path/of/tacoco/root`
 ~~~
