@@ -21,7 +21,9 @@ public class TacocoListener extends RunListener
 
 	public void testRunFinished(Result result)
 	{
-		System.out.println("Number of test cases executed: " + result.getRunCount());
+		if(result != null) {
+		  System.out.println("Number of test cases executed: " + result.getRunCount());
+		}
 		agent.setSessionId("end");
 	}
 

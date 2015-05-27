@@ -15,6 +15,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 
 import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 
 
 public final class TacocoRunner {
@@ -27,15 +28,20 @@ public final class TacocoRunner {
 		}
 */
 		JUnitCore core = new JUnitCore();
-		core.addListener(new TacocoListener());
+		TacocoListener listener = new TacocoListener();
+		core.addListener(listener);
 
+		Result result = null;
 		for(String testClass : getClasses(args[0])){
 			try {
-				core.run(Class.forName(testClass));
+				result = core.run(Class.forName(testClass));
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
+		
+		
+    listener.testRunFinished(result);
 		
 		//System.out.println(System.getProperty("java.class.path"));
 	}
