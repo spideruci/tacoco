@@ -67,3 +67,8 @@ java -javaagent:lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jac
 - Instruction and Branch counters are **disregarded** in DENSE formatting.
 - DENSE formatting encodes 16 (at most) line-statuses into a single 32-bit integer.
 - DENSE formatting is implemented in LinesStatusCoder.
+
+## Running CoverageJsonReader
+
+0. Compile tacoco as stated in the subsection [Compiling ExecAnalyzer](#compiling-execanalyzer).
+1. Use the following maven command on the command line to execute the CoverageJsonReader: `mvn exec:java -Preader -Dexec.args="/path/to/your/json/output-file.json"`

@@ -2,14 +2,11 @@ package org.spideruci.tacoco.reporting;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import org.jacoco.core.analysis.ILine;
 import org.spideruci.tacoco.reporting.data.CoverageMatrix;
 import org.spideruci.tacoco.reporting.data.CoverageMatrix.SourceFile;
 import org.spideruci.tacoco.reporting.data.LineCoverageCoder;

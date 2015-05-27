@@ -5,7 +5,6 @@ import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintMan
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Date;
 
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ISessionInfoVisitor;

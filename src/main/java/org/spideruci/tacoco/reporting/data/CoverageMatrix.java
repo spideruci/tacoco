@@ -64,7 +64,7 @@ public class CoverageMatrix {
   }
   
   public void addStmtCoverage(String testName, int[] coverage) {
-    int index = testNameIndex.get(testName); // TODO
+    @SuppressWarnings("unused") int index = testNameIndex.get(testName);
     testStmtmatrix.add(coverage);
   }
   
