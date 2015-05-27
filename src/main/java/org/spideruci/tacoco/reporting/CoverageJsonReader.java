@@ -140,7 +140,7 @@ public class CoverageJsonReader {
       }
       this.endReadingTestCase();
       System.out.println();
-      if(lineCoverages == null) continue;
+      if(lineCoverages == null || lineCoverages.size() == 0) continue;
       
       int[] codedLineCoverage = new int[lineCoverages.size()];
       for(int i = 0; i < codedLineCoverage.length; i += 1) {

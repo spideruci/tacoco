@@ -84,6 +84,15 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     System.out.printf("completed printing %d coverage bundle(s).%n%n", ++count);
   }
   
+  public void forcePrintEnd() {
+    PrintStream out = printManager.jsonOut();
+    out.print("[]]");
+  }
+  
+  public String getCoverageTitle() {
+    return this.coverageTitle;
+  }
+  
   public void setCoverageTitle(final String title) {
     this.coverageTitle = title;
   }
@@ -110,5 +119,7 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
   public void close() {
     this.printManager.closeJsonStream();
   }
+
+  
 
 }

@@ -65,7 +65,12 @@ public final class ExecAnalyzer {
 		});
 		
 		reader.setExecutionDataVisitor(parser);
-		reader.read();
+		while(reader.read()) {};
+		
+		if(!parser.getCoverageTitle().equals("end")) {
+		  parser.forcePrintEnd();
+		}
+		
 		in.close();
 		parser.close();
 	}
