@@ -7,8 +7,7 @@ jdk:
 before_install:
 - git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
 - cd primitive-hamcrest  
-- mvn test
-- mvn install
+- mvn install -Dmaven.compiler.source="1.7"
 - cd ..
 
 after_success:
