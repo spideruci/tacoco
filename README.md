@@ -2,79 +2,29 @@
 
 ## Getting started...
 
-
-* Get fresh tacoco.jar. Type followings from your project root folder.
+* Get fresh tacoco
 ~~~
   git clone https://github.com/inf295uci-2015/tacoco
-  cd tacoco
-  mvn package
-  cd ..
+  mvn compile
 ~~~
-* Change your pom.xml  
-~~~xml
-  <build>
-    <plugins>
-    ...
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.18.1</version>
-        <configuration>
-          <properties>
-            <property>
-              <name>listener</name>
-              <value>org.spideruci.tacoco.TacocoListener</value>
-            </property>
-          </properties>
-          <additionalClasspathElements>
-            <additionalClasspathElement>tacoco/target/tacoco-0.1.jar</additionalClasspathElement>
-          </additionalClasspathElements>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.4.201502262128</version>
-        <configuration>
-          <destFile>jacoco.exec</destFile>
-          <append>true</append>
-        </configuration>
-        <executions>
-          <execution>
-            <id>jacoco-initialize</id>
-            <phase>initialize</phase>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>jacoco-report</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    ...
+
+
+* Run tacoco 
 ~~~
-* Run your testcase and get jacoco.exec file
+cd /to/your/project/root
+mvn test
+mvn dependency:build-classpath -Dmdep.outputFile=cp.txt
+export CLASSPATH=`cat cp.txt`:$CLASSPATH
+export CLASSPATH={your project absolute path}/target/test-classes:{your project absolute path}/target/classes:$CLASSPATH
+
+cd /to/tacoco/project/root
+mvn dependency:build-classpath -Dmdep.outputFile=cp.txt
+export CLASSPATH=`cat cp.txt`:$CLASSPATH
+export CLASSPATH={tacoco project absolute path}/target/test-classes:{tacoco project absolute path}/target/classes:$CLASSPATH
+mvn dependency:copy-dependencies -DoutputDirectory=lib
+java -javaagent:lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false org.spideruci.tacoco.TacocoRunner {your project absolute path}/target/test-classes
 ~~~
-   mvn test
-~~~
-* If it works, add followings to your .travis.yml
-~~~
-before_install:
-  
-  - git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
-  - cd primitive-hamcrest  
-  - mvn install 
-  - cd ../
-  - git clone https://github.com/inf295uci-2015/tacoco
-  - cd tacoco
-  - mvn package
-  - cd ../
-~~~
+
 
 ## Compiling and Running ExecAnalyzer utility to read the `jacoco.exec` file
 
@@ -84,7 +34,7 @@ before_install:
 
 ### Running ExecAnalyzer
 1. Compile the ExecAnalyzer as stated above.
-2. Use the following maven command on the command line to execute the ExecAnalyzer: `mvn exec:java -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec /path/to/your/json/output-file.json <compression-opt> <pretty-print>"`
+2. Use the following maven command on the command line to execute the ExecAnalyzer: `mvn exec:java -Panalyzer -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec /path/to/your/json/output-file.json <compression-opt> <pretty-print>"`
     * You have 3 choices for `<compression-opt>`: **`LOOSE`, `COMPACT`, `DENSE`**
     * You have 2 choices for `<pretty-print>`: **`true`** or **`false`**
     * The last three arguments, i.e. `/path/to/your/json/output-file.json` `<compression-opt>` `<pretty-print>` are optional. Not specifying those options will result in the selection of default options for each of those arguments.
