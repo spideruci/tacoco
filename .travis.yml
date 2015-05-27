@@ -4,5 +4,12 @@ jdk:
 - oraclejdk8
 - oraclejdk7
 
+before_install:
+-git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
+-cd primitive-hamcrest  
+-mvn test
+-mvn install
+-cd ..
+
 after_success:
   coveralls
