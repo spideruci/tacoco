@@ -7,8 +7,6 @@
   git clone https://github.com/inf295uci-2015/tacoco
   mvn compile
 ~~~
-
-
 * Run tacoco 
 ~~~
 cd /to/your/project/root
@@ -24,7 +22,14 @@ export CLASSPATH={tacoco project absolute path}/target/test-classes:{tacoco proj
 mvn dependency:copy-dependencies -DoutputDirectory=lib
 java -javaagent:lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false org.spideruci.tacoco.TacocoRunner {your project absolute path}/target/test-classes
 ~~~
-
+* Alternatively use the `export-sut-cp` to Run tacoco
+~~~
+cd /to/tacoco/project/root
+cd scripts
+chmod +x export-sut-cp
+./export-sut-cp absolute/path/of/your/project/root absolute/path/of/tacoco/root
+## this should create a jacoco.exec file in the `absolute/path/of/tacoco/root`
+~~~
 
 ## Compiling and Running ExecAnalyzer utility to read the `jacoco.exec` file
 
