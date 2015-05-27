@@ -1,7 +1,8 @@
 package org.spideruci.tacoco.reporting;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintStream;
 
 import org.jacoco.core.analysis.Analyzer;
 import org.jacoco.core.analysis.CoverageBuilder;
@@ -38,13 +39,13 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
 
   public void visitClassExecution(final ExecutionData data) {
     if(data == null) return;
-    System.out.printf("adding exec-data for: %s %d%n", 
-        data.getName(), 
-        getHitCount(data.getProbes()));
+//    System.out.printf("adding exec-data for: %s %d%n", 
+//        data.getName(), 
+//        getHitCount(data.getProbes()));
     execDataStore.put(data);
   }
   
-  public void resetExecDataStore() {
+  public void resetExecDataStore(String nextSessionName) {
     if(execDataStore.getContents().size() == 0) {
       execDataStore = new ExecutionDataStore();
       return;
@@ -53,6 +54,7 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     try {
       System.out.printf("analyzing exec-data for: %s%n", coverageTitle);
       IBundleCoverage coverage = this.analyzeStructure(execDataStore);
+      this.setCoverageTitle(nextSessionName);
       printCoverage(coverage);
     } catch (IOException e) {
       e.printStackTrace();
@@ -66,8 +68,18 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     ICoveragePrintable printer = 
         new CoverageJsonPrinter(coverage, printManager.jsonOut(),
             printManager.isPrettyPrint(), printManager.format());
-    printer.printCoverageTitle();
+    PrintStream out = printManager.jsonOut();
+    if(count == 0) {
+      out.print('[');
+    }
     printer.printCoverage();
+    if(this.coverageTitle == null
+        || this.coverageTitle.isEmpty()
+        || this.coverageTitle.equals("end")) {
+      out.print("]");
+    } else {
+      out.println(",");
+    }
     System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
     System.out.printf("completed printing %d coverage bundle(s).%n%n", ++count);
   }
@@ -76,13 +88,15 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
     this.coverageTitle = title;
   }
   
-  private IBundleCoverage analyzeStructure(final ExecutionDataStore data) throws IOException {
+  private IBundleCoverage analyzeStructure(final ExecutionDataStore data) 
+      throws IOException {
     final CoverageBuilder coverageBuilder = new CoverageBuilder();
     final Analyzer analyzer = new Analyzer(data, coverageBuilder);
     analyzer.analyzeAll(classesDirectory);
     return coverageBuilder.getBundle(coverageTitle);
   }
   
+  @SuppressWarnings("unused")
   private int getHitCount(final boolean[] data) {
     int count = 0;
     for (final boolean hit : data) {
@@ -91,6 +105,10 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
       }
     }
     return count;
+  }
+
+  public void close() {
+    this.printManager.closeJsonStream();
   }
 
 }

@@ -17,27 +17,11 @@ import java.util.ArrayList;
 import org.junit.runner.JUnitCore;
 
 
-public final class TacocoRunner
-{
-	public static void main(String[] args)
-	{
-//		int sleepLength = 2000;
-//		System.out.println("Testing Thread.sleep()");
-//		System.out.println("Going to sleep for "+sleepLength+" ms.");
-//		try
-//		{
-//			Thread.sleep(sleepLength);
-//		}
-//		catch(InterruptedException e)
-//		{
-//			System.out.println(e.getMessage());
-//		}
-//		System.out.println("Done sleeping.");
-		
+public final class TacocoRunner {
+	public static void main(String[] args) {
 		try {
 			addPath(args[0]);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		JUnitCore core = new JUnitCore();
@@ -49,7 +33,6 @@ public final class TacocoRunner
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
 		}
 		
 		System.out.println(System.getProperty("java.class.path"));
@@ -85,5 +68,4 @@ public final class TacocoRunner
 		}
 		return ret;
 	}			
-
 }

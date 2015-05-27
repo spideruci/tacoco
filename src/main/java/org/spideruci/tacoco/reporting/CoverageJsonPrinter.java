@@ -1,5 +1,7 @@
 package org.spideruci.tacoco.reporting;
 
+import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.*;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +11,6 @@ import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
-import org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,30 +39,38 @@ public class CoverageJsonPrinter implements ICoveragePrintable {
     out.println(coverage.getName());
   }
   
+  @SuppressWarnings("rawtypes")
   @Override
   public void printCoverage() {
     
     ArrayList<ISourceFileCoverage> sourcefilesCovergae = 
         amassSourcefilesCoverage();
-    Object[] sourcefiles = coverage(format, sourcefilesCovergae);
+    SourceFileCoverage[] sourcefiles = coverage(format, sourcefilesCovergae);
     out.print(gson.toJson(sourcefiles));
   }
   
-    private Object[] coverage(LineCoverageFormat format, ArrayList<ISourceFileCoverage> sourcefilesCoverage) {
+    @SuppressWarnings("rawtypes")
+    private SourceFileCoverage[] coverage(LineCoverageFormat format, 
+        ArrayList<ISourceFileCoverage> sourcefilesCoverage) {
       int sourcefileCount = sourcefilesCoverage.size();
       switch (format) {
       case LOOSE:
       {
-        ISourceFileCoverage[] sourcefiles = sourcefilesCoverage.toArray(
-            new ISourceFileCoverage[sourcefileCount]);
+        SourceFileCoverage[] sourcefiles = new SourceFileCoverage[sourcefileCount];
+        int counter = 0;
+        for(ISourceFileCoverage srcCov : sourcefilesCoverage) {
+          sourcefiles[counter] = buildLoose(srcCov, coverage.getName());
+          counter ++;
+        }
         return sourcefiles;
+        
       }
       case COMPACT:
       {
         SourceFileCoverage[] sourcefiles = new SourceFileCoverage[sourcefileCount];
         int counter = 0;
-        for(ISourceFileCoverage cov : sourcefilesCoverage) {
-          sourcefiles[counter] = SourceFileCoverageBuilder.buildCompact(cov);
+        for(ISourceFileCoverage srcCov : sourcefilesCoverage) {
+          sourcefiles[counter] = buildCompact(srcCov, coverage.getName());
           counter ++;
         }
         return sourcefiles;
@@ -70,8 +79,8 @@ public class CoverageJsonPrinter implements ICoveragePrintable {
       {
         SourceFileCoverage[] sourcefiles = new SourceFileCoverage[sourcefileCount];
         int counter = 0;
-        for(ISourceFileCoverage cov : sourcefilesCoverage) {
-          sourcefiles[counter] = SourceFileCoverageBuilder.buildDense(cov);
+        for(ISourceFileCoverage srcCov : sourcefilesCoverage) {
+          sourcefiles[counter] = buildDense(srcCov, coverage.getName());
           counter ++;
         }
         return sourcefiles;

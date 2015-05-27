@@ -1,6 +1,7 @@
 package org.spideruci.tacoco.reporting;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
@@ -11,19 +12,30 @@ public class ExecDataPrintManager {
   private final LineCoverageFormat format;
   private final boolean isPrettyPrint;
   
+  @SuppressWarnings("resource")
   public static ExecDataPrintManager createPrintManager(final String jsonFilePath,
       final String formatString,
       final String prettyString) {
-    PrintStream out;
-    try {
-      out = (jsonFilePath == null || jsonFilePath.isEmpty())
-      ? System.out : new PrintStream(jsonFilePath);
-    } catch (FileNotFoundException e) {
+    PrintStream out = null;
+    if(jsonFilePath == null || jsonFilePath.isEmpty()) {
       out = System.out;
-      System.err.printf("%s not found. "
-          + "Switching to Standard out.%n", jsonFilePath);
-      e.printStackTrace();
+    } else {
+      File jsonFile = new File(jsonFilePath);
+      try {
+        jsonFile.createNewFile();
+        if(jsonFile.exists() && !jsonFile.isFile()) {
+          System.err.printf("Json-output destination (%s) is not a file. "
+              + "Switching to STDOUT%n", jsonFile.getPath());
+          out = System.out;
+        } else {
+          out = new PrintStream(jsonFile);
+        }
+      } catch (IOException e) {
+        out = System.out;
+        e.printStackTrace();
+      }
     }
+    
     LineCoverageFormat format = 
         (formatString == null || formatString.isEmpty()) 
         ? LineCoverageFormat.DENSE : LineCoverageFormat.valueOf(formatString);
@@ -32,6 +44,8 @@ public class ExecDataPrintManager {
         ? false : Boolean.parseBoolean(prettyString);
     ExecDataPrintManager printMgr = 
         new ExecDataPrintManager(out, format, isPretty);
+    System.out.printf("json:%s,format:%s,pretty:%s%n", 
+        jsonFilePath, formatString, prettyString);
     return printMgr;
   }
   
@@ -42,7 +56,7 @@ public class ExecDataPrintManager {
     this.isPrettyPrint = isPrettyPrint;
   }
   
-  public void closePrintStream() {
+  public void closeJsonStream() {
     jsonOut.flush();
     jsonOut.close();
   }
