@@ -34,7 +34,7 @@ java -javaagent:lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jac
 
 ### Running ExecAnalyzer
 1. Compile the ExecAnalyzer as stated above.
-2. Use the following maven command on the command line to execute the ExecAnalyzer: `mvn exec:java -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec /path/to/your/json/output-file.json <compression-opt> <pretty-print>"`
+2. Use the following maven command on the command line to execute the ExecAnalyzer: `mvn exec:java -Panalyzer -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec /path/to/your/json/output-file.json <compression-opt> <pretty-print>"`
     * You have 3 choices for `<compression-opt>`: **`LOOSE`, `COMPACT`, `DENSE`**
     * You have 2 choices for `<pretty-print>`: **`true`** or **`false`**
     * The last three arguments, i.e. `/path/to/your/json/output-file.json` `<compression-opt>` `<pretty-print>` are optional. Not specifying those options will result in the selection of default options for each of those arguments.

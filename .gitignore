@@ -1,4 +1,4 @@
-
+*.json
 *.exec
 /bin
 *.class
