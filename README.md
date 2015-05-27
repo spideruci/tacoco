@@ -1,5 +1,5 @@
 # tacoco
-
+[alt tag](https://travis-ci.org/inf295uci-2015/tacoco.svg?branch=master)
 ## Getting started...
 
 * Get fresh tacoco
