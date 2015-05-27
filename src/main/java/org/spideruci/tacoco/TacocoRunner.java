@@ -19,11 +19,13 @@ import org.junit.runner.JUnitCore;
 
 public final class TacocoRunner {
 	public static void main(String[] args) {
+/*		
 		try {
 			addPath(args[0]);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+*/
 		JUnitCore core = new JUnitCore();
 		core.addListener(new TacocoListener());
 
@@ -35,9 +37,9 @@ public final class TacocoRunner {
 			}
 		}
 		
-		System.out.println(System.getProperty("java.class.path"));
+		//System.out.println(System.getProperty("java.class.path"));
 	}
-
+/*
 	public static void addPath(String s) throws Exception {
 	    File f = new File(s);
 	    URI u = f.toURI();
@@ -47,7 +49,7 @@ public final class TacocoRunner {
 	    method.setAccessible(true);
 	    method.invoke(urlClassLoader, new Object[]{u.toURL()});
 	}
-
+*/
 	public static ArrayList<String> getClasses(final String p){		
 		final ArrayList<String> ret = new ArrayList<String>();
 		
@@ -57,7 +59,7 @@ public final class TacocoRunner {
 			    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 			        String str = file.toString();
 			        if(str.endsWith(".class") && !str.matches("(.*)\\$(.*)")) {
-			        	System.out.println(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class","")); 
+			        	//System.out.println(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class","")); 
 			        	ret.add(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class",""));
 			        }
 			        return FileVisitResult.CONTINUE;
