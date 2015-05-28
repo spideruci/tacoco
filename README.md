@@ -1,5 +1,6 @@
 # tacoco
-![alt tag](https://travis-ci.org/inf295uci-2015/tacoco.svg?branch=master)
+![alt tag](https://travis-ci.org/inf295uci-2015/tacoco.svg?branch=master) 
+[![Coverage Status](https://coveralls.io/repos/inf295uci-2015/tacoco/badge.svg?branch=coveralls)](https://coveralls.io/r/inf295uci-2015/tacoco?branch=coveralls)
 ## Getting started...
 
 * Get fresh tacoco
