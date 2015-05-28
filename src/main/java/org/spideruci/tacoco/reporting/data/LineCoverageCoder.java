@@ -10,16 +10,14 @@ public class LineCoverageCoder {
   private final static int MASK = 0b11111111;
    
   public int encode(ILine lineCoverage) {
-    int code = 0;
     ICounter insnCounter = lineCoverage.getInstructionCounter();
-    code = code | insnCounter.getCoveredCount();
-    code = code << SHIFT;
-    code = code | insnCounter.getMissedCount();
-    code = code << SHIFT;
+    int ic = insnCounter.getCoveredCount();
+    int im = insnCounter.getMissedCount();
     ICounter branchCounter = lineCoverage.getBranchCounter();
-    code = code | branchCounter.getCoveredCount();
-    code = code << SHIFT;
-    code = code | branchCounter.getMissedCount();
+    int bc = branchCounter.getCoveredCount();
+    int bm = branchCounter.getMissedCount();
+    
+    int code = encode(ic, im, bc, bm); 
     return code;
   }
   
@@ -47,7 +45,7 @@ public class LineCoverageCoder {
     return new int[] {ic, im, bc, bm};
   }
   
-  public int decodeStatus(int[] counters) {
+  public int toStatus(int[] counters) {
     int bm = counters[3];
     int bc = counters[2];
     int im = counters[1];

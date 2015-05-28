@@ -94,7 +94,7 @@ public class CoverageMatrix {
       int count = 0;
       for(int codedCoverage : codedCoverages) {
         int[] counts = coder.decode(codedCoverage);
-        int status = coder.decodeStatus(counts);
+        int status = coder.toStatus(counts);
         decodedCoverage[count] = status;
         count += 1;
       }
