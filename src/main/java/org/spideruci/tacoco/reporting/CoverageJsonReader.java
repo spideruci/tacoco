@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.spideruci.tacoco.reporting.data.CoverageMatrix;
-import org.spideruci.tacoco.reporting.data.CoverageMatrix.SourceFile;
 import org.spideruci.tacoco.reporting.data.LineCoverageCoder;
+import org.spideruci.tacoco.reporting.data.SourceFile;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 

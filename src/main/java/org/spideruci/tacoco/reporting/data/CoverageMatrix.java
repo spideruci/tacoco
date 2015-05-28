@@ -3,6 +3,7 @@ package org.spideruci.tacoco.reporting.data;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.jacoco.core.analysis.ICounter;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
 import com.google.gson.Gson;
@@ -13,14 +14,14 @@ public class CoverageMatrix {
   private final HashMap<SourceFile, Integer> sourceFileIndex;
   private final ArrayList<Integer> sourceFileRanges;
   private final LineCoverageFormat format;
-  private final ArrayList<int[]> testStmtmatrix;
+  private final ArrayList<int[]> testStmtMatrix;
   
   public CoverageMatrix(LineCoverageFormat fmt) {
     testNameIndex = new HashMap<>();
     sourceFileIndex = new HashMap<>();
     sourceFileRanges = new ArrayList<>();
     format = fmt;
-    testStmtmatrix = new ArrayList<>();
+    testStmtMatrix = new ArrayList<>();
   }
 
   private int nextAvailSourceId = 0;
@@ -63,14 +64,19 @@ public class CoverageMatrix {
     return format;
   }
   
+  public int getTestCount() {
+    if(testStmtMatrix == null) return 0;
+    return testStmtMatrix.size();
+  }
+  
   public void addStmtCoverage(String testName, int[] coverage) {
     @SuppressWarnings("unused") int index = testNameIndex.get(testName);
-    testStmtmatrix.add(coverage);
+    testStmtMatrix.add(coverage);
   }
   
   public void printMatrix() {
     System.out.println(format);
-    for(int[] test : testStmtmatrix) {
+    for(int[] test : testStmtMatrix) {
       int[] decodedCoverge = 
           (format == LineCoverageFormat.DENSE) 
           ? decodeDense(test) : decodeCompact(test);
@@ -79,6 +85,59 @@ public class CoverageMatrix {
       }
       System.out.println();
     }
+  }
+  
+  public boolean[][] toBooleanMatrix() {
+    int testsNum = this.testStmtMatrix.size();
+    boolean[][] testStmtMatrix = new boolean[testsNum][];
+    int testCount = 0;
+    for(int[] test : this.testStmtMatrix) {
+      int[] decodedCoverge = null;
+      if(format == LineCoverageFormat.DENSE) {
+        decodedCoverge = decodeDense(test); 
+      } else {
+        decodedCoverge = decodeCompact(test);
+      }
+      boolean[] stmts = new boolean[decodedCoverge.length];
+      for(int i = 0; i < decodedCoverge.length; i += 1) {
+        int coverageStatus = decodedCoverge[i];
+        if(coverageStatus== ICounter.FULLY_COVERED
+            || coverageStatus == ICounter.PARTLY_COVERED) {
+          stmts[i] = true;
+        } else {
+          stmts[i] = false;
+        }
+      }
+      testStmtMatrix[testCount] = stmts;
+      testCount += 1;
+    }
+    return testStmtMatrix;
+  }
+  
+  public boolean[] getCoverableStmts() {
+    int testsNum = this.getTestCount();
+    if(testsNum == 0) return new boolean[0];
+
+    int[] test = this.testStmtMatrix.get(0);
+
+    int[] decodedCoverge = null;
+    if(format == LineCoverageFormat.DENSE) {
+      decodedCoverge = decodeDense(test); 
+    } else {
+      decodedCoverge = decodeCompact(test);
+    }
+    
+    boolean[] stmts = new boolean[decodedCoverge.length];
+    for(int i = 0; i < decodedCoverge.length; i += 1) {
+      int coverageStatus = decodedCoverge[i];
+      if(coverageStatus == ICounter.EMPTY) {
+        stmts[i] = false;
+      } else {
+        stmts[i] = true;
+      }
+    }
+    
+    return stmts;
   }
   
   public void dumpMatrix() {
@@ -108,58 +167,8 @@ public class CoverageMatrix {
       return decodedCoverage;
     }
 
-  public static class SourceFile {
-    final String fullName;
-    final int firstLine;
-    final int lastLine;
     
-    public SourceFile(String fullName, int firstLine, int lastLine) {
-      this.fullName = fullName;
-      this.firstLine = firstLine;
-      this.lastLine = lastLine;
-    }
-    
-    public String getFullName() {
-      return this.fullName;
-    }
 
-    @Override
-    public int hashCode() {
-      return this.fullName.hashCode();
-    }
-    
-    @Override
-    public boolean equals(Object object) {
-      if(object == null) {
-        return false;
-      }
-      
-      if(!(object instanceof SourceFile)) {
-        return false;
-      }
-      
-      SourceFile sourceFile = (SourceFile) object;
-      
-      if(this.fullName.equals(sourceFile.fullName)) {
-        return true;
-      }
-      
-      return false;
-    }
-
-    /**
-     * @return the firstLine
-     */
-    public int getFirstLine() {
-      return firstLine;
-    }
-
-    /**
-     * @return the lastLine
-     */
-    public int getLastLine() {
-      return lastLine;
-    }
-  }
+  
 
 }
