@@ -1,5 +1,7 @@
 package org.spideruci.tacoco.reporting;
 
+import static org.spideruci.tacoco.cli.CliAble.ReaderCli.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,7 +23,12 @@ import com.google.gson.stream.JsonReader;
 public class CoverageJsonReader {
   
   public static void main(String[] args) throws IOException {
-    File jsonFile = new File(args[0]);
+    if(System.getProperties().containsKey(HELP)) {
+      printReaderHelp();
+    }
+    
+    String jsonFilePath = readArgumentValue(JSON);
+    File jsonFile = new File(jsonFilePath);
     LineCoverageFormat covFormat = readCoverageFormat(jsonFile);
     InputStreamReader jsonIn = 
         new InputStreamReader(new FileInputStream(jsonFile));
@@ -103,6 +110,7 @@ public class CoverageJsonReader {
         if(testCaseName == null) {
           testCaseName = currTestCaseName;
           covMat.indexTestName(testCaseName);
+          System.out.printf("%s%n", testCaseName);
         } else {
           if(!testCaseName.equals(currTestCaseName)) {
             System.err.printf("Ignoring session#%d%n", count);
@@ -117,9 +125,6 @@ public class CoverageJsonReader {
         int lastLine = sourcefile.getLastLine();
         SourceFile source = new SourceFile(filename, firstLine, lastLine);
         covMat.indexSourceFile(source);
-        
-        System.out.printf("%s\t%s%n", sourcefile.getFileName(), 
-            sourcefile.getLastLine());
         
         for(Object line : sourcefile.getLinesCoverage()) {
           if(covFormat == LineCoverageFormat.LOOSE) {

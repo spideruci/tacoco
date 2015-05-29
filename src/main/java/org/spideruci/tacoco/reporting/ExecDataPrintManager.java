@@ -13,9 +13,9 @@ public class ExecDataPrintManager {
   private final boolean isPrettyPrint;
   
   @SuppressWarnings("resource")
-  public static ExecDataPrintManager createPrintManager(final String jsonFilePath,
-      final String formatString,
-      final String prettyString) {
+  public static ExecDataPrintManager createPrintManager(
+      final String jsonFilePath, final String formatString, 
+      final boolean prettyPrint) {
     PrintStream out = null;
     if(jsonFilePath == null || jsonFilePath.isEmpty()) {
       out = System.out;
@@ -39,13 +39,11 @@ public class ExecDataPrintManager {
     LineCoverageFormat format = 
         (formatString == null || formatString.isEmpty()) 
         ? LineCoverageFormat.DENSE : LineCoverageFormat.valueOf(formatString);
-    boolean isPretty = 
-        (prettyString == null || prettyString.isEmpty()) 
-        ? false : Boolean.parseBoolean(prettyString);
+    boolean isPretty = prettyPrint;
     ExecDataPrintManager printMgr = 
         new ExecDataPrintManager(out, format, isPretty);
     System.out.printf("json:%s,format:%s,pretty:%s%n", 
-        jsonFilePath, formatString, prettyString);
+        jsonFilePath, formatString, prettyPrint);
     return printMgr;
   }
   

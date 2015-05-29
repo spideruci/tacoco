@@ -1,6 +1,7 @@
 package org.spideruci.tacoco.reporting;
 
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
+import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,8 @@ import org.jacoco.core.data.SessionInfo;
 
 public final class ExecAnalyzer {
   
+
+  
 	/**
 	 * Reads all execution data files specified as the arguments and dumps the
 	 * content.
@@ -21,20 +24,28 @@ public final class ExecAnalyzer {
 	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws IOException {
+	  
+	  if(System.getProperties().containsKey(HELP)) {
+	    printAnalyzerHelp();
+	  }
+	  
 	  ExecAnalyzer execAnalyzer = processArgs(args);
 	  execAnalyzer.dumpContent();
 	}
 	
   	private static ExecAnalyzer processArgs(String[] args) {
-  	  File projectRoot = new File(args[0]);
-      File execFile = new File(args[1]);
-      String jsonFilePath = args.length < 3 ? null : args[2];
-      String format = 
-          (args.length < 4 || args[3] == null) 
-          ? null : args[3].trim().toUpperCase();
-      String prettyPrint = 
-          (args.length < 5 || args[4] == null) 
-          ? null : args[4].trim().toLowerCase();
+  	  
+  	  String sut = readArgumentValue(SUT);
+  	  File projectRoot = new File(sut);
+  	  
+  	  String exec = readArgumentValue(EXEC);
+      File execFile = new File(exec);
+      
+      String jsonFilePath = readOptionalArgumentValue(JSON, null);
+      
+      String format = System.getProperty(FMT, "DENSE");
+      boolean prettyPrint = System.getProperties().containsKey(PP);
+      
       ExecDataPrintManager printManager = 
           createPrintManager(jsonFilePath, format, prettyPrint);
       ExecutionDataParser parser = 

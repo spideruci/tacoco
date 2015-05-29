@@ -1,7 +1,13 @@
 # tacoco
 ![alt tag](https://travis-ci.org/inf295uci-2015/tacoco.svg?branch=master) 
 [![Coverage Status](https://coveralls.io/repos/inf295uci-2015/tacoco/badge.svg?branch=master)](https://coveralls.io/r/inf295uci-2015/tacoco?branch=master)
-## Getting started...
+
+## Compiling Tacoco
+1. Install [Primitive Hamcrest (https://github.com/inf295uci-2015/primitive-hamcrest)](https://github.com/inf295uci-2015/primitive-hamcrest) in your local repository (check instruction in given in primitive-hamcrest's Readme.md).
+2. Run `mvn comile` as a sanity check to make sure that there are no compile-time errors.
+3. Run `mvn test` to make sure that tacoco is working against its own test-cases.
+
+## Analyzing with Tacoco
 
 * Get fresh tacoco
 ~~~
@@ -36,29 +42,45 @@ chmod +x export-sut-cp # you need to do this just once.
 ## this should create a jacoco.exec file in the `absolute/path/of/tacoco/root`
 ~~~
 
-## Compiling and Running ExecAnalyzer utility to read the `jacoco.exec` file
+## Running ExecAnalyzer utility to parse the `jacoco.exec` file
 
-### Compiling ExecAnalyzer
-0. Install [Primitive Hamcrest (https://github.com/inf295uci-2015/primitive-hamcrest)](https://github.com/inf295uci-2015/primitive-hamcrest) in your local repository (check instruction in given in primitive-hamcrest's Readme.md).
-1. Run `mvn test` as a sanity check to make sure that the encoders are working properly.
+### Help Menu
 
-### Running ExecAnalyzer
+```
+Tacoco: Exec-file Analyzer
+usage: mvn exec:java -q -Panalyzer [arguments] 
+
+Arguments:
+-Dtacoco.sut=[dir]  (Required) Absolute-path of system-under-test's root.
+-Dtacoco.exec=[*.exec]  (Required) Absolute-path of input exec binary.
+-Dtacoco.json=[*.json]   (Default: STDOUT) Absolute-path of per-test coverage output.
+-Dtacoco.fmt=`[LOOSE|COMPACT|DENSE]` (Default: DENSE) Compression format of coverage data.
+-Dtacoco.pp Pretty prints coverage data to json file.
+-Dtacoco.help Prints this message and exits (with 0).
+```
+
+### Step-wise instructions
 1. Compile the ExecAnalyzer as stated above.
-2. Use the following maven command on the command line to execute the ExecAnalyzer: `mvn exec:java -Panalyzer -Dexec.args="/project/path/of/your/system/under/test/ /path/to/your/jacoco.exec /path/to/your/json/output-file.json <compression-opt> <pretty-print>"`
-    * You have 3 choices for `<compression-opt>`: **`LOOSE`, `COMPACT`, `DENSE`**
-    * You have 2 choices for `<pretty-print>`: **`true`** or **`false`**
-    * The last three arguments, i.e. `/path/to/your/json/output-file.json` `<compression-opt>` `<pretty-print>` are optional. Not specifying those options will result in the selection of default options for each of those arguments.
-    * The default options for the last three commands are:
-        * `/path/to/your/json/output-file.json` -- **`System.out` i.e. Standard-Out**
-        * `<compression-opt>` -- **`DENSE`**
-        * `<pretty-print>` -- **`false`**
+2. Use the `mvn` command on the command line to execute the ExecAnalyzer as shown above in the help menu, e.g.: `mvn exec:java -q -Panalyzer -Dtacoco.sut=/home/vijay/misc_Programming/pmd/pmd-java -Dtacoco.json=pmd-java-compact.json -Dtacoco.exec=jacoco.exec -Dtacoco.pp -Dtacoco.fmt=COMPACT`
+    * `-Dtacoco.pp` and `-Dtacoco.help` are treated as flags.
+    * `-Dtacoco.json=[*.json]` and `Dtacoco.fmt=[LOOSE|COMPACT|DENSE]`. Not specifying those options will result in the selection of default options for each of those arguments.
+    * The default options are:
+        * `-Dtacoco.json=[*.json]` -- **`System.out` i.e. Standard-Out**
+        * `-Dtacoco.fmt=[LOOSE|COMPACT|DENSE]` -- **`DENSE`**
+    * `-Dtacoco.pp`, being a flag, is also optional. Not providing it means that you do not want pretty-printed coverage-data.
+3. NOTE: Coverage Compression Formats and Pretty-printing are two different things. Pretty-printing simply ensures that the Json output is printed in a non-minified manner. Continue reading to learn more about coverage compression formats.
 
-### Notes on Line-coverage Compression
+### Notes on Line-coverage Compression Formats
+
+You have 3 choices for `-Dtacoco.fmt=`: **`LOOSE`, `COMPACT`, `DENSE`**
+
+#### LOOSE Format
+- This is a space-inefficient formatting of the coverage information.
 
 #### COMPACT Format
 
 - Bit-based encoding for each line-level coverage information.
-- Line-level coverage infromation encoded to single 32-bit int.
+- Line-level coverage information encoded to single 32-bit int.
 - Each (source) line has the following two counters:
   - Bytecode Instruction Coverage Counter (number of bytecode instructions covered and missed)
   - Branch Coverage Counter (number of branches covered and missed)
@@ -80,5 +102,13 @@ chmod +x export-sut-cp # you need to do this just once.
 
 ## Running CoverageJsonReader
 
-0. Compile tacoco as stated in the subsection [Compiling ExecAnalyzer](#compiling-execanalyzer).
-1. Use the following maven command on the command line to execute the CoverageJsonReader: `mvn exec:java -Preader -Dexec.args="/path/to/your/json/output-file.json"`
+```tex
+Tacoco: Coverage Json-file Reader
+usage: mvn exec:java -q -Preader [arguments]
+
+Arguments:
+-Dtacoco.json=[*.json]  (Required) Absolute-path of per-test coverage file.
+-Dtacoco.help Prints this message and exits (with 0).
+```
+
+1. Use the following maven command on the command line to execute the CoverageJsonReader: `mvn exec:java -Preader -Dtacoco.json="/path/to/your/json/coverage-data-file.json"`
