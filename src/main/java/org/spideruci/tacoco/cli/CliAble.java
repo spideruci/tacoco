@@ -42,15 +42,20 @@ public interface CliAble {
     }
     
     public static void printAnalyzerHelp() {
+      final String white = "                                    ";
       final String helpMessage =
           "\nTacoco: Exec-file Analyzer\n"+
           "usage: mvn exec:java -q -Panalyzer [arguments] \n\nArguments:\n" +
-              PREFIX + SUT + "=[dir]\t(Required) Absolute-path of system-under-test's root.\n" +
-              PREFIX + EXEC + "=[*.exec]\t(Required) Absolute-path of input exec binary.\n" +
-              PREFIX + JSON + "=[*.json]\t (Default: STDOUT) Absolute-path of per-test coverage output.\n" +
-              PREFIX + FMT + "=[LOOSE|COMPACT|DENSE] (Default: DENSE) Compression format of coverage data.\n" +
-              PREFIX + PP + "\tPretty prints coverage data to json file.\n" +
-              PREFIX + HELP + "\tPrints this message and exits (with 0).\n";
+              PREFIX + SUT + "=<dir>                  (Required) Absolute-path of system-\n"
+                  + white + "under-test's root.\n" +
+              PREFIX + EXEC + "=<*.exec>              (Required) Absolute-path of input exec\n"
+                  + white + "binary.\n" +
+              PREFIX + JSON + "=<*.json>              (Default: STDOUT) Absolute-path of per-test\n"
+                  + white + "coverage output.\n" +
+              PREFIX + FMT + "=<LOOSE|COMPACT|DENSE>  (Default: DENSE) Compression format of\n"
+                  + white + "coverage data.\n" +
+              PREFIX + PP + "                         Pretty prints coverage data to json file.\n" +
+              PREFIX + HELP + "                       Prints this message and exits (with 0).\n";
       System.out.println(helpMessage);
       System.exit(0);
     }
@@ -90,8 +95,8 @@ public interface CliAble {
       final String helpMessage =
           "\nTacoco: Coverage Json-file Reader\n"+
           "usage: mvn exec:java -q -Preader [arguments] \n\nArguments:\n" +
-              PREFIX + JSON + "=[*.json]\t(Required) Absolute-path of per-test coverage file.\n" +
-              PREFIX + HELP + "\tPrints this message and exits (with 0).\n";
+              PREFIX + JSON + "=[*.json]  (Required) Absolute-path of per-test coverage file.\n" +
+              PREFIX + HELP + "           Prints this message and exits (with 0).\n";
       System.out.println(helpMessage);
       System.exit(0);
     }
