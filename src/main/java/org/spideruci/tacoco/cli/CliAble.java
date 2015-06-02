@@ -31,21 +31,26 @@ public interface CliAble {
     
     public static void printAnalyzerHelpForMissingArgError(final String arg) {
       final String errorMessage = PREFIX + arg + " is a required argument.";
-      printAnalyzerHelpWithErrorMessage(errorMessage);
-    }
-    
-    public static void printAnalyzerHelpWithErrorMessage(
-        final String errorMessage) {
-      System.out.println("ERROR! " + errorMessage);
-      System.out.println("Refer to the following commandline arguments.");
-      printAnalyzerHelp();
+      printAnalyzerHelp(errorMessage);
     }
     
     public static void printAnalyzerHelp() {
+      printAnalyzerHelp(null);
+    }
+    
+    public static void printAnalyzerHelp(final String errorMessage) {
+      System.out.println(getHelpMenu(errorMessage));
+      System.exit(0);
+    }
+    
+    public static String getHelpMenu(final String errorMessage) {
+      final String error = errorMessage == null ? null :
+          ("ERROR! " + errorMessage + 
+          "\nRefer to the following commandline arguments.\n"); 
       final String white = "                                    ";
       final String helpMessage =
           "\nTacoco: Exec-file Analyzer\n"+
-          "usage: mvn exec:java -q -Panalyzer [arguments] \n\nArguments:\n" +
+          "usage: mvn exec:java -q -Panalyzer [arguments]\n\nArguments:\n" +
               PREFIX + SUT + "=<dir>                  (Required) Absolute-path of system-\n"
                   + white + "under-test's root.\n" +
               PREFIX + EXEC + "=<*.exec>              (Required) Absolute-path of input exec\n"
@@ -56,8 +61,11 @@ public interface CliAble {
                   + white + "coverage data.\n" +
               PREFIX + PP + "                         Pretty prints coverage data to json file.\n" +
               PREFIX + HELP + "                       Prints this message and exits (with 0).\n";
-      System.out.println(helpMessage);
-      System.exit(0);
+      
+      if(error != null) {
+        return error + helpMessage; 
+      }
+      return helpMessage;
     }
   }
   
@@ -81,24 +89,32 @@ public interface CliAble {
     
     public static void printReaderHelpForMissingArgError(final String arg) {
       final String errorMessage = arg + " is a required argument.";
-      printReaderHelpWithErrorMessage(errorMessage);
+      printReaderHelp(errorMessage);
     }
     
-    public static void printReaderHelpWithErrorMessage(
-        final String errorMessage) {
-      System.out.println("ERROR:" + errorMessage);
-      System.out.println("Refer to the following commandline arguments.\n");
-      printReaderHelp();
+    public static void printReaderHelp(final String errorMessage) {
+      System.out.println(getHelpMenu(errorMessage));
+      System.exit(0);
     }
     
     public static void printReaderHelp() {
+      printReaderHelp(null);
+    }
+    
+    public static String getHelpMenu(final String errorMessage) {
+      final String error = errorMessage == null ? null :
+          ("ERROR! " + errorMessage + 
+          "\nRefer to the following commandline arguments.\n"); 
       final String helpMessage =
           "\nTacoco: Coverage Json-file Reader\n"+
-          "usage: mvn exec:java -q -Preader [arguments] \n\nArguments:\n" +
-              PREFIX + JSON + "=[*.json]  (Required) Absolute-path of per-test coverage file.\n" +
+          "usage: mvn exec:java -q -Preader [arguments]\n\nArguments:\n" +
+              PREFIX + JSON + "=<*.json>  (Required) Absolute-path of per-test coverage file.\n" +
               PREFIX + HELP + "           Prints this message and exits (with 0).\n";
-      System.out.println(helpMessage);
-      System.exit(0);
+      
+      if(error != null) {
+        return error + helpMessage; 
+      }
+      return helpMessage;
     }
   }
   

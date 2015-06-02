@@ -47,16 +47,22 @@ chmod +x export-sut-cp # you need to do this just once.
 ### Help Menu
 
 ```
+tacoco$ mvn -q exec:java -Panalyzer -Dtacoco.help
+
 Tacoco: Exec-file Analyzer
 usage: mvn exec:java -q -Panalyzer [arguments] 
 
 Arguments:
--Dtacoco.sut=[dir]  (Required) Absolute-path of system-under-test's root.
--Dtacoco.exec=[*.exec]  (Required) Absolute-path of input exec binary.
--Dtacoco.json=[*.json]   (Default: STDOUT) Absolute-path of per-test coverage output.
--Dtacoco.fmt=`[LOOSE|COMPACT|DENSE]` (Default: DENSE) Compression format of coverage data.
--Dtacoco.pp Pretty prints coverage data to json file.
--Dtacoco.help Prints this message and exits (with 0).
+-Dtacoco.sut=<dir>                  (Required) Absolute-path of system-
+                                    under-test's root.
+-Dtacoco.exec=<*.exec>              (Required) Absolute-path of input exec
+                                    binary.
+-Dtacoco.json=<*.json>              (Default: STDOUT) Absolute-path of per-test
+                                    coverage output.
+-Dtacoco.fmt=<LOOSE|COMPACT|DENSE>  (Default: DENSE) Compression format of
+                                    coverage data.
+-Dtacoco.pp                         Pretty prints coverage data to json file.
+-Dtacoco.help                       Prints this message and exits (with 0).
 ```
 
 ### Step-wise instructions
@@ -103,12 +109,14 @@ You have 3 choices for `-Dtacoco.fmt=`: **`LOOSE`, `COMPACT`, `DENSE`**
 ## Running CoverageJsonReader
 
 ```tex
+tacoco$ mvn -q exec:java -Preader -Dtacoco.help
+
 Tacoco: Coverage Json-file Reader
-usage: mvn exec:java -q -Preader [arguments]
+usage: mvn exec:java -q -Preader [arguments] 
 
 Arguments:
--Dtacoco.json=[*.json]  (Required) Absolute-path of per-test coverage file.
--Dtacoco.help Prints this message and exits (with 0).
+-Dtacoco.json=<*.json>  (Required) Absolute-path of per-test coverage file.
+-Dtacoco.help           Prints this message and exits (with 0).
 ```
 
 1. Use the following maven command on the command line to execute the CoverageJsonReader: `mvn exec:java -Preader -Dtacoco.json="/path/to/your/json/coverage-data-file.json"`
