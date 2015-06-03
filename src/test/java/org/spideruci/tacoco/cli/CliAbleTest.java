@@ -91,6 +91,8 @@ public class CliAbleTest {
             "\n" +
             "Arguments:\n" +
             "-Dtacoco.json=<*.json>  (Required) Absolute-path of per-test coverage file.\n" +
+            "-Dtacoco.out=<*.json>   Absolute-path of per-sourcefile coverage matrix.\n" +
+            "-Dtacoco.pp             Pretty prints coverage data to json file.\n" +
             "-Dtacoco.help           Prints this message and exits (with 0).\n";
     return menu;
   }

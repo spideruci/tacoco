@@ -112,7 +112,7 @@ public interface CliAble {
               PREFIX + JSON + "=<*.json>  (Required) Absolute-path of per-test coverage file.\n" +
               PREFIX + OUT + "=<*.json>   Absolute-path of per-sourcefile coverage matrix.\n" +
               PREFIX + PP + "             Pretty prints coverage data to json file.\n" +
-              PREFIX + HELP + "           Prints this message and exits (with 0).";
+              PREFIX + HELP + "           Prints this message and exits (with 0).\n";
       
       if(error != null) {
         return error + helpMessage; 

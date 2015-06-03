@@ -116,7 +116,20 @@ usage: mvn exec:java -q -Preader [arguments]
 
 Arguments:
 -Dtacoco.json=<*.json>  (Required) Absolute-path of per-test coverage file.
+-Dtacoco.out=<*.json>   Absolute-path of per-sourcefile coverage matrix.
+-Dtacoco.pp             Pretty prints coverage data to json file.
 -Dtacoco.help           Prints this message and exits (with 0).
 ```
 
 1. Use the following maven command on the command line to execute the CoverageJsonReader: `mvn exec:java -Preader -Dtacoco.json="/path/to/your/json/coverage-data-file.json"`
+
+## Space Optimized Coverage Matrix
+
+### Per source file Coverage matrix
+- The coverage matrix for a project is split into smaller coverage matrices for each source file.
+- The statements in this matrix are localized to only the statements in the sourcefile in question.
+- We maintain a list of tests for which the test-statement matrix is built.
+- Tests that do not execute a single statement in the sourcefile are considered IRRELEVANT and are not a part of the test-statement matrix.
+- More to come ...
+  + converting the boolean arrays into bit arrays/vectors
+  + (optional) including an index to the test-case names. currently only the test-case-ids are listed in the per-source-coverage-matrices.
