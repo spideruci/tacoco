@@ -130,6 +130,7 @@ Arguments:
 - The statements in this matrix are localized to only the statements in the sourcefile in question.
 - We maintain a list of tests for which the test-statement matrix is built.
 - Tests that do not execute a single statement in the sourcefile are considered IRRELEVANT and are not a part of the test-statement matrix.
+- Check `org.spideruci.tacoco.coverage.CoverageMatrix2` and `org.spideruci.tacoco.coverage.SourceSpecificCoverageMatrix` to study the models for per-source coverage.
 - More to come ...
   + converting the boolean arrays into bit arrays/vectors
   + (optional) including an index to the test-case names. currently only the test-case-ids are listed in the per-source-coverage-matrices.
