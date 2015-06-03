@@ -1,16 +1,12 @@
 package org.spideruci.tacoco.coverage;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.jacoco.core.analysis.ICounter;
-import org.spideruci.tacoco.reporting.data.LineCoverageCoder;
-import org.spideruci.tacoco.reporting.data.LinesStatusCoder;
-import org.spideruci.tacoco.reporting.data.SourceFileCoverage;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class CoverageMatrix2 {
   
@@ -65,16 +61,23 @@ public class CoverageMatrix2 {
     srcCoverage.addStmtCoverage(testIndex, coverage, this.format, findCoverableLines);
   }
   
-  public void dumpMatrix(PrintStream out) {
-    Gson gson = new Gson();
+  public void dumpMatrix(PrintStream out, boolean shouldPrettyPrint) {
+    
     for(SourceFile sourceUnit : sourceFileIndex.keySet()) {
       SourceSpecificCoverageMatrix coverage = sourceFileIndex.get(sourceUnit);
       System.out.println(coverage.getSourceName());
       System.out.println(coverage.getActivatingTestCount());
+      Gson gson;
+      if(shouldPrettyPrint) {
+        gson = new Gson();
+      } else {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setPrettyPrinting();
+        gson = gsonBuilder.create();
+      }
+      
       String json = gson.toJson(coverage);
       out.println(json);
     }
-    
-    
   }
 }

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.jacoco.core.analysis.ICounter;
 import org.spideruci.tacoco.reporting.data.LineCoverageCoder;
 import org.spideruci.tacoco.reporting.data.LinesStatusCoder;
-import org.spideruci.tacoco.reporting.data.SourceFileCoverage;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
 import com.google.gson.Gson;

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -27,8 +28,10 @@ public class CoverageJsonReader {
     if(System.getProperties().containsKey(HELP)) {
       printReaderHelp();
     }
-    
     String jsonFilePath = readArgumentValue(JSON);
+    String outFilePath = 
+        readOptionalArgumentValue(OUT, 
+            jsonFilePath.replaceFirst("\\.json", "") + "-cov-matrix.json");
     File jsonFile = new File(jsonFilePath);
     LineCoverageFormat covFormat = readCoverageFormat(jsonFile);
     InputStreamReader jsonIn = 
@@ -36,7 +39,9 @@ public class CoverageJsonReader {
     JsonReader jsonreader = new JsonReader(jsonIn);
     CoverageJsonReader reader = new CoverageJsonReader(jsonreader);;
     CoverageMatrix2 covMat = reader.read2(covFormat);
-    covMat.dumpMatrix(System.out);
+    
+    boolean shouldPrettyPrint = Boolean.getBoolean(System.getProperty(PP));
+    covMat.dumpMatrix(new PrintStream(new File(outFilePath)), shouldPrettyPrint);
   }
   
   private final JsonReader jsonReader;

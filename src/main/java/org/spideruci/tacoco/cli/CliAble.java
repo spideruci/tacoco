@@ -6,6 +6,7 @@ public interface CliAble {
   public static final String ROOT = "tacoco.root";
   public static final String SUT = "tacoco.sut";
   public static final String JSON = "tacoco.json";
+  public static final String OUT = "tacoco.out";
   public static final String FMT = "tacoco.fmt";
   public static final String PP = "tacoco.pp";
   public static final String EXEC = "tacoco.exec";
@@ -88,7 +89,7 @@ public interface CliAble {
     }
     
     public static void printReaderHelpForMissingArgError(final String arg) {
-      final String errorMessage = arg + " is a required argument.";
+      final String errorMessage = PREFIX + arg + " is a required argument.";
       printReaderHelp(errorMessage);
     }
     
@@ -109,7 +110,9 @@ public interface CliAble {
           "\nTacoco: Coverage Json-file Reader\n"+
           "usage: mvn exec:java -q -Preader [arguments]\n\nArguments:\n" +
               PREFIX + JSON + "=<*.json>  (Required) Absolute-path of per-test coverage file.\n" +
-              PREFIX + HELP + "           Prints this message and exits (with 0).\n";
+              PREFIX + OUT + "=<*.json>   Absolute-path of per-sourcefile coverage matrix.\n" +
+              PREFIX + PP + "             Pretty prints coverage data to json file.\n" +
+              PREFIX + HELP + "           Prints this message and exits (with 0).";
       
       if(error != null) {
         return error + helpMessage; 
@@ -117,9 +120,4 @@ public interface CliAble {
       return helpMessage;
     }
   }
-  
-  
-  
-
-
 }
