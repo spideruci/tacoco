@@ -1,4 +1,4 @@
-package org.spideruci.tacoco.reporting.data;
+package org.spideruci.tacoco.coverage;
 
 public class SourceFile {
   final String fullName;

@@ -9,7 +9,7 @@ public class LinesStatusCoder {
   private final static int SHIFT = 2; 
   private final static int MASK = 0b11;
   
-  int[] encode(Collection<ILine> linesCoverage) {
+  public int[] encode(Collection<ILine> linesCoverage) {
     int lineCount = linesCoverage.size();
     int codeCount = (lineCount / 16) + (lineCount % 16 == 0 ? 0 : 1);
     int[] codedCoverage = new int[codeCount];
@@ -40,7 +40,7 @@ public class LinesStatusCoder {
     return codedCoverage;
   }
   
-  int[] decode(int[] codedCoverage) {
+  public int[] decode(int[] codedCoverage) {
     int statusCount = codedCoverage.length*16;
     int index = statusCount - 1;
     int[] statuses = new int[statusCount];

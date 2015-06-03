@@ -1,9 +1,12 @@
-package org.spideruci.tacoco.reporting.data;
+package org.spideruci.tacoco.coverage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.jacoco.core.analysis.ICounter;
+import org.spideruci.tacoco.reporting.data.LineCoverageCoder;
+import org.spideruci.tacoco.reporting.data.LinesStatusCoder;
+import org.spideruci.tacoco.reporting.data.SourceFileCoverage;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
 import com.google.gson.Gson;
@@ -41,7 +44,7 @@ public class CoverageMatrix {
     Integer testId = testNameIndex.get(testName);
     if(testId != null) {
       return testId;
-    } 
+    }
 
     testNameIndex.put(testName, nextAvailTestId);
     nextAvailTestId += 1;
