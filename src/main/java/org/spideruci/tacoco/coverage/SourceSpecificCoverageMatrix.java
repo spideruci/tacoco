@@ -18,7 +18,7 @@ public class SourceSpecificCoverageMatrix {
     this.source = source;
     activatingTests = new ArrayList<>();
     testStmtMatrix = new ArrayList<>();
-    coverableLines = new boolean[source.lastLine - source.firstLine + 1];
+    coverableLines = new boolean[source.getRealLineCount()];
   }
 
   /**
@@ -86,8 +86,10 @@ public class SourceSpecificCoverageMatrix {
     } else {
       decodedCoverge = decodeCompact(coverage);
     }
-    boolean[] stmts = new boolean[decodedCoverge.length];
-    for(int i = 0; i < decodedCoverge.length; i += 1) {
+    
+    int sourcesize = source.getRealLineCount();
+    boolean[] stmts = new boolean[sourcesize];
+    for(int i = 0; i < sourcesize; i += 1) {
       int coverageStatus = decodedCoverge[i];
       if(coverageStatus== ICounter.FULLY_COVERED
           || coverageStatus == ICounter.PARTLY_COVERED) {

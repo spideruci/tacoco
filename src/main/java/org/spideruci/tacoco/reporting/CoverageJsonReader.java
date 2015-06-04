@@ -40,7 +40,7 @@ public class CoverageJsonReader {
     CoverageJsonReader reader = new CoverageJsonReader(jsonreader);;
     CoverageMatrix2 covMat = reader.read2(covFormat);
     
-    boolean shouldPrettyPrint = Boolean.getBoolean(System.getProperty(PP));
+    boolean shouldPrettyPrint = System.getProperties().containsKey(PP);
     covMat.dumpMatrix(new PrintStream(new File(outFilePath)), shouldPrettyPrint);
   }
   

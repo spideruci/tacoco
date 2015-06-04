@@ -62,22 +62,27 @@ public class CoverageMatrix2 {
   }
   
   public void dumpMatrix(PrintStream out, boolean shouldPrettyPrint) {
-    
+    out.print('[');
+    int totalSourceUnits = sourceFileIndex.keySet().size();
+    int count = 0;
     for(SourceFile sourceUnit : sourceFileIndex.keySet()) {
       SourceSpecificCoverageMatrix coverage = sourceFileIndex.get(sourceUnit);
       System.out.println(coverage.getSourceName());
       System.out.println(coverage.getActivatingTestCount());
       Gson gson;
       if(shouldPrettyPrint) {
-        gson = new Gson();
-      } else {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
         gson = gsonBuilder.create();
+      } else {
+        gson = new Gson();
       }
       
       String json = gson.toJson(coverage);
-      out.println(json);
+      out.print(json);
+      count += 1;
+      if(count < totalSourceUnits) out.println(',');
     }
+    out.print(']');
   }
 }

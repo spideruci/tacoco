@@ -11,6 +11,14 @@ public class SourceFile {
     this.lastLine = lastLine;
   }
   
+  public int getLineCount() {
+    return lastLine;
+  }
+  
+  public int getRealLineCount() {
+    return lastLine - firstLine + 1; 
+  }
+  
   public String getFullName() {
     return this.fullName;
   }
@@ -38,6 +46,8 @@ public class SourceFile {
     
     return false;
   }
+  
+  
 
   /**
    * @return the firstLine
