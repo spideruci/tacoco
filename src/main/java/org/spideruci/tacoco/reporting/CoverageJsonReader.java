@@ -188,7 +188,7 @@ public class CoverageJsonReader {
           }
         }
         
-        String filename = sourcefile.getPackageName() + sourcefile.getFileName();
+        String filename = sourcefile.getPackageName() + "/" + sourcefile.getFileName();
         int firstLine = sourcefile.getFirstLine();
         int lastLine = sourcefile.getLastLine();
         SourceFile source = new SourceFile(filename, firstLine, lastLine);

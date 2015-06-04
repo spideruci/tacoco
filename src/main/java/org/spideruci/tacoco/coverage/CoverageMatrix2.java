@@ -62,13 +62,14 @@ public class CoverageMatrix2 {
       testCases[index] = testCaseName;
     }
     
-    Gson gjson = getGson(shouldPrettyPrint);
-    String testCasesJson = gjson.toJson(testCases);
-    gjson = null;
+    Gson testGson = getGson(shouldPrettyPrint);
+    String testCasesJson = testGson.toJson(testCases);
+    testGson = null;
     
     out.print('{');
-    out.println("\"testsIndex\":" + testCasesJson + ",");
     out.println("\"testCount\":" + testCount + ",");
+    out.println("\"testsIndex\":" + testCasesJson + ",");
+    
     out.print("\"sources\":[");
     int totalSourceUnits = sourceFileIndex.keySet().size();
     int count = 0;
