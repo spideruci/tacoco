@@ -13,7 +13,6 @@ public class CoverageMatrix2 {
   private final HashMap<String, Integer> testNameIndex;
   private final HashMap<SourceFile, SourceSpecificCoverageMatrix> sourceFileIndex;
   private final LineCoverageFormat format;
-  private int testCount;
   
   public CoverageMatrix2(LineCoverageFormat fmt) {
     testNameIndex = new HashMap<>();
@@ -40,14 +39,6 @@ public class CoverageMatrix2 {
     return format;
   }
   
-  public void setTestCount(int testCount) {
-    this.testCount = testCount;
-  }
-  
-  public int getTestCount() {
-    return testCount;
-  }
-  
   public void addStmtCoverage(SourceFile source, String testName, int[] coverage) {
     SourceSpecificCoverageMatrix srcCoverage = sourceFileIndex.get(source);
     boolean findCoverableLines = false;
@@ -62,27 +53,48 @@ public class CoverageMatrix2 {
   }
   
   public void dumpMatrix(PrintStream out, boolean shouldPrettyPrint) {
-    out.print('[');
+    int testCount = this.testNameIndex.size();
+    String[] testCases = new String[testCount];
+    
+    for(String testCaseName : testNameIndex.keySet()) {
+      if(testCaseName == null || testCaseName.isEmpty()) continue;
+      int index = testNameIndex.get(testCaseName);
+      testCases[index] = testCaseName;
+    }
+    
+    Gson gjson = getGson(shouldPrettyPrint);
+    String testCasesJson = gjson.toJson(testCases);
+    gjson = null;
+    
+    out.print('{');
+    out.println("\"testsIndex\":" + testCasesJson + ",");
+    out.println("\"testCount\":" + testCount + ",");
+    out.print("\"sources\":[");
     int totalSourceUnits = sourceFileIndex.keySet().size();
     int count = 0;
     for(SourceFile sourceUnit : sourceFileIndex.keySet()) {
       SourceSpecificCoverageMatrix coverage = sourceFileIndex.get(sourceUnit);
       System.out.println(coverage.getSourceName());
       System.out.println(coverage.getActivatingTestCount());
+      Gson gson = getGson(shouldPrettyPrint);
+      String json = gson.toJson(coverage);
+      gson = null;
+      out.print(json);
+      count += 1;
+      if(count < totalSourceUnits) out.println(',');
+    }
+    out.print("]}");
+  }
+  
+    private Gson getGson(boolean isPretty) {
       Gson gson;
-      if(shouldPrettyPrint) {
+      if(isPretty) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
         gson = gsonBuilder.create();
       } else {
         gson = new Gson();
       }
-      
-      String json = gson.toJson(coverage);
-      out.print(json);
-      count += 1;
-      if(count < totalSourceUnits) out.println(',');
+      return gson;
     }
-    out.print(']');
-  }
 }
