@@ -11,7 +11,7 @@
 
 * Get fresh tacoco
 ~~~
-  git clone https://github.com/inf295uci-2015/tacoco
+  git clone https://github.com/spideruci/tacoco
   mvn compile
 ~~~
 * Run tacoco 
