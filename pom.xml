@@ -48,6 +48,18 @@
 			<artifactId>primitive-hamcrest</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-model</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>3.0.21</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -79,6 +91,17 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+				    <parallel>methods</parallel>
+				    <useUnlimitedThreads>true</useUnlimitedThreads>
+				</configuration>
+			</plugin>
+			-->
 		</plugins>
 	</build>
 
