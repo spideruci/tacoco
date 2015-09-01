@@ -11,6 +11,11 @@ public interface CliAble {
   public static final String PP = "tacoco.pp";
   public static final String EXEC = "tacoco.exec";
   
+  //parallel execution mode: none(default), class, method, both
+  public static final String PM = "tacoco.pm";
+  //log level: off(default), on
+  public static final String LOG = "tacoco.log";
+  
   static final String PREFIX = "-D";
   
   public static class AnalyzerCli implements CliAble {
