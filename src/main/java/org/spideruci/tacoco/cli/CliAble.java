@@ -15,6 +15,8 @@ public interface CliAble {
   public static final String PM = "tacoco.pm";
   //log level: off(default), on
   public static final String LOG = "tacoco.log";
+  public static final String TARGET = "tacoco.target";
+  public static final String HOME = "tacoco.home";
   
   static final String PREFIX = "-D";
   

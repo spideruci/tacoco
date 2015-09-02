@@ -10,12 +10,12 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
 
-public class TacocoListener extends RunListener
+public class JUnitListener extends RunListener
 {
 	private IAgent agent;
 	private boolean log=false;
 	
-	public TacocoListener(){
+	public JUnitListener(){
 		if(readOptionalArgumentValue(LOG,"off").equals("on")) log=true;	
 	}
 	
