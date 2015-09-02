@@ -52,7 +52,7 @@ public class CoverageJsonReader {
     this.gson = new Gson();
   }
   
-  public static LineCoverageFormat readCoverageFormat(final File file) 
+  public static LineCoverageFormat readCoverageFormat(final File file)
       throws IOException {
     InputStreamReader jsonIn = new InputStreamReader(new FileInputStream(file));
     JsonReader jsonReader = new JsonReader(jsonIn);
@@ -63,7 +63,7 @@ public class CoverageJsonReader {
     sourceFileCoverage = gson.fromJson(jsonReader, SourceFileCoverage.class);
     jsonReader.close();
     return sourceFileCoverage.getFormat();
-  } 
+  }
   
   public void startReading() throws IOException {
     jsonReader.beginArray();
