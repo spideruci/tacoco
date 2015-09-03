@@ -28,7 +28,6 @@ public final class JUnitRunner {
 		core.addListener(listener);
 		
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(targetDir);
-		
 		ArrayList<String> klasses = probe.getClasses();
 		Class<?>[] cls = new Class<?>[klasses.size()];
 		int i=0;
