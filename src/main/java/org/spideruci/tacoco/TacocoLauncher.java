@@ -35,6 +35,7 @@ public class TacocoLauncher {
 				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false",
 				"-Dtacoco.home="+tacocoHome,
 				"-Dtacoco.target="+targetDir,
+				"-Dtacoco.log=off",
 				"org.spideruci.tacoco.JUnitRunner").inheritIO();
 		builder.directory(new File(targetDir));
 		try{

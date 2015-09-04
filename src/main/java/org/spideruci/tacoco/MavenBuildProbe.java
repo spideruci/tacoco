@@ -72,7 +72,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		node = dom.getChild("excludes");
 		if(node != null){
 			for(Xpp3Dom n : node.getChildren("exclude"))
-				excludes.add(n.getValue());
+				excludes.add(n.getValue().replace("**/", "").replaceAll("\\.java", ""));
 		}
 	}
 	
@@ -81,10 +81,10 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		if(includes.size() == 0 && excludes.size() ==0) return true;
 		
 		for(String in : includes){
-			if(file.toString().matches(in)) return true;
+			if(file.toString().matches(".*"+in+".class")) return true;
 		}
 		for(String ex : excludes){
-			if(file.toString().matches(ex)) return false;
+			if(file.toString().matches(".*"+ex+".class")) return false;
 		}
 		return false;
 	}

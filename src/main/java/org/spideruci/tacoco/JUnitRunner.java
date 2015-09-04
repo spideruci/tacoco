@@ -66,6 +66,15 @@ public final class JUnitRunner {
 		System.out.println("Parallel Mode:" + pm);
 		System.out.println("-------------------------------------------------");
 		
-		if(log) System.out.println(failures);	
+		if(failures.size()!=0) {
+			System.out.println("---------------------Failures--------------------");
+			for(Failure f: failures){
+				System.out.println("Header: " + f.getTestHeader());
+				System.out.println("Message: " + f.getMessage());
+				System.out.println("Description: " + f.getDescription());
+				System.out.println("");
+				
+			}
+		}
 	}
 }
