@@ -15,9 +15,9 @@ public class AntBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public String getBuilderName() {
+	public BuilderType getBuilderType() {
 		// TODO Auto-generated method stub
-		return "ANT";
+		return BuilderType.ANT;
 	}
 
 	@Override

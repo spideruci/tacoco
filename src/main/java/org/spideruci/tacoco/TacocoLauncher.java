@@ -29,6 +29,9 @@ public class TacocoLauncher {
 
 	
 	private void startJUnitRunner(String classpath) {
+		
+		System.out.println(classpath);
+		
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,

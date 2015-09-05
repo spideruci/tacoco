@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class AbstractBuildProbe {
 	
-	private static enum builder {MAVEN, ANT, GRADLE, TBD};
+	public static enum BuilderType {MAVEN, ANT, GRADLE, TBD};
 	private static AbstractBuildProbe instance = null;
 	
 	public final static AbstractBuildProbe getInstance(String AbsolutTargetPath){
@@ -26,15 +26,15 @@ public abstract class AbstractBuildProbe {
 		return instance;
 	}
 	
-	private final static builder detectBuilder(String AbsolutTargetPath){
+	private final static BuilderType detectBuilder(String AbsolutTargetPath){
 		
-		if(new File(AbsolutTargetPath, "pom.xml").exists()) return builder.MAVEN;
-		else if(new File(AbsolutTargetPath, "build.xml").exists()) return builder.ANT;
-		else if(new File(AbsolutTargetPath, "build.gradle").exists()) return builder.GRADLE;
-		return builder.TBD;
+		if(new File(AbsolutTargetPath, "pom.xml").exists()) return BuilderType.MAVEN;
+		else if(new File(AbsolutTargetPath, "build.xml").exists()) return BuilderType.ANT;
+		else if(new File(AbsolutTargetPath, "build.gradle").exists()) return BuilderType.GRADLE;
+		return BuilderType.TBD;
 	}
 	
 	public abstract ArrayList<String> getClasses();
-	public abstract String getBuilderName();
+	public abstract BuilderType getBuilderType();
 	public abstract String getClasspath() throws Exception;
 }

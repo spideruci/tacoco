@@ -90,8 +90,8 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public String getBuilderName() {
-		return "MAVEN";
+	public BuilderType getBuilderType() {
+		return BuilderType.MAVEN;
 	}
 
 	@Override

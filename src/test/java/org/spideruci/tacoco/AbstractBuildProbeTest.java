@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.spideruci.tacoco.AbstractBuildProbe.BuilderType;
 
 @RunWith(Parameterized.class)
 public class AbstractBuildProbeTest {
@@ -22,19 +23,19 @@ public class AbstractBuildProbeTest {
 	
 	//Parameters
 	private String confFileName;
-	private String builderName;
+	private BuilderType builderName;
 	
-	public AbstractBuildProbeTest(String confFileName, String builderName) {
+	public AbstractBuildProbeTest(String confFileName, BuilderType builderName) {
 		this.confFileName = confFileName;
 		this.builderName = builderName;
 	}
 	
 	@Parameters
-	public static Collection<String[]> builders() {
-	        return Arrays.asList(new String[][]{
-	        	{"pom.xml","MAVEN"},
-	        	{"build.xml","ANT"},
-	        	{"build.gradle","GRADLE"}
+	public static Collection<Object[]> builders() {
+	        return Arrays.asList(new Object[][]{
+	        	{"pom.xml",BuilderType.MAVEN},
+	        	{"build.xml",BuilderType.ANT},
+	        	{"build.gradle",BuilderType.GRADLE}
 	        	});
 	}
 
@@ -51,7 +52,7 @@ public class AbstractBuildProbeTest {
 	@Test
 	public void getInstanceTest() throws IOException{
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(testDir.getAbsolutePath());
-		assertEquals(probe.getBuilderName(),(builderName));
+		assertEquals(probe.getBuilderType(),(builderName));
 	}
 
 	@After
