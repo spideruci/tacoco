@@ -16,18 +16,7 @@
 ~~~
 * Run tacoco 
 ~~~
-cd /to/your/project/root
-mvn test
-mvn dependency:build-classpath -Dmdep.outputFile=cp.txt
-export CLASSPATH=`cat cp.txt`:$CLASSPATH
-export CLASSPATH={your project absolute path}/target/test-classes:{your project absolute path}/target/classes:$CLASSPATH
-
-cd /to/tacoco/project/root
-mvn dependency:build-classpath -Dmdep.outputFile=cp.txt
-export CLASSPATH=`cat cp.txt`:$CLASSPATH
-export CLASSPATH={tacoco project absolute path}/target/test-classes:{tacoco project absolute path}/target/classes:$CLASSPATH
-mvn dependency:copy-dependencies -DoutputDirectory=lib
-java -javaagent:lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false org.spideruci.tacoco.TacocoRunner {your project absolute path}/target/test-classes
+java org.spideruci.tacoco.TacocoLauncher -Dtacoco.target=/abolute/path/of/target/root -Dtacoco.home=absolute/path/of/tacoco/root
 ~~~
 * Alternatively use the `export-sut-cp` to Run tacoco
 ~~~
