@@ -16,7 +16,7 @@
 ~~~
 * Run tacoco 
 ~~~
-java tacocoLauncher -Dtacoco.target=/abolute/path/of/target/root -Dtacoco.home=absolute/path/of/tacoco/root
+java org.spideruci.tacoco.TacocoLauncher -Dtacoco.target=/abolute/path/of/target/root -Dtacoco.home=absolute/path/of/tacoco/root
 ~~~
 * Alternatively use the `export-sut-cp` to Run tacoco
 ~~~
