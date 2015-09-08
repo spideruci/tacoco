@@ -58,3 +58,4 @@ local.properties
 .texlipse
 
 cp.txt
+lib/*
