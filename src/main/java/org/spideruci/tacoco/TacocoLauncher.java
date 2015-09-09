@@ -3,10 +3,13 @@ package org.spideruci.tacoco;
 import static org.spideruci.tacoco.cli.CliAble.HOME;
 import static org.spideruci.tacoco.cli.CliAble.TARGET;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import org.spideruci.tacoco.AbstractBuildProbe.Child;
 
 public class TacocoLauncher {
 
@@ -20,25 +23,30 @@ public class TacocoLauncher {
 
 	public static void main(String[] args) throws Exception{
 
-		TacocoLauncher launcher = new TacocoLauncher(readArgumentValue(HOME),readArgumentValue(TARGET));
+		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME,System.getProperty("user.dir"))
+													,readArgumentValue(TARGET));
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
-		String classpath = probe.getClasspath() +":"+ launcher.getTacocoClasspath();
 		launcher.setTacocoEnv();
-		launcher.startJUnitRunner(classpath);
+		String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath(); 
+
+		if(probe.hasChild()){	
+			for(Child child : probe.getChildren())
+				launcher.startJUnitRunner(child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
+		}
+		launcher.startJUnitRunner(parentCP, launcher.targetDir, null);
 	}
 
 	
-	private void startJUnitRunner(String classpath) {
-		
-		System.out.println(classpath);
+	private void startJUnitRunner(String classpath, String targetDir, String[] jvmArgs) {
 		
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,
-				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false",
-				"-Dtacoco.home="+tacocoHome,
+				//"-Xmx1536M", "-Duser.language=hi", "-Duser.country=IN",
+				//"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false",
 				"-Dtacoco.target="+targetDir,
 				"-Dtacoco.log=off",
+				//"-Dtacoco.pm=classes",
 				"org.spideruci.tacoco.JUnitRunner").inheritIO();
 		builder.directory(new File(targetDir));
 		try{

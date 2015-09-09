@@ -1,6 +1,7 @@
 package org.spideruci.tacoco;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AntBuildProbe extends AbstractBuildProbe {
 
@@ -21,7 +22,19 @@ public class AntBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public String getClasspath() throws Exception {
+	public String getClasspath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasChild() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Child> getChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
