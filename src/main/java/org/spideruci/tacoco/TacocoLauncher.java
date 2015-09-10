@@ -29,9 +29,12 @@ public class TacocoLauncher {
 		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath(); 
 
+		int i=0;
 		if(probe.hasChild()){	
-			for(Child child : probe.getChildren())
+			for(Child child : probe.getChildren()){
+				if(++i==4)
 				launcher.startJUnitRunner(child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
+			}
 		}
 		launcher.startJUnitRunner(parentCP, launcher.targetDir, null);
 	}
@@ -42,13 +45,14 @@ public class TacocoLauncher {
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,
-				//"-Xmx1536M", "-Duser.language=hi", "-Duser.country=IN",
+				"-Xmx1536M",// -Duser.language=hi -Duser.country=IN",
 				//"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false",
 				"-Dtacoco.target="+targetDir,
 				"-Dtacoco.log=off",
 				//"-Dtacoco.pm=classes",
-				"org.spideruci.tacoco.JUnitRunner").inheritIO();
+				"org.spideruci.tacoco.JUnitRunner");
 		builder.directory(new File(targetDir));
+		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		try{
 			Process p = builder.start();
 			p.waitFor();

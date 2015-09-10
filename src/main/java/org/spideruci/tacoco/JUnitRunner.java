@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.experimental.ParallelComputer;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -34,7 +35,8 @@ public final class JUnitRunner extends Thread{
 	public void run() {
     	try {
 			System.out.println("Starting "+testClass);
-			Result result = core.run(Class.forName(testClass));
+			
+			Result result = core.run(new ParallelComputer(true, false), Class.forName(testClass));
 			
 			runTime=result.getRunTime()/1000.0;
 			runCnt=result.getRunCount();
@@ -47,7 +49,7 @@ public final class JUnitRunner extends Thread{
 								+" Errors: 0"   //TBD
 								+" Skipped: "+ignoreCnt
 								+" Time elapsed: "+ runTime +"sec");
-			if(false && result.getFailureCount() !=0) {
+			if(result.getFailureCount() !=0) {
 				System.out.println("---------------------Failures--------------------");
 				for(Failure f: result.getFailures()){
 					System.out.println("Header: " + f.getTestHeader());
@@ -55,7 +57,9 @@ public final class JUnitRunner extends Thread{
 					System.out.println("Description: " + f.getDescription());
 					System.out.println("Header: "+f.getTestHeader());
 					System.out.println("Trace: "+f.getTrace());	
-				}	
+				}
+				//System.exit(0);
+				//currentThread().interrupt();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,20 +84,28 @@ public final class JUnitRunner extends Thread{
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(targetDir);
 		List<String> klasses = probe.getClasses();
 		
-		ExecutorService threadPool = Executors.newFixedThreadPool(10);
 		List<JUnitRunner> runners = new ArrayList<>();
+		
+		
+		ExecutorService threadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		for(String testClass : klasses){
+			if(!testClass.matches(".*com.google.common.cache.CacheLoadingTest")) continue;
 			JUnitRunner r = new JUnitRunner(testClass);
 			threadPool.submit(r);
 			runners.add(r);
 		}
+		//threadPool.
 		threadPool.shutdown();
+		
 		
 		try {
 			threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
+				
+		
 		
 		double rTime=0;
 		int rCnt=0, fCnt=0, iCnt=0;

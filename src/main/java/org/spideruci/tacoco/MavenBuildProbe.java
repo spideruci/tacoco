@@ -125,7 +125,6 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		classpath = new String(Files.readAllBytes(Paths.get(targetDir,"tacoco.cp")))
 				+":"+ targetDir + "/target/test-classes"
 				+":"+ targetDir + "/target/classes";
-				//+":"+ "/Users/bada/git/test/guava/guava/target/classes"; //TBD
 		}catch(Exception e){
 			e.printStackTrace();
 		}
