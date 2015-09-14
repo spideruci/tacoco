@@ -73,7 +73,7 @@ public class TacocoLauncher {
 		if(tacocoClasspath != null) return tacocoClasspath;
 		if(!new File(tacocoHome+"/cp.txt").exists()) {
 			ProcessBuilder builder = new ProcessBuilder(
-					"/usr/local/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=cp.txt").inheritIO();
+					"/usr/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=cp.txt").inheritIO();
 			builder.directory(new File(tacocoHome));
 			Process p = builder.start();
 			p.waitFor();
@@ -87,7 +87,7 @@ public class TacocoLauncher {
 	 */
 	private void setTacocoEnv() {
 		if(new File(tacocoHome+"/lib").exists()) return;
-		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
+		ProcessBuilder builder = new ProcessBuilder("/usr/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
 		builder.directory(new File(tacocoHome));
 		try{
 			Process p = builder.start();

@@ -117,7 +117,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		if(classpath != null) return classpath;
 		if(!new File(targetDir+"/tacoco.cp").exists()) {
 			ProcessBuilder builder = new ProcessBuilder(
-					"/usr/local/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=tacoco.cp").inheritIO();
+					"/usr/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=tacoco.cp").inheritIO();
 			builder.directory(new File(targetDir));
 			Process p = builder.start();
 			p.waitFor();
