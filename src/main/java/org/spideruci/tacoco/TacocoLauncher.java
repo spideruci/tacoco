@@ -45,16 +45,23 @@ public class TacocoLauncher {
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,
-				"-Xmx1536M",// -Duser.language=hi -Duser.country=IN",
-				//"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false",
+				"-Xmx1536M",// "-Duser.language=hi", "-Duser.country=IN",
+				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false",
 				"-Dtacoco.target="+targetDir,
-				"-Dtacoco.log=off",
-				//"-Dtacoco.pm=classes",
-				"org.spideruci.tacoco.JUnitRunner");
+				"-Dtacoco.log=on",
+				"-Dtacoco.thread="+1,
+				"org.spideruci.tacoco.JUnitRunner");//.inheritIO();
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+		builder.redirectError(new File("tacoco.err"));
+		final Process p;
 		try{
-			Process p = builder.start();
+			p= builder.start();
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+			    public void run() {
+			        p.destroy();
+			    }
+			}); 
 			p.waitFor();
 		}catch(Exception e){
 			e.printStackTrace();

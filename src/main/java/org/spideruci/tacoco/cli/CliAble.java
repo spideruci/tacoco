@@ -13,6 +13,8 @@ public interface CliAble {
   
   //parallel execution mode: none(default), class, method, both
   public static final String PM = "tacoco.pm";
+  public static final String THREAD = "tacoco.thread";
+  
   //log level: off(default), on
   public static final String LOG = "tacoco.log";
   public static final String TARGET = "tacoco.target";
