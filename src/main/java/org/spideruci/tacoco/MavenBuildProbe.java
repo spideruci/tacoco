@@ -88,7 +88,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 			for(Xpp3Dom n : node.getChildren("exclude"))
 				excludes.add(n.getValue().replace("**/", "").replaceAll("\\.java", ""));
 		}
-		includes.add("Test");
+		System.out.println("----------------Filters");
 		System.out.println("----------------includes"+includes);
 		System.out.println("----------------excludes"+excludes);
 	}
@@ -117,7 +117,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		if(classpath != null) return classpath;
 		if(!new File(targetDir+"/tacoco.cp").exists()) {
 			ProcessBuilder builder = new ProcessBuilder(
-					"/usr/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=tacoco.cp").inheritIO();
+					"mvn","dependency:build-classpath","-Dmdep.outputFile=tacoco.cp").inheritIO();
 			builder.directory(new File(targetDir));
 			Process p = builder.start();
 			p.waitFor();
@@ -142,8 +142,13 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		for(String s: getModel().getModules()){
 			String childDir=targetDir+"/"+s;
 			MavenBuildProbe p = new MavenBuildProbe(childDir);
-			list.add(new Child(p.getClasspath(), childDir, null));
+			list.add(new Child(p.getId(), p.getClasspath(), childDir, null));
 		}
 		return list;
+	}
+
+	@Override
+	public String getId() {
+		return getModel().getArtifactId();
 	}
 }

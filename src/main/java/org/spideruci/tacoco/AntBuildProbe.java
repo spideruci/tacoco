@@ -39,4 +39,10 @@ public class AntBuildProbe extends AbstractBuildProbe {
 		return null;
 	}
 
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

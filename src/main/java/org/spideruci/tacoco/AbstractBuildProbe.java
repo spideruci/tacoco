@@ -6,11 +6,13 @@ import java.util.List;
 public abstract class AbstractBuildProbe {
 	
 	public class Child{
+		public String id;
 		public String classpath;
 		public String targetDir;
 		public String[] jvmArgs;
 		
-		public Child(String cp, String dir, String[] args){
+		public Child(String name, String cp, String dir, String[] args){
+			id = name;
 			classpath=cp;
 			targetDir=dir;
 			jvmArgs=args;
@@ -50,4 +52,5 @@ public abstract class AbstractBuildProbe {
 	public abstract String getClasspath();
 	public abstract boolean hasChild();
 	public abstract List<Child> getChildren();
+	public abstract String getId();
 }

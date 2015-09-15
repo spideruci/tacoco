@@ -2,6 +2,7 @@ package org.spideruci.tacoco;
 
 import static org.spideruci.tacoco.cli.CliAble.HOME;
 import static org.spideruci.tacoco.cli.CliAble.TARGET;
+import static org.spideruci.tacoco.cli.CliAble.OUTDIR;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
 
@@ -26,6 +27,7 @@ public class TacocoLauncher {
 		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME,System.getProperty("user.dir"))
 													,readArgumentValue(TARGET));
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
+		
 		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath(); 
 
@@ -33,27 +35,43 @@ public class TacocoLauncher {
 		if(probe.hasChild()){	
 			for(Child child : probe.getChildren()){
 				if(++i==4)
-				launcher.startJUnitRunner(child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
+				launcher.startJUnitRunner(child.id, child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
 			}
 		}
-		launcher.startJUnitRunner(parentCP, launcher.targetDir, null);
+		launcher.startJUnitRunner(probe.getId(), parentCP, launcher.targetDir, null);
 	}
 
 	
-	private void startJUnitRunner(String classpath, String targetDir, String[] jvmArgs) {
+	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs) {
+		
+		String outdir = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output");
+		
+		if(!new File(outdir).exists()) new File(outdir).mkdirs();
+		
+		//delete files before execution, 
+		File exec = new File(outdir, id+".exec");
+		File err = new File(outdir, id+".err");
+		File log = new File(outdir, id+".log");
+		if(exec.exists()) exec.delete();
+		if(err.exists()) err.delete();
+		if(log.exists()) log.delete();
+		
 		
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,
 				"-Xmx1536M",// "-Duser.language=hi", "-Duser.country=IN",
-				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false",
+				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile="+outdir+"/"+id+".exec,dumponexit=false",
 				"-Dtacoco.target="+targetDir,
-				"-Dtacoco.log=on",
+				"-Dtacoco.output="+outdir,
+				"-Dtacoco.log=off",
 				"-Dtacoco.thread="+1,
 				"org.spideruci.tacoco.JUnitRunner");//.inheritIO();
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-		builder.redirectError(new File("tacoco.err"));
+		builder.redirectError(err);
+		builder.redirectOutput(log);
+		
 		final Process p;
 		try{
 			p= builder.start();
