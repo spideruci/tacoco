@@ -68,7 +68,7 @@ public class TacocoLauncher {
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		builder.redirectError(err);
-		//builder.redirectOutput(log);
+		builder.redirectOutput(log);
 		
 		final Process p;
 		try{

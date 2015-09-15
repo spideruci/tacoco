@@ -81,12 +81,12 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		if(dom !=null) node = dom.getChild("includes");
 		if(node != null){
 			for(Xpp3Dom n : node.getChildren("include"))
-				includes.add(n.getValue().replace("**/", "").replaceAll("\\.java", ""));
+				includes.add(n.getValue().replace("**/", "").replace("*", "").replaceAll("\\.java", ""));
 		}
 		if(dom !=null) node = dom.getChild("excludes");
 		if(node != null){
 			for(Xpp3Dom n : node.getChildren("exclude"))
-				excludes.add(n.getValue().replace("**/", "").replaceAll("\\.java", ""));
+				excludes.add(n.getValue().replace("**/", "").replace("*", "").replaceAll("\\.java", ""));
 		}
 		System.out.println("----------------Filters");
 		System.out.println("----------------includes"+includes);
