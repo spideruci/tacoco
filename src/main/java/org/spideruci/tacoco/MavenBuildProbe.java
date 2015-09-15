@@ -149,6 +149,9 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public String getId() {
-		return getModel().getGroupId() +"."+getModel().getName();
+		String id = getModel().getName();
+		String group = getModel().getGroupId();
+		if(group != null) id = group + "." + id;
+		return id;
 	}
 }

@@ -31,10 +31,8 @@ public class TacocoLauncher {
 		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath(); 
 
-		int i=0;
 		if(probe.hasChild()){	
 			for(Child child : probe.getChildren()){
-				if(++i==4)
 				launcher.startJUnitRunner(child.id, child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
 			}
 		}
@@ -70,7 +68,7 @@ public class TacocoLauncher {
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		builder.redirectError(err);
-		builder.redirectOutput(log);
+		//builder.redirectOutput(log);
 		
 		final Process p;
 		try{
