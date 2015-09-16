@@ -72,11 +72,14 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		includes = new ArrayList<>();
 		excludes = new ArrayList<>();
 
-		for(Plugin p : getModel().getBuild().getPlugins()){
-			if(p.getKey().equals("org.apache.maven.plugins:maven-surefire-plugin")){
-				dom = (Xpp3Dom) p.getConfiguration();
+		if(getModel().getBuild() != null){
+			for(Plugin p : getModel().getBuild().getPlugins()){
+				if(p.getKey().equals("org.apache.maven.plugins:maven-surefire-plugin")){
+					dom = (Xpp3Dom) p.getConfiguration();
+				}
 			}
 		}
+		
 		Xpp3Dom node = null;
 		if(dom !=null) node = dom.getChild("includes");
 		if(node != null){
@@ -88,6 +91,9 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 			for(Xpp3Dom n : node.getChildren("exclude"))
 				excludes.add(n.getValue().replace("**/", "").replace("*", "").replaceAll("\\.java", ""));
 		}
+		//add default filter
+		if(includes.size()==0) includes.add("Test");
+		
 		System.out.println("----------------Filters");
 		System.out.println("----------------includes"+includes);
 		System.out.println("----------------excludes"+excludes);
