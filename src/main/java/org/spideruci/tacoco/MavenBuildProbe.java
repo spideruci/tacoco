@@ -145,13 +145,17 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	@Override
 	public List<Child> getChildren() {
 		List<Child> list = new ArrayList<>();
-		for(String s: getModel().getModules()){
-			if(s.endsWith(".xml")) continue;
-			String childDir=targetDir+"/"+s;
+		for(String module: getModel().getModules()){
+			if(moduleSharesParentTarget(module)) continue;
+			String childDir=targetDir+"/"+module;
 			MavenBuildProbe p = new MavenBuildProbe(childDir);
 			list.add(new Child(p.getId(), p.getClasspath(), childDir, null));
 		}
 		return list;
+	}
+	
+	private boolean moduleSharesParentTarget(String module) {
+	  return module.endsWith(".xml");
 	}
 
 	@Override
