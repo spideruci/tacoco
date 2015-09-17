@@ -7,13 +7,21 @@ import org.jacoco.agent.rt.IAgent;
 import org.jacoco.agent.rt.RT;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
 
 public class JUnitListener extends RunListener
 {
+	@Override
+	public void testFailure(Failure failure) throws Exception {
+		System.out.println(agent.getSessionId()+"_tacocoFail");
+		agent.setSessionId(agent.getSessionId()+"_tacocoFail");
+		super.testFailure(failure);
+	}
+
 	private IAgent agent;
-	private boolean log=false;
+	private boolean log=true;
 	
 	public JUnitListener(){
 		if(readOptionalArgumentValue(LOG,"off").equals("on")) log=true;	
@@ -28,7 +36,7 @@ public class JUnitListener extends RunListener
 	{
 		agent.setSessionId("end");
 	}
-
+	
 	public void testStarted(Description description)
 	{
 		if(log) System.out.println("Setting sessionId to "+description.getDisplayName());
