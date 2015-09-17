@@ -10,6 +10,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GradleBuildProbe extends AbstractBuildProbe {
 
@@ -51,11 +52,15 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public String getClasspath() throws Exception {
+	public String getClasspath() {
 		if(classpath != null) return classpath;
 
+		try{
 		if(!new File(targetDir+"/tacoco.cp").exists()) runGradleTaskForTacoco();
 		classpath = new String(Files.readAllBytes(Paths.get(targetDir+"/tacoco.cp")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return classpath;
 	}
 
@@ -77,5 +82,23 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 		builder.directory(new File(targetDir));
 		Process p = builder.start();
 		p.waitFor();	
+	}
+
+	@Override
+	public boolean hasChild() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Child> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
