@@ -175,6 +175,38 @@ public class TestLinesStatusCoder {
   }
 
   @Test
+  public void shouldDecode5LineStatusesToOriginalStatusesWithNoTrailingZeros() {
+    //given
+    int numberOfLines = 5; int index = 0;
+    int[] originalStatuses = new int[numberOfLines];
+    //and
+    Collection<ILine> linesCoverage = mockLinesCoverage(numberOfLines);
+    //and
+    for(ILine lineCoverage : linesCoverage) {
+      originalStatuses[index] = lineCoverage.getStatus();
+      index += 1;
+    }
+    //and
+    LinesStatusCoder coder = new LinesStatusCoder();
+
+    //when
+    int[] codes = coder.encode(linesCoverage);
+    //and
+    int[] actualStatuses = coder.decode(codes, numberOfLines);
+    //and
+    int[] truncatedActualStatuses = Arrays.copyOf(actualStatuses, numberOfLines);
+    //and
+    int[] trailingStatuses = Arrays.copyOfRange(actualStatuses, numberOfLines, actualStatuses.length);
+
+    //then
+    assertArrayEquals(originalStatuses, truncatedActualStatuses);
+    //and
+    assertEquals(actualStatuses.length - numberOfLines, trailingStatuses.length);
+    //and
+    assertEquals(0, trailingStatuses.length);
+  }
+  
+  @Test
   public void shouldDecode15LineStatusesToOriginalStatusesAndOneTrailingZero() {
     //given
     int numberOfLines = 15;
@@ -210,6 +242,38 @@ public class TestLinesStatusCoder {
     assertThat(trailingStatuses, hasInt(not(1)));
     assertThat(trailingStatuses, hasInt(not(2)));
     assertThat(trailingStatuses, hasInt(not(3)));
+  }
+  
+  @Test
+  public void shouldDecode15LineStatusesToOriginalStatusesWithNoTrailingZeros() {
+    //given
+    int numberOfLines = 15; int index = 0;
+    int[] originalStatuses = new int[numberOfLines];
+    //and
+    Collection<ILine> linesCoverage = mockLinesCoverage(numberOfLines);
+    //and
+    for(ILine lineCoverage : linesCoverage) {
+      originalStatuses[index] = lineCoverage.getStatus();
+      index += 1;
+    }
+    //and
+    LinesStatusCoder coder = new LinesStatusCoder();
+
+    //when
+    int[] codes = coder.encode(linesCoverage);
+    //and
+    int[] actualStatuses = coder.decode(codes, numberOfLines);
+    //and
+    int[] truncatedActualStatuses = Arrays.copyOf(actualStatuses, numberOfLines);
+    //and
+    int[] trailingStatuses = Arrays.copyOfRange(actualStatuses, numberOfLines, actualStatuses.length);
+
+    //then
+    assertArrayEquals(originalStatuses, truncatedActualStatuses);
+    //and
+    assertEquals(actualStatuses.length - numberOfLines, trailingStatuses.length);
+    //and
+    assertEquals(0, trailingStatuses.length);
   }
   
   @Test
@@ -280,6 +344,38 @@ public class TestLinesStatusCoder {
     assertThat(trailingStatuses, hasInt(not(1)));
     assertThat(trailingStatuses, hasInt(not(2)));
     assertThat(trailingStatuses, hasInt(not(3)));
+  }
+  
+  @Test
+  public void shouldDecode17LineStatusesToOriginalStatusesWithNoTrailingZeros() {
+    //given
+    int numberOfLines = 17; int index = 0;
+    int[] originalStatuses = new int[numberOfLines];
+    //and
+    Collection<ILine> linesCoverage = mockLinesCoverage(numberOfLines);
+    //and
+    for(ILine lineCoverage : linesCoverage) {
+      originalStatuses[index] = lineCoverage.getStatus();
+      index += 1;
+    }
+    //and
+    LinesStatusCoder coder = new LinesStatusCoder();
+
+    //when
+    int[] codes = coder.encode(linesCoverage);
+    //and
+    int[] actualStatuses = coder.decode(codes, numberOfLines);
+    //and
+    int[] truncatedActualStatuses = Arrays.copyOf(actualStatuses, numberOfLines);
+    //and
+    int[] trailingStatuses = Arrays.copyOfRange(actualStatuses, numberOfLines, actualStatuses.length);
+
+    //then
+    assertArrayEquals(originalStatuses, truncatedActualStatuses);
+    //and
+    assertEquals(actualStatuses.length - numberOfLines, trailingStatuses.length);
+    //and
+    assertEquals(0, trailingStatuses.length);
   }
 
   private Collection<ILine> mockLinesCoverage(int lineCount) {

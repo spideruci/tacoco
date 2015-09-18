@@ -56,5 +56,24 @@ public class LinesStatusCoder {
     
     return statuses;
   }
+  
+  public int[] decode(int[] codedCoverage, int limit) {
+    int statusCount = codedCoverage.length*16;
+    int index = statusCount - 1;
+    int[] statuses = new int[limit];
+    for(int i = codedCoverage.length - 1; i >= 0; i -= 1) {
+      int code = codedCoverage[i];
+      for(int j = 1; j <= 16; j += 1) {
+        int status = code & MASK;
+        if(index < limit) {
+          statuses[index] = status;
+        }
+        index -= 1;
+        code = code >>> SHIFT;
+      }
+    }
+    
+    return statuses;
+  }
 
 }
