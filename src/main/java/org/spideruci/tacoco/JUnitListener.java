@@ -7,11 +7,13 @@ import org.jacoco.agent.rt.IAgent;
 import org.jacoco.agent.rt.RT;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
 
 public class JUnitListener extends RunListener
 {
+
 	private IAgent agent;
 	private boolean log=false;
 	
@@ -28,7 +30,7 @@ public class JUnitListener extends RunListener
 	{
 		agent.setSessionId("end");
 	}
-
+	
 	public void testStarted(Description description)
 	{
 		if(log) System.out.println("Setting sessionId to "+description.getDisplayName());
@@ -41,4 +43,17 @@ public class JUnitListener extends RunListener
 		agent.dump(true);
 		System.out.flush();
 	}
+	
+	@Override
+	public void testFailure(Failure failure) throws Exception {
+		agent.setSessionId(agent.getSessionId()+"_F");
+		super.testFailure(failure);
+	}
+	
+	@Override
+	public void testIgnored(Description description) throws Exception {
+		agent.setSessionId(agent.getSessionId()+"_I");
+		super.testIgnored(description);
+	}
+
 }

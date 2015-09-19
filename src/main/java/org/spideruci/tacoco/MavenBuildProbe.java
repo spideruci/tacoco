@@ -160,7 +160,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public String getId() {
-		String id = getModel().getName();
+		String id = getModel().getArtifactId();
 		String group = getModel().getGroupId();
 		if(group != null) id = group + "." + id;
 		return id;

@@ -26,6 +26,7 @@ public class SourceFileCoverageBuilder {
       }
     }
     
+    
     SourceFileCoverage<ILine> cov = 
         new SourceFileCoverage<>(sourcefileName, packageName, sessionName, 
             firstLine, lastLine, LineCoverageFormat.LOOSE, linesCoverage);
