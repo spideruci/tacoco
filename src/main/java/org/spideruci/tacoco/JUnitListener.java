@@ -13,15 +13,9 @@ import org.junit.runner.notification.RunListener;
 
 public class JUnitListener extends RunListener
 {
-	@Override
-	public void testFailure(Failure failure) throws Exception {
-		System.out.println(agent.getSessionId()+"_tacocoFail");
-		agent.setSessionId(agent.getSessionId()+"_tacocoFail");
-		super.testFailure(failure);
-	}
 
 	private IAgent agent;
-	private boolean log=true;
+	private boolean log=false;
 	
 	public JUnitListener(){
 		if(readOptionalArgumentValue(LOG,"off").equals("on")) log=true;	
@@ -49,4 +43,17 @@ public class JUnitListener extends RunListener
 		agent.dump(true);
 		System.out.flush();
 	}
+	
+	@Override
+	public void testFailure(Failure failure) throws Exception {
+		agent.setSessionId(agent.getSessionId()+"_F");
+		super.testFailure(failure);
+	}
+	
+	@Override
+	public void testIgnored(Description description) throws Exception {
+		agent.setSessionId(agent.getSessionId()+"_I");
+		super.testIgnored(description);
+	}
+
 }
