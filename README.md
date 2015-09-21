@@ -16,7 +16,11 @@
 ~~~
 * Run tacoco 
 ~~~
-mvn -q exec:java -Plauncher -Dtacoco.target=/abolute/path/of/target/root -Dtacoco.home=absolute/path/of/tacoco/root
+mvn -q exec:java -Plauncher -Dtacoco.sut=/abolute/path/of/target/root
+~~~
+* Run tacoco and produce sqlite3 database file 
+~~~
+mvn -q exec:java -Plauncher -Dtacoco.sut=/abolute/path/of/target/root -Dtacoco.db
 ~~~
 * Alternatively use the `export-sut-cp` to Run tacoco
 ~~~
