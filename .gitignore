@@ -57,5 +57,8 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+# R script
+*.R
+
 cp.txt
 lib/*
