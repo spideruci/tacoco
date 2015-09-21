@@ -32,14 +32,15 @@ public class CreateSQLiteDB {
 		String tacocoHome =  readOptionalArgumentValue(HOME,System.getProperty("user.dir"));
 		String dbFile = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output") + "/tacoco.db";
 		
-		dump(dbFile);
+		String sut = readArgumentValue(SUT);
+		String exec = readArgumentValue(EXEC);
+		
+		dump(dbFile, sut, exec);
 
 	}
 
-	private static void dump(String dbFile) throws Exception{
-		String sut = readArgumentValue(SUT);
+	public static void dump(String dbFile, String sut, String exec) throws Exception{
 		File projectRoot = new File(sut);
-		String exec = readArgumentValue(EXEC);
 		File execFile = new File(exec);
 		final FileInputStream in = new FileInputStream(execFile);
 		final ExecutionDataReader reader = new ExecutionDataReader(in);

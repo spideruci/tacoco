@@ -1,8 +1,9 @@
 package org.spideruci.tacoco;
 
+import static org.spideruci.tacoco.cli.CliAble.DB;
 import static org.spideruci.tacoco.cli.CliAble.HOME;
-import static org.spideruci.tacoco.cli.CliAble.SUT;
 import static org.spideruci.tacoco.cli.CliAble.OUTDIR;
+import static org.spideruci.tacoco.cli.CliAble.SUT;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
 
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.spideruci.tacoco.AbstractBuildProbe.Child;
+import org.spideruci.tacoco.db.CreateSQLiteDB;
 
 public class TacocoLauncher {
 
@@ -82,6 +84,14 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		String dbFile = outdir+"/tacoco.db";
+		if(System.getProperties().containsKey(DB))
+			try {
+				CreateSQLiteDB.dump(dbFile, targetDir, exec.toString());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	private String getTacocoClasspath() throws Exception{

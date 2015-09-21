@@ -69,14 +69,14 @@ public class  DBUtil{
 
 		String project="CREATE TABLE IF NOT EXISTS `PROJECT` ( "
 				+ "`PROJECT_ID`	INTEGER,"
-				+ "`FQN`	    TEXT, "
+				+ "`FQN`	    TEXT UNIQUE, "
 				+ "`BUILD`      TEXT, "
 				+ "PRIMARY KEY(project_id)"
 				+ ");";
 
 		String testcase = "CREATE TABLE IF NOT EXISTS `TESTCASE` ( "
 				+ "`TEST_ID`	INTEGER,"
-				+ "`FQN`	    TEXT, "
+				+ "`FQN`	    TEXT UNIQUE, "
 				+ "`STATUS`     INTEGER,"
 				+ "`PROJECT_ID` INTEGER,"
 				+ "PRIMARY KEY(TEST_ID, PROJECT_ID),"
@@ -85,7 +85,7 @@ public class  DBUtil{
 
 		String src="CREATE TABLE IF NOT EXISTS `SOURCE` ( "
 				+ "`SOURCE_ID`	INTEGER,"
-				+ "`FQN`	    TEXT, "
+				+ "`FQN`	    TEXT UNIQUE, "
 				+ "`SLOC`       INTEGER,"
 				+ "`PROJECT_ID` INTEGER,"
 				+ "PRIMARY KEY(SOURCE_ID, PROJECT_ID),"
@@ -194,7 +194,7 @@ public class  DBUtil{
 		}
 		
 		if(sid.containsKey(projectFQN)) {
-			deleteTablesFor(getProjectID(projectFQN));
+			deleteTablesFor(sid.get(projectFQN));
 		}
 	}
 
