@@ -17,7 +17,7 @@ public interface CliAble {
   
   //log level: off(default), on
   public static final String LOG = "tacoco.log";
-  public static final String TARGET = "tacoco.target";
+  public static final String DB = "tacoco.db";
   public static final String OUTDIR = "tacoco.outdir";
   public static final String HOME = "tacoco.home";
   

@@ -1,7 +1,7 @@
 package org.spideruci.tacoco;
 
 import static org.spideruci.tacoco.cli.CliAble.HOME;
-import static org.spideruci.tacoco.cli.CliAble.TARGET;
+import static org.spideruci.tacoco.cli.CliAble.SUT;
 import static org.spideruci.tacoco.cli.CliAble.OUTDIR;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
@@ -25,7 +25,7 @@ public class TacocoLauncher {
 	public static void main(String[] args) throws Exception{
 
 		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME,System.getProperty("user.dir"))
-													,readArgumentValue(TARGET));
+													,readArgumentValue(SUT));
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
 		
 		launcher.setTacocoEnv();
@@ -60,7 +60,7 @@ public class TacocoLauncher {
 				"-cp", classpath,
 				"-Xmx1536M",// "-Duser.language=hi", "-Duser.country=IN",
 				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile="+outdir+"/"+id+".exec,dumponexit=false",
-				"-Dtacoco.target="+targetDir,
+				"-Dtacoco.sut="+targetDir,
 				"-Dtacoco.output="+outdir,
 				"-Dtacoco.log=off",
 				"-Dtacoco.thread="+1,

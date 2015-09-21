@@ -1,7 +1,7 @@
 package org.spideruci.tacoco;
 
 import static org.spideruci.tacoco.cli.CliAble.LOG;
-import static org.spideruci.tacoco.cli.CliAble.TARGET;
+import static org.spideruci.tacoco.cli.CliAble.SUT;
 import static org.spideruci.tacoco.cli.CliAble.THREAD;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
@@ -70,7 +70,7 @@ public final class JUnitRunner extends Thread{
 
 		boolean log=false;
 		if(readOptionalArgumentValue(LOG,"off").equals("on")) log=true;
-		String targetDir = readArgumentValue(TARGET);
+		String targetDir = readArgumentValue(SUT);
 
 		System.out.println("---------------------------------------------");
 		System.out.println("Starting Tacoco JUnitRunner: "+targetDir);
