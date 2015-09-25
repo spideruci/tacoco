@@ -2,7 +2,8 @@ package org.spideruci.tacoco.reporting;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.startsWith;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.EOFException;
 import java.io.IOException;

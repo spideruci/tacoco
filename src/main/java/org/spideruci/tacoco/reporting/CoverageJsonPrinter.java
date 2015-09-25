@@ -1,6 +1,8 @@
 package org.spideruci.tacoco.reporting;
 
-import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.*;
+import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.buildCompact;
+import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.buildDense;
+import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.buildLoose;
 
 import java.io.PrintStream;
 import java.util.ArrayList;

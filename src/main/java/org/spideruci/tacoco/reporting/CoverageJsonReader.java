@@ -1,6 +1,12 @@
 package org.spideruci.tacoco.reporting;
 
-import static org.spideruci.tacoco.cli.CliAble.ReaderCli.*;
+import static org.spideruci.tacoco.cli.CliAble.HELP;
+import static org.spideruci.tacoco.cli.CliAble.JSON;
+import static org.spideruci.tacoco.cli.CliAble.OUT;
+import static org.spideruci.tacoco.cli.CliAble.PP;
+import static org.spideruci.tacoco.cli.CliAble.ReaderCli.printReaderHelp;
+import static org.spideruci.tacoco.cli.CliAble.ReaderCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.CliAble.ReaderCli.readOptionalArgumentValue;
 
 import java.io.File;
 import java.io.FileInputStream;

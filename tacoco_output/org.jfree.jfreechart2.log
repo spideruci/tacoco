@@ -1,0 +1,1050 @@
+---------------------------------------------
+Starting Tacoco JUnitRunner: /Users/bada/git/test/jfreechart-fse
+---------------------------------------------
+org/jfree/chart/annotations/CategoryLineAnnotationTest.class
+org/jfree/chart/annotations/CategoryPointerAnnotationTest.class
+org/jfree/chart/annotations/CategoryTextAnnotationTest.class
+org/jfree/chart/annotations/TextAnnotationTest.class
+org/jfree/chart/annotations/XYBoxAnnotationTest.class
+org/jfree/chart/annotations/XYDrawableAnnotationTest.class
+org/jfree/chart/annotations/XYImageAnnotationTest.class
+org/jfree/chart/annotations/XYLineAnnotationTest.class
+org/jfree/chart/annotations/XYPointerAnnotationTest.class
+org/jfree/chart/annotations/XYPolygonAnnotationTest.class
+org/jfree/chart/annotations/XYShapeAnnotationTest.class
+org/jfree/chart/annotations/XYTextAnnotationTest.class
+org/jfree/chart/annotations/XYTitleAnnotationTest.class
+org/jfree/chart/AreaChartTest.class
+org/jfree/chart/axis/AxisLocationTest.class
+org/jfree/chart/axis/AxisSpaceTest.class
+org/jfree/chart/axis/AxisTest.class
+org/jfree/chart/axis/CategoryAnchorTest.class
+org/jfree/chart/axis/CategoryAxisTest.class
+org/jfree/chart/axis/CategoryLabelPositionsTest.class
+org/jfree/chart/axis/CategoryLabelPositionTest.class
+org/jfree/chart/axis/CategoryLabelWidthTypeTest.class
+org/jfree/chart/axis/CategoryTickTest.class
+org/jfree/chart/axis/CompassFormatTest.class
+org/jfree/chart/axis/CyclicNumberAxisTest.class
+org/jfree/chart/axis/DateAxisTest.class
+org/jfree/chart/axis/DateTickMarkPositionTest.class
+org/jfree/chart/axis/DateTickTest.class
+org/jfree/chart/axis/DateTickUnitTest.class
+org/jfree/chart/axis/ExtendedCategoryAxisTest.class
+org/jfree/chart/axis/LogAxisTest.class
+org/jfree/chart/axis/MarkerAxisBandTest.class
+org/jfree/chart/axis/ModuloAxisTest.class
+org/jfree/chart/axis/MonthDateFormatTest.class
+org/jfree/chart/axis/NumberAxisTest.class
+org/jfree/chart/axis/NumberTickUnitTest.class
+org/jfree/chart/axis/PeriodAxisLabelInfoTest.class
+org/jfree/chart/axis/PeriodAxisTest.class
+org/jfree/chart/axis/QuarterDateFormatTest.class
+org/jfree/chart/axis/StandardTickUnitSourceTest.class
+org/jfree/chart/axis/SubCategoryAxisTest.class
+org/jfree/chart/axis/SymbolAxisTest.class
+org/jfree/chart/axis/TickUnitsTest.class
+org/jfree/chart/axis/ValueAxisTest.class
+org/jfree/chart/BarChartTest.class
+org/jfree/chart/block/AbstractBlockTest.class
+org/jfree/chart/block/BlockBorderTest.class
+org/jfree/chart/block/BlockContainerTest.class
+org/jfree/chart/block/BorderArrangementTest.class
+org/jfree/chart/block/ColorBlockTest.class
+org/jfree/chart/block/ColumnArrangementTest.class
+org/jfree/chart/block/EmptyBlockTest.class
+org/jfree/chart/block/FlowArrangementTest.class
+org/jfree/chart/block/GridArrangementTest.class
+org/jfree/chart/block/LabelBlockTest.class
+org/jfree/chart/block/LineBorderTest.class
+org/jfree/chart/block/RectangleConstraintTest.class
+org/jfree/chart/ChartPanelTest.class
+org/jfree/chart/ChartRenderingInfoTest.class
+org/jfree/chart/drawable/BorderPainterTest.class
+org/jfree/chart/drawable/ColorPainterTest.class
+org/jfree/chart/entity/CategoryItemEntityTest.class
+org/jfree/chart/entity/CategoryLabelEntityTest.class
+org/jfree/chart/entity/LegendItemEntityTest.class
+org/jfree/chart/entity/PieSectionEntityTest.class
+org/jfree/chart/entity/StandardEntityCollectionTest.class
+org/jfree/chart/entity/TickLabelEntityTest.class
+org/jfree/chart/entity/XYItemEntityTest.class
+org/jfree/chart/GanttChartTest.class
+org/jfree/chart/HashUtilitiesTest.class
+org/jfree/chart/imagemap/DynamicDriveToolTipTagFragmentGeneratorTest.class
+org/jfree/chart/imagemap/ImageMapUtilitiesTest.class
+org/jfree/chart/imagemap/OverLIBToolTipTagFragmentGeneratorTest.class
+org/jfree/chart/imagemap/StandardToolTipTagFragmentGeneratorTest.class
+org/jfree/chart/imagemap/StandardURLTagFragmentGeneratorTest.class
+org/jfree/chart/JFreeChartTest.class
+org/jfree/chart/labels/BoxAndWhiskerToolTipGeneratorTest.class
+org/jfree/chart/labels/BoxAndWhiskerXYToolTipGeneratorTest.class
+org/jfree/chart/labels/BubbleXYItemLabelGeneratorTest.class
+org/jfree/chart/labels/CustomXYItemLabelGeneratorTest.class
+org/jfree/chart/labels/HighLowItemLabelGeneratorTest.class
+org/jfree/chart/labels/IntervalCategoryItemLabelGeneratorTest.class
+org/jfree/chart/labels/IntervalCategoryToolTipGeneratorTest.class
+org/jfree/chart/labels/ItemLabelAnchorTest.class
+org/jfree/chart/labels/ItemLabelPositionTest.class
+org/jfree/chart/labels/MultipleXYSeriesLabelGeneratorTest.class
+org/jfree/chart/labels/StandardCategoryItemLabelGeneratorTest.class
+org/jfree/chart/labels/StandardCategorySeriesLabelGeneratorTest.class
+org/jfree/chart/labels/StandardCategoryToolTipGeneratorTest.class
+org/jfree/chart/labels/StandardPieSectionLabelGeneratorTest.class
+org/jfree/chart/labels/StandardPieToolTipGeneratorTest.class
+org/jfree/chart/labels/StandardXYItemLabelGeneratorTest.class
+org/jfree/chart/labels/StandardXYSeriesLabelGeneratorTest.class
+org/jfree/chart/labels/StandardXYToolTipGeneratorTest.class
+org/jfree/chart/labels/StandardXYZToolTipGeneratorTest.class
+org/jfree/chart/labels/SymbolicXYItemLabelGeneratorTest.class
+org/jfree/chart/LegendItemTest.class
+org/jfree/chart/LineChartTest.class
+org/jfree/chart/MeterChartTest.class
+org/jfree/chart/needle/ArrowNeedleTest.class
+org/jfree/chart/needle/LineNeedleTest.class
+org/jfree/chart/needle/LongNeedleTest.class
+org/jfree/chart/needle/MeterNeedleTest.class
+org/jfree/chart/needle/MiddlePinNeedleTest.class
+org/jfree/chart/needle/PinNeedleTest.class
+org/jfree/chart/needle/PlumNeedleTest.class
+org/jfree/chart/needle/PointerNeedleTest.class
+org/jfree/chart/needle/ShipNeedleTest.class
+org/jfree/chart/needle/WindNeedleTest.class
+org/jfree/chart/PaintMapTest.class
+org/jfree/chart/panel/CrosshairOverlayTest.class
+org/jfree/chart/PieChart3DTest.class
+org/jfree/chart/PieChartTest.class
+org/jfree/chart/plot/CategoryMarkerTest.class
+org/jfree/chart/plot/CategoryPlotTest.class
+org/jfree/chart/plot/CombinedDomainCategoryPlotTest.class
+org/jfree/chart/plot/CombinedDomainXYPlotTest.class
+org/jfree/chart/plot/CombinedRangeCategoryPlotTest.class
+org/jfree/chart/plot/CombinedRangeXYPlotTest.class
+org/jfree/chart/plot/CompassPlotTest.class
+org/jfree/chart/plot/CrosshairTest.class
+org/jfree/chart/plot/DefaultDrawingSupplierTest.class
+org/jfree/chart/plot/dial/AbstractDialLayerTest.class
+org/jfree/chart/plot/dial/ArcDialFrameTest.class
+org/jfree/chart/plot/dial/DialBackgroundTest.class
+org/jfree/chart/plot/dial/DialCapTest.class
+org/jfree/chart/plot/dial/DialPlotTest.class
+org/jfree/chart/plot/dial/DialPointerTest.class
+org/jfree/chart/plot/dial/DialTextAnnotationTest.class
+org/jfree/chart/plot/dial/DialValueIndicatorTest.class
+org/jfree/chart/plot/dial/StandardDialFrameTest.class
+org/jfree/chart/plot/dial/StandardDialRangeTest.class
+org/jfree/chart/plot/dial/StandardDialScaleTest.class
+org/jfree/chart/plot/FastScatterPlotTest.class
+org/jfree/chart/plot/IntervalMarkerTest.class
+org/jfree/chart/plot/MarkerTest.class
+org/jfree/chart/plot/MeterIntervalTest.class
+org/jfree/chart/plot/MeterPlotTest.class
+org/jfree/chart/plot/MultiplePiePlotTest.class
+org/jfree/chart/plot/PieLabelRecordTest.class
+org/jfree/chart/plot/PiePlot3DTest.class
+org/jfree/chart/plot/PiePlotTest.class
+org/jfree/chart/plot/PlotOrientationTest.class
+org/jfree/chart/plot/PlotRenderingInfoTest.class
+org/jfree/chart/plot/PlotTest.class
+org/jfree/chart/plot/PolarPlotTest.class
+org/jfree/chart/plot/RingPlotTest.class
+org/jfree/chart/plot/SpiderWebPlotTest.class
+org/jfree/chart/plot/ThermometerPlotTest.class
+org/jfree/chart/plot/ValueMarkerTest.class
+org/jfree/chart/plot/XYPlotTest.class
+org/jfree/chart/renderer/AbstractRendererTest.class
+org/jfree/chart/renderer/AreaRendererEndTypeTest.class
+org/jfree/chart/renderer/category/AbstractCategoryItemRendererTest.class
+org/jfree/chart/renderer/category/AreaRendererTest.class
+org/jfree/chart/renderer/category/BarRendererTest.class
+org/jfree/chart/renderer/category/BoxAndWhiskerRendererTest.class
+org/jfree/chart/renderer/category/CategoryStepRendererTest.class
+org/jfree/chart/renderer/category/DefaultCategoryItemRendererTest.class
+org/jfree/chart/renderer/category/GanttRendererTest.class
+org/jfree/chart/renderer/category/GradientBarPainterTest.class
+org/jfree/chart/renderer/category/GroupedStackedBarRendererTest.class
+org/jfree/chart/renderer/category/IntervalBarRendererTest.class
+org/jfree/chart/renderer/category/LayeredBarRendererTest.class
+org/jfree/chart/renderer/category/LevelRendererTest.class
+org/jfree/chart/renderer/category/LineAndShapeRendererTest.class
+org/jfree/chart/renderer/category/MinMaxCategoryRendererTest.class
+org/jfree/chart/renderer/category/ScatterRendererTest.class
+org/jfree/chart/renderer/category/StackedAreaRendererTest.class
+org/jfree/chart/renderer/category/StackedBarRendererTest.class
+org/jfree/chart/renderer/category/StandardBarPainterTest.class
+org/jfree/chart/renderer/category/StatisticalBarRendererTest.class
+org/jfree/chart/renderer/category/StatisticalLineAndShapeRendererTest.class
+org/jfree/chart/renderer/category/WaterfallBarRendererTest.class
+org/jfree/chart/renderer/DefaultPolarItemRendererTest.class
+org/jfree/chart/renderer/GrayPaintScaleTest.class
+org/jfree/chart/renderer/LookupPaintScaleTest.class
+org/jfree/chart/renderer/OutlierTest.class
+org/jfree/chart/renderer/RendererUtilitiesTest.class
+org/jfree/chart/renderer/xy/AbstractXYItemRendererTest.class
+org/jfree/chart/renderer/xy/CandlestickRendererTest.class
+org/jfree/chart/renderer/xy/ClusteredXYBarRendererTest.class
+org/jfree/chart/renderer/xy/DeviationRendererTest.class
+org/jfree/chart/renderer/xy/GradientXYBarPainterTest.class
+org/jfree/chart/renderer/xy/HighLowRendererTest.class
+org/jfree/chart/renderer/xy/StackedXYAreaRenderer2Test.class
+org/jfree/chart/renderer/xy/StackedXYAreaRendererTest.class
+org/jfree/chart/renderer/xy/StackedXYBarRendererTest.class
+org/jfree/chart/renderer/xy/StandardXYBarPainterTest.class
+org/jfree/chart/renderer/xy/StandardXYItemRendererTest.class
+org/jfree/chart/renderer/xy/VectorRendererTest.class
+org/jfree/chart/renderer/xy/WindItemRendererTest.class
+org/jfree/chart/renderer/xy/XYAreaRenderer2Test.class
+org/jfree/chart/renderer/xy/XYAreaRendererTest.class
+org/jfree/chart/renderer/xy/XYBarRendererTest.class
+org/jfree/chart/renderer/xy/XYBlockRendererTest.class
+org/jfree/chart/renderer/xy/XYBoxAndWhiskerRendererTest.class
+org/jfree/chart/renderer/xy/XYBubbleRendererTest.class
+org/jfree/chart/renderer/xy/XYDifferenceRendererTest.class
+org/jfree/chart/renderer/xy/XYDotRendererTest.class
+org/jfree/chart/renderer/xy/XYErrorRendererTest.class
+org/jfree/chart/renderer/xy/XYLineAndShapeRendererTest.class
+org/jfree/chart/renderer/xy/XYShapeRendererTest.class
+org/jfree/chart/renderer/xy/XYSplineRendererTest.class
+org/jfree/chart/renderer/xy/XYStepAreaRendererTest.class
+org/jfree/chart/renderer/xy/XYStepRendererTest.class
+org/jfree/chart/renderer/xy/YIntervalRendererTest.class
+org/jfree/chart/ScatterPlotTest.class
+org/jfree/chart/StackedAreaChartTest.class
+org/jfree/chart/StackedBarChartTest.class
+org/jfree/chart/StandardChartThemeTest.class
+org/jfree/chart/StrokeMapTest.class
+org/jfree/chart/TestUtils.class
+org/jfree/chart/text/TextAnchorTest.class
+org/jfree/chart/TimeSeriesChartTest.class
+org/jfree/chart/title/CompositeTitleTest.class
+org/jfree/chart/title/DateTitleTest.class
+org/jfree/chart/title/ImageTitleTest.class
+org/jfree/chart/title/LegendGraphicTest.class
+org/jfree/chart/title/LegendTitleTest.class
+org/jfree/chart/title/PaintScaleLegendTest.class
+org/jfree/chart/title/ShortTextTitleTest.class
+org/jfree/chart/title/TextTitleTest.class
+org/jfree/chart/title/TitleTest.class
+org/jfree/chart/ui/RectangleAnchorTest.class
+org/jfree/chart/urls/CustomCategoryURLGeneratorTest.class
+org/jfree/chart/urls/CustomPieURLGeneratorTest.class
+org/jfree/chart/urls/CustomXYURLGeneratorTest.class
+org/jfree/chart/urls/StandardCategoryURLGeneratorTest.class
+org/jfree/chart/urls/StandardPieURLGeneratorTest.class
+org/jfree/chart/urls/StandardXYURLGeneratorTest.class
+org/jfree/chart/urls/TimeSeriesURLGeneratorTest.class
+org/jfree/chart/util/HMSNumberFormatTest.class
+org/jfree/chart/util/LineUtilsTest.class
+org/jfree/chart/util/LogFormatTest.class
+org/jfree/chart/util/RelativeDateFormatTest.class
+org/jfree/chart/WaterfallChartTest.class
+org/jfree/chart/XYAreaChartTest.class
+org/jfree/chart/XYBarChartTest.class
+org/jfree/chart/XYLineChartTest.class
+org/jfree/chart/XYStepAreaChartTest.class
+org/jfree/chart/XYStepChartTest.class
+org/jfree/data/category/CategoryToPieDatasetTest.class
+org/jfree/data/category/DefaultCategoryDatasetTest.class
+org/jfree/data/category/DefaultIntervalCategoryDatasetTest.class
+org/jfree/data/category/SlidingCategoryDatasetTest.class
+org/jfree/data/ComparableObjectItemTest.class
+org/jfree/data/ComparableObjectSeriesTest.class
+org/jfree/data/DataUtilitiesTest.class
+org/jfree/data/DefaultKeyedValues2DTest.class
+org/jfree/data/DefaultKeyedValuesTest.class
+org/jfree/data/DefaultKeyedValueTest.class
+org/jfree/data/DomainOrderTest.class
+org/jfree/data/extension/CategoryDatasetSelectionExtensionTest.class
+org/jfree/data/extension/PieDatasetSelectionExtensionTest.class
+org/jfree/data/extension/XYDatasetSelectionExtensionTest.class
+org/jfree/data/function/LineFunction2DTest.class
+org/jfree/data/function/NormalDistributionFunction2DTest.class
+org/jfree/data/function/PolynomialFunction2DTest.class
+org/jfree/data/function/PowerFunction2DTest.class
+org/jfree/data/gantt/SlidingGanttCategoryDatasetTest.class
+org/jfree/data/gantt/TaskSeriesCollectionTest.class
+org/jfree/data/gantt/TaskSeriesTest.class
+org/jfree/data/gantt/TaskTest.class
+org/jfree/data/gantt/XYTaskDatasetTest.class
+org/jfree/data/general/DatasetUtilitiesTest.class
+org/jfree/data/general/DefaultHeatMapDatasetTest.class
+org/jfree/data/general/DefaultKeyedValueDatasetTest.class
+org/jfree/data/general/DefaultKeyedValues2DDatasetTest.class
+org/jfree/data/general/DefaultKeyedValuesDatasetTest.class
+org/jfree/data/general/DefaultPieDatasetTest.class
+org/jfree/data/general/TestIntervalCategoryDataset.class
+org/jfree/data/KeyedObjects2DTest.class
+org/jfree/data/KeyedObjectsTest.class
+org/jfree/data/KeyedObjectTest.class
+org/jfree/data/KeyToGroupMapTest.class
+org/jfree/data/RangeTest.class
+org/jfree/data/RangeTypeTest.class
+org/jfree/data/statistics/BoxAndWhiskerCalculatorTest.class
+org/jfree/data/statistics/BoxAndWhiskerItemTest.class
+org/jfree/data/statistics/DefaultBoxAndWhiskerCategoryDatasetTest.class
+org/jfree/data/statistics/DefaultBoxAndWhiskerXYDatasetTest.class
+org/jfree/data/statistics/DefaultMultiValueCategoryDatasetTest.class
+org/jfree/data/statistics/DefaultStatisticalCategoryDatasetTest.class
+org/jfree/data/statistics/HistogramBinTest.class
+org/jfree/data/statistics/HistogramDatasetTest.class
+org/jfree/data/statistics/MeanAndStandardDeviationTest.class
+org/jfree/data/statistics/RegressionTest.class
+org/jfree/data/statistics/StatisticsTest.class
+org/jfree/data/time/DateRangeTest.class
+org/jfree/data/time/DayTest.class
+org/jfree/data/time/FixedMillisecondTest.class
+org/jfree/data/time/HourTest.class
+org/jfree/data/time/MillisecondTest.class
+org/jfree/data/time/MinuteTest.class
+org/jfree/data/time/MonthTest.class
+org/jfree/data/time/MovingAverageTest.class
+org/jfree/data/time/ohlc/OHLCItemTest.class
+org/jfree/data/time/ohlc/OHLCSeriesCollectionTest.class
+org/jfree/data/time/ohlc/OHLCSeriesTest.class
+org/jfree/data/time/ohlc/OHLCTest.class
+org/jfree/data/time/QuarterTest.class
+org/jfree/data/time/SecondTest.class
+org/jfree/data/time/SimpleTimePeriodTest.class
+org/jfree/data/time/TimePeriodAnchorTest.class
+org/jfree/data/time/TimePeriodValuesCollectionTest.class
+org/jfree/data/time/TimePeriodValuesTest.class
+org/jfree/data/time/TimePeriodValueTest.class
+org/jfree/data/time/TimeSeriesCollectionTest.class
+org/jfree/data/time/TimeSeriesDataItemTest.class
+org/jfree/data/time/TimeSeriesTest.class
+org/jfree/data/time/TimeTableXYDatasetTest.class
+org/jfree/data/time/WeekTest.class
+org/jfree/data/time/YearTest.class
+org/jfree/data/xy/CategoryTableXYDatasetTest.class
+org/jfree/data/xy/DefaultHighLowDatasetTest.class
+org/jfree/data/xy/DefaultIntervalXYDatasetTest.class
+org/jfree/data/xy/DefaultOHLCDatasetTest.class
+org/jfree/data/xy/DefaultTableXYDatasetTest.class
+org/jfree/data/xy/DefaultWindDatasetTest.class
+org/jfree/data/xy/DefaultXYDatasetTest.class
+org/jfree/data/xy/DefaultXYZDatasetTest.class
+org/jfree/data/xy/IntervalXYDelegateTest.class
+org/jfree/data/xy/MatrixSeriesCollectionTest.class
+org/jfree/data/xy/MatrixSeriesTest.class
+org/jfree/data/xy/OHLCDataItemTest.class
+org/jfree/data/xy/TableXYDatasetTest.class
+org/jfree/data/xy/VectorDataItemTest.class
+org/jfree/data/xy/VectorSeriesCollectionTest.class
+org/jfree/data/xy/VectorSeriesTest.class
+org/jfree/data/xy/VectorTest.class
+org/jfree/data/xy/XIntervalDataItemTest.class
+org/jfree/data/xy/XIntervalSeriesCollectionTest.class
+org/jfree/data/xy/XIntervalSeriesTest.class
+org/jfree/data/xy/XYBarDatasetTest.class
+org/jfree/data/xy/XYCoordinateTest.class
+org/jfree/data/xy/XYDataItemTest.class
+org/jfree/data/xy/XYIntervalDataItemTest.class
+org/jfree/data/xy/XYIntervalSeriesCollectionTest.class
+org/jfree/data/xy/XYIntervalSeriesTest.class
+org/jfree/data/xy/XYIntervalTest.class
+org/jfree/data/xy/XYSeriesCollectionTest.class
+org/jfree/data/xy/XYSeriesTest.class
+org/jfree/data/xy/YIntervalDataItemTest.class
+org/jfree/data/xy/YIntervalSeriesCollectionTest.class
+org/jfree/data/xy/YIntervalSeriesTest.class
+org/jfree/data/xy/YIntervalTest.class
+org/jfree/data/xy/YWithXIntervalTest.class
+Starting class org.jfree.chart.annotations.CategoryLineAnnotationTest
+Finishing class org.jfree.chart.annotations.CategoryLineAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.74sec
+Starting class org.jfree.chart.annotations.CategoryPointerAnnotationTest
+Finishing class org.jfree.chart.annotations.CategoryPointerAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.049sec
+Starting class org.jfree.chart.annotations.CategoryTextAnnotationTest
+Finishing class org.jfree.chart.annotations.CategoryTextAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.027sec
+Starting class org.jfree.chart.annotations.TextAnnotationTest
+Finishing class org.jfree.chart.annotations.TextAnnotationTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.019sec
+Starting class org.jfree.chart.annotations.XYBoxAnnotationTest
+Finishing class org.jfree.chart.annotations.XYBoxAnnotationTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 3.009sec
+Starting class org.jfree.chart.annotations.XYDrawableAnnotationTest
+Finishing class org.jfree.chart.annotations.XYDrawableAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.044sec
+Starting class org.jfree.chart.annotations.XYImageAnnotationTest
+Finishing class org.jfree.chart.annotations.XYImageAnnotationTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 1 Time elapsed: 0.075sec
+Starting class org.jfree.chart.annotations.XYLineAnnotationTest
+Finishing class org.jfree.chart.annotations.XYLineAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.04sec
+Starting class org.jfree.chart.annotations.XYPointerAnnotationTest
+Finishing class org.jfree.chart.annotations.XYPointerAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.053sec
+Starting class org.jfree.chart.annotations.XYPolygonAnnotationTest
+Finishing class org.jfree.chart.annotations.XYPolygonAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.05sec
+Starting class org.jfree.chart.annotations.XYShapeAnnotationTest
+Finishing class org.jfree.chart.annotations.XYShapeAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.044sec
+Starting class org.jfree.chart.annotations.XYTextAnnotationTest
+Finishing class org.jfree.chart.annotations.XYTextAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.043sec
+Starting class org.jfree.chart.annotations.XYTitleAnnotationTest
+Finishing class org.jfree.chart.annotations.XYTitleAnnotationTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.091sec
+Starting class org.jfree.chart.AreaChartTest
+Finishing class org.jfree.chart.AreaChartTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.202sec
+Starting class org.jfree.chart.axis.AxisLocationTest
+Finishing class org.jfree.chart.axis.AxisLocationTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.032sec
+Starting class org.jfree.chart.axis.AxisSpaceTest
+Finishing class org.jfree.chart.axis.AxisSpaceTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.032sec
+Starting class org.jfree.chart.axis.AxisTest
+Finishing class org.jfree.chart.axis.AxisTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.079sec
+Starting class org.jfree.chart.axis.CategoryAnchorTest
+Finishing class org.jfree.chart.axis.CategoryAnchorTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.035sec
+Starting class org.jfree.chart.axis.CategoryAxisTest
+Finishing class org.jfree.chart.axis.CategoryAxisTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.chart.axis.CategoryLabelPositionsTest
+Finishing class org.jfree.chart.axis.CategoryLabelPositionsTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.037sec
+Starting class org.jfree.chart.axis.CategoryLabelPositionTest
+Finishing class org.jfree.chart.axis.CategoryLabelPositionTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.038sec
+Starting class org.jfree.chart.axis.CategoryLabelWidthTypeTest
+Finishing class org.jfree.chart.axis.CategoryLabelWidthTypeTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.051sec
+Starting class org.jfree.chart.axis.CategoryTickTest
+Finishing class org.jfree.chart.axis.CategoryTickTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.061sec
+Starting class org.jfree.chart.axis.CompassFormatTest
+Finishing class org.jfree.chart.axis.CompassFormatTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.023sec
+Starting class org.jfree.chart.axis.CyclicNumberAxisTest
+Finishing class org.jfree.chart.axis.CyclicNumberAxisTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.126sec
+Starting class org.jfree.chart.axis.DateAxisTest
+Finishing class org.jfree.chart.axis.DateAxisTest Tests run: 22 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.442sec
+Starting class org.jfree.chart.axis.DateTickMarkPositionTest
+Finishing class org.jfree.chart.axis.DateTickMarkPositionTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.047sec
+Starting class org.jfree.chart.axis.DateTickTest
+Finishing class org.jfree.chart.axis.DateTickTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.axis.DateTickUnitTest
+Finishing class org.jfree.chart.axis.DateTickUnitTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.061sec
+Starting class org.jfree.chart.axis.ExtendedCategoryAxisTest
+Finishing class org.jfree.chart.axis.ExtendedCategoryAxisTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.069sec
+Starting class org.jfree.chart.axis.LogAxisTest
+Finishing class org.jfree.chart.axis.LogAxisTest Tests run: 12 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.181sec
+Starting class org.jfree.chart.axis.MarkerAxisBandTest
+Finishing class org.jfree.chart.axis.MarkerAxisBandTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.033sec
+Starting class org.jfree.chart.axis.ModuloAxisTest
+Finishing class org.jfree.chart.axis.ModuloAxisTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.axis.MonthDateFormatTest
+Finishing class org.jfree.chart.axis.MonthDateFormatTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.062sec
+Starting class org.jfree.chart.axis.NumberAxisTest
+Finishing class org.jfree.chart.axis.NumberAxisTest Tests run: 12 Failures: 0 Errors: 0 Skipped: 1 Time elapsed: 0.131sec
+Starting class org.jfree.chart.axis.NumberTickUnitTest
+Finishing class org.jfree.chart.axis.NumberTickUnitTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.04sec
+Starting class org.jfree.chart.axis.PeriodAxisLabelInfoTest
+Finishing class org.jfree.chart.axis.PeriodAxisLabelInfoTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.092sec
+Starting class org.jfree.chart.axis.PeriodAxisTest
+Finishing class org.jfree.chart.axis.PeriodAxisTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.173sec
+Starting class org.jfree.chart.axis.QuarterDateFormatTest
+Finishing class org.jfree.chart.axis.QuarterDateFormatTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.axis.StandardTickUnitSourceTest
+Finishing class org.jfree.chart.axis.StandardTickUnitSourceTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.024sec
+Starting class org.jfree.chart.axis.SubCategoryAxisTest
+Finishing class org.jfree.chart.axis.SubCategoryAxisTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.092sec
+Starting class org.jfree.chart.axis.SymbolAxisTest
+Finishing class org.jfree.chart.axis.SymbolAxisTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.063sec
+Starting class org.jfree.chart.axis.TickUnitsTest
+Finishing class org.jfree.chart.axis.TickUnitsTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.05sec
+Starting class org.jfree.chart.axis.ValueAxisTest
+Finishing class org.jfree.chart.axis.ValueAxisTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.077sec
+Starting class org.jfree.chart.BarChartTest
+Finishing class org.jfree.chart.BarChartTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.043sec
+Starting class org.jfree.chart.block.AbstractBlockTest
+Finishing class org.jfree.chart.block.AbstractBlockTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.028sec
+Starting class org.jfree.chart.block.BlockBorderTest
+Finishing class org.jfree.chart.block.BlockBorderTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.03sec
+Starting class org.jfree.chart.block.BlockContainerTest
+Finishing class org.jfree.chart.block.BlockContainerTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.029sec
+Starting class org.jfree.chart.block.BorderArrangementTest
+Finishing class org.jfree.chart.block.BorderArrangementTest Tests run: 8 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.084sec
+Starting class org.jfree.chart.block.ColorBlockTest
+Finishing class org.jfree.chart.block.ColorBlockTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.037sec
+Starting class org.jfree.chart.block.ColumnArrangementTest
+Finishing class org.jfree.chart.block.ColumnArrangementTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.03sec
+Starting class org.jfree.chart.block.EmptyBlockTest
+Finishing class org.jfree.chart.block.EmptyBlockTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.03sec
+Starting class org.jfree.chart.block.FlowArrangementTest
+Finishing class org.jfree.chart.block.FlowArrangementTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.029sec
+Starting class org.jfree.chart.block.GridArrangementTest
+Finishing class org.jfree.chart.block.GridArrangementTest Tests run: 18 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.187sec
+Starting class org.jfree.chart.block.LabelBlockTest
+Finishing class org.jfree.chart.block.LabelBlockTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.035sec
+Starting class org.jfree.chart.block.LineBorderTest
+Finishing class org.jfree.chart.block.LineBorderTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.029sec
+Starting class org.jfree.chart.block.RectangleConstraintTest
+Finishing class org.jfree.chart.block.RectangleConstraintTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.01sec
+Starting class org.jfree.chart.ChartPanelTest
+Finishing class org.jfree.chart.ChartPanelTest Tests run: 14 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.436sec
+Starting class org.jfree.chart.ChartRenderingInfoTest
+Finishing class org.jfree.chart.ChartRenderingInfoTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.04sec
+Starting class org.jfree.chart.drawable.BorderPainterTest
+Finishing class org.jfree.chart.drawable.BorderPainterTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.021sec
+Starting class org.jfree.chart.drawable.ColorPainterTest
+Finishing class org.jfree.chart.drawable.ColorPainterTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.018sec
+Starting class org.jfree.chart.entity.CategoryItemEntityTest
+Finishing class org.jfree.chart.entity.CategoryItemEntityTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.042sec
+Starting class org.jfree.chart.entity.CategoryLabelEntityTest
+Finishing class org.jfree.chart.entity.CategoryLabelEntityTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.046sec
+Starting class org.jfree.chart.entity.LegendItemEntityTest
+Finishing class org.jfree.chart.entity.LegendItemEntityTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.045sec
+Starting class org.jfree.chart.entity.PieSectionEntityTest
+Finishing class org.jfree.chart.entity.PieSectionEntityTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.038sec
+Starting class org.jfree.chart.entity.StandardEntityCollectionTest
+Finishing class org.jfree.chart.entity.StandardEntityCollectionTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.046sec
+Starting class org.jfree.chart.entity.TickLabelEntityTest
+Finishing class org.jfree.chart.entity.TickLabelEntityTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.031sec
+Starting class org.jfree.chart.entity.XYItemEntityTest
+Finishing class org.jfree.chart.entity.XYItemEntityTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.035sec
+Starting class org.jfree.chart.GanttChartTest
+Finishing class org.jfree.chart.GanttChartTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.114sec
+Starting class org.jfree.chart.HashUtilitiesTest
+Finishing class org.jfree.chart.HashUtilitiesTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.018sec
+Starting class org.jfree.chart.imagemap.DynamicDriveToolTipTagFragmentGeneratorTest
+Finishing class org.jfree.chart.imagemap.DynamicDriveToolTipTagFragmentGeneratorTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.014sec
+Starting class org.jfree.chart.imagemap.ImageMapUtilitiesTest
+Finishing class org.jfree.chart.imagemap.ImageMapUtilitiesTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.022sec
+Starting class org.jfree.chart.imagemap.OverLIBToolTipTagFragmentGeneratorTest
+Finishing class org.jfree.chart.imagemap.OverLIBToolTipTagFragmentGeneratorTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.011sec
+Starting class org.jfree.chart.imagemap.StandardToolTipTagFragmentGeneratorTest
+Finishing class org.jfree.chart.imagemap.StandardToolTipTagFragmentGeneratorTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.011sec
+Starting class org.jfree.chart.imagemap.StandardURLTagFragmentGeneratorTest
+Finishing class org.jfree.chart.imagemap.StandardURLTagFragmentGeneratorTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.011sec
+Starting class org.jfree.chart.JFreeChartTest
+Finishing class org.jfree.chart.JFreeChartTest Tests run: 13 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.282sec
+Starting class org.jfree.chart.labels.BoxAndWhiskerToolTipGeneratorTest
+Finishing class org.jfree.chart.labels.BoxAndWhiskerToolTipGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.059sec
+Starting class org.jfree.chart.labels.BoxAndWhiskerXYToolTipGeneratorTest
+Finishing class org.jfree.chart.labels.BoxAndWhiskerXYToolTipGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.054sec
+Starting class org.jfree.chart.labels.BubbleXYItemLabelGeneratorTest
+Finishing class org.jfree.chart.labels.BubbleXYItemLabelGeneratorTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.067sec
+Starting class org.jfree.chart.labels.CustomXYItemLabelGeneratorTest
+Finishing class org.jfree.chart.labels.CustomXYItemLabelGeneratorTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.036sec
+Starting class org.jfree.chart.labels.HighLowItemLabelGeneratorTest
+Finishing class org.jfree.chart.labels.HighLowItemLabelGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.chart.labels.IntervalCategoryItemLabelGeneratorTest
+Finishing class org.jfree.chart.labels.IntervalCategoryItemLabelGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.063sec
+Starting class org.jfree.chart.labels.IntervalCategoryToolTipGeneratorTest
+Finishing class org.jfree.chart.labels.IntervalCategoryToolTipGeneratorTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.069sec
+Starting class org.jfree.chart.labels.ItemLabelAnchorTest
+Finishing class org.jfree.chart.labels.ItemLabelAnchorTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.024sec
+Starting class org.jfree.chart.labels.ItemLabelPositionTest
+Finishing class org.jfree.chart.labels.ItemLabelPositionTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.022sec
+Starting class org.jfree.chart.labels.MultipleXYSeriesLabelGeneratorTest
+Finishing class org.jfree.chart.labels.MultipleXYSeriesLabelGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.064sec
+Starting class org.jfree.chart.labels.StandardCategoryItemLabelGeneratorTest
+Finishing class org.jfree.chart.labels.StandardCategoryItemLabelGeneratorTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.099sec
+Starting class org.jfree.chart.labels.StandardCategorySeriesLabelGeneratorTest
+Finishing class org.jfree.chart.labels.StandardCategorySeriesLabelGeneratorTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.066sec
+Starting class org.jfree.chart.labels.StandardCategoryToolTipGeneratorTest
+Finishing class org.jfree.chart.labels.StandardCategoryToolTipGeneratorTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.097sec
+Starting class org.jfree.chart.labels.StandardPieSectionLabelGeneratorTest
+Finishing class org.jfree.chart.labels.StandardPieSectionLabelGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.055sec
+Starting class org.jfree.chart.labels.StandardPieToolTipGeneratorTest
+Finishing class org.jfree.chart.labels.StandardPieToolTipGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.059sec
+Starting class org.jfree.chart.labels.StandardXYItemLabelGeneratorTest
+Finishing class org.jfree.chart.labels.StandardXYItemLabelGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.labels.StandardXYSeriesLabelGeneratorTest
+Finishing class org.jfree.chart.labels.StandardXYSeriesLabelGeneratorTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.073sec
+Starting class org.jfree.chart.labels.StandardXYToolTipGeneratorTest
+Finishing class org.jfree.chart.labels.StandardXYToolTipGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.labels.StandardXYZToolTipGeneratorTest
+Finishing class org.jfree.chart.labels.StandardXYZToolTipGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.062sec
+Starting class org.jfree.chart.labels.SymbolicXYItemLabelGeneratorTest
+Finishing class org.jfree.chart.labels.SymbolicXYItemLabelGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.057sec
+Starting class org.jfree.chart.LegendItemTest
+Finishing class org.jfree.chart.LegendItemTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.053sec
+Starting class org.jfree.chart.LineChartTest
+Finishing class org.jfree.chart.LineChartTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.MeterChartTest
+Finishing class org.jfree.chart.MeterChartTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.021sec
+Starting class org.jfree.chart.needle.ArrowNeedleTest
+Finishing class org.jfree.chart.needle.ArrowNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.039sec
+Starting class org.jfree.chart.needle.LineNeedleTest
+Finishing class org.jfree.chart.needle.LineNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.04sec
+Starting class org.jfree.chart.needle.LongNeedleTest
+Finishing class org.jfree.chart.needle.LongNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.036sec
+Starting class org.jfree.chart.needle.MeterNeedleTest
+Finishing class org.jfree.chart.needle.MeterNeedleTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.013sec
+Starting class org.jfree.chart.needle.MiddlePinNeedleTest
+Finishing class org.jfree.chart.needle.MiddlePinNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.037sec
+Starting class org.jfree.chart.needle.PinNeedleTest
+Finishing class org.jfree.chart.needle.PinNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.037sec
+Starting class org.jfree.chart.needle.PlumNeedleTest
+Finishing class org.jfree.chart.needle.PlumNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.036sec
+Starting class org.jfree.chart.needle.PointerNeedleTest
+Finishing class org.jfree.chart.needle.PointerNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.037sec
+Starting class org.jfree.chart.needle.ShipNeedleTest
+Finishing class org.jfree.chart.needle.ShipNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.035sec
+Starting class org.jfree.chart.needle.WindNeedleTest
+Finishing class org.jfree.chart.needle.WindNeedleTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.036sec
+Starting class org.jfree.chart.PaintMapTest
+Finishing class org.jfree.chart.PaintMapTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.086sec
+Starting class org.jfree.chart.panel.CrosshairOverlayTest
+Finishing class org.jfree.chart.panel.CrosshairOverlayTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.05sec
+Starting class org.jfree.chart.PieChart3DTest
+Finishing class org.jfree.chart.PieChart3DTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.049sec
+Starting class org.jfree.chart.PieChartTest
+Finishing class org.jfree.chart.PieChartTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.013sec
+Starting class org.jfree.chart.plot.CategoryMarkerTest
+Finishing class org.jfree.chart.plot.CategoryMarkerTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.059sec
+Starting class org.jfree.chart.plot.CategoryPlotTest
+Finishing class org.jfree.chart.plot.CategoryPlotTest Tests run: 37 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.528sec
+Starting class org.jfree.chart.plot.CombinedDomainCategoryPlotTest
+Finishing class org.jfree.chart.plot.CombinedDomainCategoryPlotTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.083sec
+Starting class org.jfree.chart.plot.CombinedDomainXYPlotTest
+Finishing class org.jfree.chart.plot.CombinedDomainXYPlotTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.107sec
+Starting class org.jfree.chart.plot.CombinedRangeCategoryPlotTest
+Finishing class org.jfree.chart.plot.CombinedRangeCategoryPlotTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.133sec
+Starting class org.jfree.chart.plot.CombinedRangeXYPlotTest
+Finishing class org.jfree.chart.plot.CombinedRangeXYPlotTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.116sec
+Starting class org.jfree.chart.plot.CompassPlotTest
+Finishing class org.jfree.chart.plot.CompassPlotTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.042sec
+Starting class org.jfree.chart.plot.CrosshairTest
+Finishing class org.jfree.chart.plot.CrosshairTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.062sec
+Starting class org.jfree.chart.plot.DefaultDrawingSupplierTest
+Finishing class org.jfree.chart.plot.DefaultDrawingSupplierTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.036sec
+Starting class org.jfree.chart.plot.dial.AbstractDialLayerTest
+Finishing class org.jfree.chart.plot.dial.AbstractDialLayerTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.044sec
+Starting class org.jfree.chart.plot.dial.ArcDialFrameTest
+Finishing class org.jfree.chart.plot.dial.ArcDialFrameTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.plot.dial.DialBackgroundTest
+Finishing class org.jfree.chart.plot.dial.DialBackgroundTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.047sec
+Starting class org.jfree.chart.plot.dial.DialCapTest
+Finishing class org.jfree.chart.plot.dial.DialCapTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.048sec
+Starting class org.jfree.chart.plot.dial.DialPlotTest
+Finishing class org.jfree.chart.plot.dial.DialPlotTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.119sec
+Starting class org.jfree.chart.plot.dial.DialPointerTest
+Finishing class org.jfree.chart.plot.dial.DialPointerTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.092sec
+Starting class org.jfree.chart.plot.dial.DialTextAnnotationTest
+Finishing class org.jfree.chart.plot.dial.DialTextAnnotationTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.plot.dial.DialValueIndicatorTest
+Finishing class org.jfree.chart.plot.dial.DialValueIndicatorTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.053sec
+Starting class org.jfree.chart.plot.dial.StandardDialFrameTest
+Finishing class org.jfree.chart.plot.dial.StandardDialFrameTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.049sec
+Starting class org.jfree.chart.plot.dial.StandardDialRangeTest
+Finishing class org.jfree.chart.plot.dial.StandardDialRangeTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.plot.dial.StandardDialScaleTest
+Finishing class org.jfree.chart.plot.dial.StandardDialScaleTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.075sec
+Starting class org.jfree.chart.plot.FastScatterPlotTest
+Finishing class org.jfree.chart.plot.FastScatterPlotTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.102sec
+Starting class org.jfree.chart.plot.IntervalMarkerTest
+Finishing class org.jfree.chart.plot.IntervalMarkerTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.083sec
+Starting class org.jfree.chart.plot.MarkerTest
+Finishing class org.jfree.chart.plot.MarkerTest Tests run: 14 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.198sec
+Starting class org.jfree.chart.plot.MeterIntervalTest
+Finishing class org.jfree.chart.plot.MeterIntervalTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.035sec
+Starting class org.jfree.chart.plot.MeterPlotTest
+Finishing class org.jfree.chart.plot.MeterPlotTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.057sec
+Starting class org.jfree.chart.plot.MultiplePiePlotTest
+Finishing class org.jfree.chart.plot.MultiplePiePlotTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.chart.plot.PieLabelRecordTest
+Finishing class org.jfree.chart.plot.PieLabelRecordTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.04sec
+Starting class org.jfree.chart.plot.PiePlot3DTest
+Finishing class org.jfree.chart.plot.PiePlot3DTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.04sec
+Starting class org.jfree.chart.plot.PiePlotTest
+Finishing class org.jfree.chart.plot.PiePlotTest Tests run: 16 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.207sec
+Starting class org.jfree.chart.plot.PlotOrientationTest
+Finishing class org.jfree.chart.plot.PlotOrientationTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.025sec
+Starting class org.jfree.chart.plot.PlotRenderingInfoTest
+Finishing class org.jfree.chart.plot.PlotRenderingInfoTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.041sec
+Starting class org.jfree.chart.plot.PlotTest
+Finishing class org.jfree.chart.plot.PlotTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.013sec
+Starting class org.jfree.chart.plot.PolarPlotTest
+Finishing class org.jfree.chart.plot.PolarPlotTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.158sec
+Starting class org.jfree.chart.plot.RingPlotTest
+Finishing class org.jfree.chart.plot.RingPlotTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.046sec
+Starting class org.jfree.chart.plot.SpiderWebPlotTest
+Finishing class org.jfree.chart.plot.SpiderWebPlotTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.chart.plot.ThermometerPlotTest
+Finishing class org.jfree.chart.plot.ThermometerPlotTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.069sec
+Starting class org.jfree.chart.plot.ValueMarkerTest
+Finishing class org.jfree.chart.plot.ValueMarkerTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.08sec
+Starting class org.jfree.chart.plot.XYPlotTest
+Finishing class org.jfree.chart.plot.XYPlotTest Tests run: 42 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.738sec
+Starting class org.jfree.chart.renderer.AbstractRendererTest
+Finishing class org.jfree.chart.renderer.AbstractRendererTest Tests run: 14 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.204sec
+Starting class org.jfree.chart.renderer.AreaRendererEndTypeTest
+Finishing class org.jfree.chart.renderer.AreaRendererEndTypeTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.027sec
+Starting class org.jfree.chart.renderer.category.AbstractCategoryItemRendererTest
+Finishing class org.jfree.chart.renderer.category.AbstractCategoryItemRendererTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.147sec
+Starting class org.jfree.chart.renderer.category.AreaRendererTest
+Finishing class org.jfree.chart.renderer.category.AreaRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.083sec
+Starting class org.jfree.chart.renderer.category.BarRendererTest
+Finishing class org.jfree.chart.renderer.category.BarRendererTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.122sec
+Starting class org.jfree.chart.renderer.category.BoxAndWhiskerRendererTest
+Finishing class org.jfree.chart.renderer.category.BoxAndWhiskerRendererTest Tests run: 18 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.327sec
+Starting class org.jfree.chart.renderer.category.CategoryStepRendererTest
+Finishing class org.jfree.chart.renderer.category.CategoryStepRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.071sec
+Starting class org.jfree.chart.renderer.category.DefaultCategoryItemRendererTest
+Finishing class org.jfree.chart.renderer.category.DefaultCategoryItemRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.071sec
+Starting class org.jfree.chart.renderer.category.GanttRendererTest
+Finishing class org.jfree.chart.renderer.category.GanttRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.085sec
+Starting class org.jfree.chart.renderer.category.GradientBarPainterTest
+Finishing class org.jfree.chart.renderer.category.GradientBarPainterTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.renderer.category.GroupedStackedBarRendererTest
+Finishing class org.jfree.chart.renderer.category.GroupedStackedBarRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.1sec
+Starting class org.jfree.chart.renderer.category.IntervalBarRendererTest
+Finishing class org.jfree.chart.renderer.category.IntervalBarRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.105sec
+Starting class org.jfree.chart.renderer.category.LayeredBarRendererTest
+Finishing class org.jfree.chart.renderer.category.LayeredBarRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.094sec
+Starting class org.jfree.chart.renderer.category.LevelRendererTest
+Finishing class org.jfree.chart.renderer.category.LevelRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.105sec
+Starting class org.jfree.chart.renderer.category.LineAndShapeRendererTest
+Finishing class org.jfree.chart.renderer.category.LineAndShapeRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.101sec
+Starting class org.jfree.chart.renderer.category.MinMaxCategoryRendererTest
+Finishing class org.jfree.chart.renderer.category.MinMaxCategoryRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.093sec
+Starting class org.jfree.chart.renderer.category.ScatterRendererTest
+Finishing class org.jfree.chart.renderer.category.ScatterRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.084sec
+Starting class org.jfree.chart.renderer.category.StackedAreaRendererTest
+Finishing class org.jfree.chart.renderer.category.StackedAreaRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.085sec
+Starting class org.jfree.chart.renderer.category.StackedBarRendererTest
+Finishing class org.jfree.chart.renderer.category.StackedBarRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.082sec
+Starting class org.jfree.chart.renderer.category.StandardBarPainterTest
+Finishing class org.jfree.chart.renderer.category.StandardBarPainterTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.renderer.category.StatisticalBarRendererTest
+Finishing class org.jfree.chart.renderer.category.StatisticalBarRendererTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.198sec
+Starting class org.jfree.chart.renderer.category.StatisticalLineAndShapeRendererTest
+Finishing class org.jfree.chart.renderer.category.StatisticalLineAndShapeRendererTest Tests run: 8 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.121sec
+Starting class org.jfree.chart.renderer.category.WaterfallBarRendererTest
+Finishing class org.jfree.chart.renderer.category.WaterfallBarRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.092sec
+Starting class org.jfree.chart.renderer.DefaultPolarItemRendererTest
+Finishing class org.jfree.chart.renderer.DefaultPolarItemRendererTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.054sec
+Starting class org.jfree.chart.renderer.GrayPaintScaleTest
+Finishing class org.jfree.chart.renderer.GrayPaintScaleTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.chart.renderer.LookupPaintScaleTest
+Finishing class org.jfree.chart.renderer.LookupPaintScaleTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.103sec
+Starting class org.jfree.chart.renderer.OutlierTest
+Finishing class org.jfree.chart.renderer.OutlierTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.054sec
+Starting class org.jfree.chart.renderer.RendererUtilitiesTest
+Finishing class org.jfree.chart.renderer.RendererUtilitiesTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.1sec
+Starting class org.jfree.chart.renderer.xy.AbstractXYItemRendererTest
+Finishing class org.jfree.chart.renderer.xy.AbstractXYItemRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.098sec
+Starting class org.jfree.chart.renderer.xy.CandlestickRendererTest
+Finishing class org.jfree.chart.renderer.xy.CandlestickRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.112sec
+Starting class org.jfree.chart.renderer.xy.ClusteredXYBarRendererTest
+Finishing class org.jfree.chart.renderer.xy.ClusteredXYBarRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.09sec
+Starting class org.jfree.chart.renderer.xy.DeviationRendererTest
+Finishing class org.jfree.chart.renderer.xy.DeviationRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.075sec
+Starting class org.jfree.chart.renderer.xy.GradientXYBarPainterTest
+Finishing class org.jfree.chart.renderer.xy.GradientXYBarPainterTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.renderer.xy.HighLowRendererTest
+Finishing class org.jfree.chart.renderer.xy.HighLowRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.089sec
+Starting class org.jfree.chart.renderer.xy.StackedXYAreaRenderer2Test
+Finishing class org.jfree.chart.renderer.xy.StackedXYAreaRenderer2Test Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.114sec
+Starting class org.jfree.chart.renderer.xy.StackedXYAreaRendererTest
+Finishing class org.jfree.chart.renderer.xy.StackedXYAreaRendererTest Tests run: 8 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.148sec
+Starting class org.jfree.chart.renderer.xy.StackedXYBarRendererTest
+Finishing class org.jfree.chart.renderer.xy.StackedXYBarRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.107sec
+Starting class org.jfree.chart.renderer.xy.StandardXYBarPainterTest
+Finishing class org.jfree.chart.renderer.xy.StandardXYBarPainterTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.061sec
+Starting class org.jfree.chart.renderer.xy.StandardXYItemRendererTest
+Finishing class org.jfree.chart.renderer.xy.StandardXYItemRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.105sec
+Starting class org.jfree.chart.renderer.xy.VectorRendererTest
+Finishing class org.jfree.chart.renderer.xy.VectorRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.078sec
+Starting class org.jfree.chart.renderer.xy.WindItemRendererTest
+Finishing class org.jfree.chart.renderer.xy.WindItemRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.078sec
+Starting class org.jfree.chart.renderer.xy.XYAreaRenderer2Test
+Finishing class org.jfree.chart.renderer.xy.XYAreaRenderer2Test Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.113sec
+Starting class org.jfree.chart.renderer.xy.XYAreaRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYAreaRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.11sec
+Starting class org.jfree.chart.renderer.xy.XYBarRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYBarRendererTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.173sec
+Starting class org.jfree.chart.renderer.xy.XYBlockRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYBlockRendererTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.139sec
+Starting class org.jfree.chart.renderer.xy.XYBoxAndWhiskerRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYBoxAndWhiskerRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.1sec
+Starting class org.jfree.chart.renderer.xy.XYBubbleRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYBubbleRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.098sec
+Starting class org.jfree.chart.renderer.xy.XYDifferenceRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYDifferenceRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.109sec
+Starting class org.jfree.chart.renderer.xy.XYDotRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYDotRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.1sec
+Starting class org.jfree.chart.renderer.xy.XYErrorRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYErrorRendererTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.147sec
+Starting class org.jfree.chart.renderer.xy.XYLineAndShapeRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYLineAndShapeRendererTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.14sec
+Starting class org.jfree.chart.renderer.xy.XYShapeRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYShapeRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.081sec
+Starting class org.jfree.chart.renderer.xy.XYSplineRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYSplineRendererTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.084sec
+Starting class org.jfree.chart.renderer.xy.XYStepAreaRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYStepAreaRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.103sec
+Starting class org.jfree.chart.renderer.xy.XYStepRendererTest
+Finishing class org.jfree.chart.renderer.xy.XYStepRendererTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.14sec
+Starting class org.jfree.chart.renderer.xy.YIntervalRendererTest
+Finishing class org.jfree.chart.renderer.xy.YIntervalRendererTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.135sec
+Starting class org.jfree.chart.ScatterPlotTest
+Finishing class org.jfree.chart.ScatterPlotTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.058sec
+Starting class org.jfree.chart.StackedAreaChartTest
+Finishing class org.jfree.chart.StackedAreaChartTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.069sec
+Starting class org.jfree.chart.StackedBarChartTest
+Finishing class org.jfree.chart.StackedBarChartTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.071sec
+Starting class org.jfree.chart.StandardChartThemeTest
+Finishing class org.jfree.chart.StandardChartThemeTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.StrokeMapTest
+Finishing class org.jfree.chart.StrokeMapTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.1sec
+Starting class org.jfree.chart.text.TextAnchorTest
+Finishing class org.jfree.chart.text.TextAnchorTest Tests run: 15 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.237sec
+Starting class org.jfree.chart.TimeSeriesChartTest
+Finishing class org.jfree.chart.TimeSeriesChartTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.title.CompositeTitleTest
+Finishing class org.jfree.chart.title.CompositeTitleTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.083sec
+Starting class org.jfree.chart.title.DateTitleTest
+Finishing class org.jfree.chart.title.DateTitleTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.067sec
+Starting class org.jfree.chart.title.ImageTitleTest
+Finishing class org.jfree.chart.title.ImageTitleTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.096sec
+Starting class org.jfree.chart.title.LegendGraphicTest
+Finishing class org.jfree.chart.title.LegendGraphicTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.086sec
+Starting class org.jfree.chart.title.LegendTitleTest
+Finishing class org.jfree.chart.title.LegendTitleTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.072sec
+Starting class org.jfree.chart.title.PaintScaleLegendTest
+Finishing class org.jfree.chart.title.PaintScaleLegendTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.094sec
+Starting class org.jfree.chart.title.ShortTextTitleTest
+Finishing class org.jfree.chart.title.ShortTextTitleTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.077sec
+Starting class org.jfree.chart.title.TextTitleTest
+Finishing class org.jfree.chart.title.TextTitleTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.071sec
+Starting class org.jfree.chart.title.TitleTest
+Finishing class org.jfree.chart.title.TitleTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.035sec
+Starting class org.jfree.chart.ui.RectangleAnchorTest
+Finishing class org.jfree.chart.ui.RectangleAnchorTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.016sec
+Starting class org.jfree.chart.urls.CustomCategoryURLGeneratorTest
+Finishing class org.jfree.chart.urls.CustomCategoryURLGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.085sec
+Starting class org.jfree.chart.urls.CustomPieURLGeneratorTest
+Finishing class org.jfree.chart.urls.CustomPieURLGeneratorTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.066sec
+Starting class org.jfree.chart.urls.CustomXYURLGeneratorTest
+Finishing class org.jfree.chart.urls.CustomXYURLGeneratorTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.084sec
+Starting class org.jfree.chart.urls.StandardCategoryURLGeneratorTest
+Finishing class org.jfree.chart.urls.StandardCategoryURLGeneratorTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.065sec
+Starting class org.jfree.chart.urls.StandardPieURLGeneratorTest
+Finishing class org.jfree.chart.urls.StandardPieURLGeneratorTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.061sec
+Starting class org.jfree.chart.urls.StandardXYURLGeneratorTest
+Finishing class org.jfree.chart.urls.StandardXYURLGeneratorTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.03sec
+Starting class org.jfree.chart.urls.TimeSeriesURLGeneratorTest
+Finishing class org.jfree.chart.urls.TimeSeriesURLGeneratorTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.065sec
+Starting class org.jfree.chart.util.HMSNumberFormatTest
+Finishing class org.jfree.chart.util.HMSNumberFormatTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.016sec
+Starting class org.jfree.chart.util.LineUtilsTest
+Finishing class org.jfree.chart.util.LineUtilsTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.015sec
+Starting class org.jfree.chart.util.LogFormatTest
+Finishing class org.jfree.chart.util.LogFormatTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.071sec
+Starting class org.jfree.chart.util.RelativeDateFormatTest
+Finishing class org.jfree.chart.util.RelativeDateFormatTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.098sec
+Starting class org.jfree.chart.WaterfallChartTest
+Finishing class org.jfree.chart.WaterfallChartTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.053sec
+Starting class org.jfree.chart.XYAreaChartTest
+Finishing class org.jfree.chart.XYAreaChartTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.chart.XYBarChartTest
+Finishing class org.jfree.chart.XYBarChartTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.XYLineChartTest
+Finishing class org.jfree.chart.XYLineChartTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.XYStepAreaChartTest
+Finishing class org.jfree.chart.XYStepAreaChartTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.052sec
+Starting class org.jfree.chart.XYStepChartTest
+Finishing class org.jfree.chart.XYStepChartTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.055sec
+Starting class org.jfree.data.category.CategoryToPieDatasetTest
+Finishing class org.jfree.data.category.CategoryToPieDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.098sec
+Starting class org.jfree.data.category.DefaultCategoryDatasetTest
+Finishing class org.jfree.data.category.DefaultCategoryDatasetTest Tests run: 14 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.232sec
+Starting class org.jfree.data.category.DefaultIntervalCategoryDatasetTest
+Finishing class org.jfree.data.category.DefaultIntervalCategoryDatasetTest Tests run: 20 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.332sec
+Starting class org.jfree.data.category.SlidingCategoryDatasetTest
+Finishing class org.jfree.data.category.SlidingCategoryDatasetTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.153sec
+Starting class org.jfree.data.ComparableObjectItemTest
+Finishing class org.jfree.data.ComparableObjectItemTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.084sec
+Starting class org.jfree.data.ComparableObjectSeriesTest
+Finishing class org.jfree.data.ComparableObjectSeriesTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.088sec
+Starting class org.jfree.data.DataUtilitiesTest
+Finishing class org.jfree.data.DataUtilitiesTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.117sec
+Starting class org.jfree.data.DefaultKeyedValues2DTest
+Finishing class org.jfree.data.DefaultKeyedValues2DTest Tests run: 14 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.236sec
+Starting class org.jfree.data.DefaultKeyedValuesTest
+Finishing class org.jfree.data.DefaultKeyedValuesTest Tests run: 18 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.327sec
+Starting class org.jfree.data.DefaultKeyedValueTest
+Finishing class org.jfree.data.DefaultKeyedValueTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.076sec
+Starting class org.jfree.data.DomainOrderTest
+Finishing class org.jfree.data.DomainOrderTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.05sec
+Starting class org.jfree.data.extension.CategoryDatasetSelectionExtensionTest
+Finishing class org.jfree.data.extension.CategoryDatasetSelectionExtensionTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.042sec
+Starting class org.jfree.data.extension.PieDatasetSelectionExtensionTest
+Finishing class org.jfree.data.extension.PieDatasetSelectionExtensionTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.021sec
+Starting class org.jfree.data.extension.XYDatasetSelectionExtensionTest
+Finishing class org.jfree.data.extension.XYDatasetSelectionExtensionTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.022sec
+Starting class org.jfree.data.function.LineFunction2DTest
+Finishing class org.jfree.data.function.LineFunction2DTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.072sec
+Starting class org.jfree.data.function.NormalDistributionFunction2DTest
+Finishing class org.jfree.data.function.NormalDistributionFunction2DTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.069sec
+Starting class org.jfree.data.function.PolynomialFunction2DTest
+Finishing class org.jfree.data.function.PolynomialFunction2DTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.113sec
+Starting class org.jfree.data.function.PowerFunction2DTest
+Finishing class org.jfree.data.function.PowerFunction2DTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.072sec
+Starting class org.jfree.data.gantt.SlidingGanttCategoryDatasetTest
+Finishing class org.jfree.data.gantt.SlidingGanttCategoryDatasetTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.07sec
+Starting class org.jfree.data.gantt.TaskSeriesCollectionTest
+Finishing class org.jfree.data.gantt.TaskSeriesCollectionTest Tests run: 24 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.458sec
+Starting class org.jfree.data.gantt.TaskSeriesTest
+Finishing class org.jfree.data.gantt.TaskSeriesTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.data.gantt.TaskTest
+Finishing class org.jfree.data.gantt.TaskTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.072sec
+Starting class org.jfree.data.gantt.XYTaskDatasetTest
+Finishing class org.jfree.data.gantt.XYTaskDatasetTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.055sec
+Starting class org.jfree.data.general.DatasetUtilitiesTest
+Finishing class org.jfree.data.general.DatasetUtilitiesTest Tests run: 59 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 1.072sec
+Starting class org.jfree.data.general.DefaultHeatMapDatasetTest
+Finishing class org.jfree.data.general.DefaultHeatMapDatasetTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.072sec
+Starting class org.jfree.data.general.DefaultKeyedValueDatasetTest
+Finishing class org.jfree.data.general.DefaultKeyedValueDatasetTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.068sec
+Starting class org.jfree.data.general.DefaultKeyedValues2DDatasetTest
+Finishing class org.jfree.data.general.DefaultKeyedValues2DDatasetTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.038sec
+Starting class org.jfree.data.general.DefaultKeyedValuesDatasetTest
+Finishing class org.jfree.data.general.DefaultKeyedValuesDatasetTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.038sec
+Starting class org.jfree.data.general.DefaultPieDatasetTest
+Finishing class org.jfree.data.general.DefaultPieDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.11sec
+Starting class org.jfree.data.KeyedObjects2DTest
+Finishing class org.jfree.data.KeyedObjects2DTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.207sec
+Starting class org.jfree.data.KeyedObjectsTest
+Finishing class org.jfree.data.KeyedObjectsTest Tests run: 10 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.179sec
+Starting class org.jfree.data.KeyedObjectTest
+Finishing class org.jfree.data.KeyedObjectTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.069sec
+Starting class org.jfree.data.KeyToGroupMapTest
+Finishing class org.jfree.data.KeyToGroupMapTest Tests run: 8 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.138sec
+Starting class org.jfree.data.RangeTest
+Finishing class org.jfree.data.RangeTest Tests run: 13 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.231sec
+Starting class org.jfree.data.RangeTypeTest
+Finishing class org.jfree.data.RangeTypeTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.049sec
+Starting class org.jfree.data.statistics.BoxAndWhiskerCalculatorTest
+Finishing class org.jfree.data.statistics.BoxAndWhiskerCalculatorTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.066sec
+Starting class org.jfree.data.statistics.BoxAndWhiskerItemTest
+Finishing class org.jfree.data.statistics.BoxAndWhiskerItemTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.033sec
+Starting class org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDatasetTest
+Finishing class org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDatasetTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.159sec
+Starting class org.jfree.data.statistics.DefaultBoxAndWhiskerXYDatasetTest
+Finishing class org.jfree.data.statistics.DefaultBoxAndWhiskerXYDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.104sec
+Starting class org.jfree.data.statistics.DefaultMultiValueCategoryDatasetTest
+Finishing class org.jfree.data.statistics.DefaultMultiValueCategoryDatasetTest Tests run: 8 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.145sec
+Starting class org.jfree.data.statistics.DefaultStatisticalCategoryDatasetTest
+Finishing class org.jfree.data.statistics.DefaultStatisticalCategoryDatasetTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.191sec
+Starting class org.jfree.data.statistics.HistogramBinTest
+Finishing class org.jfree.data.statistics.HistogramBinTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.091sec
+Starting class org.jfree.data.statistics.HistogramDatasetTest
+Finishing class org.jfree.data.statistics.HistogramDatasetTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.091sec
+Starting class org.jfree.data.statistics.MeanAndStandardDeviationTest
+Finishing class org.jfree.data.statistics.MeanAndStandardDeviationTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.051sec
+Starting class org.jfree.data.statistics.RegressionTest
+Finishing class org.jfree.data.statistics.RegressionTest Tests run: 8 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.138sec
+Starting class org.jfree.data.statistics.StatisticsTest
+Finishing class org.jfree.data.statistics.StatisticsTest Tests run: 12 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.216sec
+Starting class org.jfree.data.time.DateRangeTest
+Finishing class org.jfree.data.time.DateRangeTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.068sec
+Starting class org.jfree.data.time.DayTest
+Finishing class org.jfree.data.time.DayTest Tests run: 22 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.388sec
+Starting class org.jfree.data.time.FixedMillisecondTest
+Finishing class org.jfree.data.time.FixedMillisecondTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.073sec
+Starting class org.jfree.data.time.HourTest
+Finishing class org.jfree.data.time.HourTest Tests run: 22 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.396sec
+Starting class org.jfree.data.time.MillisecondTest
+Finishing class org.jfree.data.time.MillisecondTest Tests run: 18 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.322sec
+Starting class org.jfree.data.time.MinuteTest
+Finishing class org.jfree.data.time.MinuteTest Tests run: 18 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.316sec
+Starting class org.jfree.data.time.MonthTest
+Finishing class org.jfree.data.time.MonthTest Tests run: 22 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.395sec
+Starting class org.jfree.data.time.MovingAverageTest
+Finishing class org.jfree.data.time.MovingAverageTest Tests run: 1 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.024sec
+Starting class org.jfree.data.time.ohlc.OHLCItemTest
+Finishing class org.jfree.data.time.ohlc.OHLCItemTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.093sec
+Starting class org.jfree.data.time.ohlc.OHLCSeriesCollectionTest
+Finishing class org.jfree.data.time.ohlc.OHLCSeriesCollectionTest Tests run: 8 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.151sec
+Starting class org.jfree.data.time.ohlc.OHLCSeriesTest
+Finishing class org.jfree.data.time.ohlc.OHLCSeriesTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.202sec
+Starting class org.jfree.data.time.ohlc.OHLCTest
+Finishing class org.jfree.data.time.ohlc.OHLCTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.067sec
+Starting class org.jfree.data.time.QuarterTest
+Finishing class org.jfree.data.time.QuarterTest Tests run: 23 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.436sec
+Starting class org.jfree.data.time.SecondTest
+Finishing class org.jfree.data.time.SecondTest Tests run: 17 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.305sec
+Starting class org.jfree.data.time.SimpleTimePeriodTest
+Finishing class org.jfree.data.time.SimpleTimePeriodTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.123sec
+Starting class org.jfree.data.time.TimePeriodAnchorTest
+Finishing class org.jfree.data.time.TimePeriodAnchorTest Tests run: 2 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.036sec
+Starting class org.jfree.data.time.TimePeriodValuesCollectionTest
+Finishing class org.jfree.data.time.TimePeriodValuesCollectionTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.117sec
+Starting class org.jfree.data.time.TimePeriodValuesTest
+Finishing class org.jfree.data.time.TimePeriodValuesTest Tests run: 12 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.225sec
+Starting class org.jfree.data.time.TimePeriodValueTest
+Finishing class org.jfree.data.time.TimePeriodValueTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.053sec
+Starting class org.jfree.data.time.TimeSeriesCollectionTest
+Finishing class org.jfree.data.time.TimeSeriesCollectionTest Tests run: 12 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.221sec
+Starting class org.jfree.data.time.TimeSeriesDataItemTest
+Finishing class org.jfree.data.time.TimeSeriesDataItemTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.057sec
+Starting class org.jfree.data.time.TimeSeriesTest
+Finishing class org.jfree.data.time.TimeSeriesTest Tests run: 44 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.813sec
+Starting class org.jfree.data.time.TimeTableXYDatasetTest
+Finishing class org.jfree.data.time.TimeTableXYDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.113sec
+Starting class org.jfree.data.time.WeekTest
+Finishing class org.jfree.data.time.WeekTest Tests run: 23 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.443sec
+Starting class org.jfree.data.time.YearTest
+Finishing class org.jfree.data.time.YearTest Tests run: 22 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.434sec
+Starting class org.jfree.data.xy.CategoryTableXYDatasetTest
+Finishing class org.jfree.data.xy.CategoryTableXYDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.12sec
+Starting class org.jfree.data.xy.DefaultHighLowDatasetTest
+Finishing class org.jfree.data.xy.DefaultHighLowDatasetTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.071sec
+Starting class org.jfree.data.xy.DefaultIntervalXYDatasetTest
+Finishing class org.jfree.data.xy.DefaultIntervalXYDatasetTest Tests run: 16 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.299sec
+Starting class org.jfree.data.xy.DefaultOHLCDatasetTest
+Finishing class org.jfree.data.xy.DefaultOHLCDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.113sec
+Starting class org.jfree.data.xy.DefaultTableXYDatasetTest
+Finishing class org.jfree.data.xy.DefaultTableXYDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.117sec
+Starting class org.jfree.data.xy.DefaultWindDatasetTest
+Finishing class org.jfree.data.xy.DefaultWindDatasetTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.119sec
+Starting class org.jfree.data.xy.DefaultXYDatasetTest
+Finishing class org.jfree.data.xy.DefaultXYDatasetTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.134sec
+Starting class org.jfree.data.xy.DefaultXYZDatasetTest
+Finishing class org.jfree.data.xy.DefaultXYZDatasetTest Tests run: 7 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.133sec
+Starting class org.jfree.data.xy.IntervalXYDelegateTest
+Finishing class org.jfree.data.xy.IntervalXYDelegateTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.064sec
+Starting class org.jfree.data.xy.MatrixSeriesCollectionTest
+Finishing class org.jfree.data.xy.MatrixSeriesCollectionTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.079sec
+Starting class org.jfree.data.xy.MatrixSeriesTest
+Finishing class org.jfree.data.xy.MatrixSeriesTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.11sec
+Starting class org.jfree.data.xy.OHLCDataItemTest
+Finishing class org.jfree.data.xy.OHLCDataItemTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.056sec
+Starting class org.jfree.data.xy.TableXYDatasetTest
+Finishing class org.jfree.data.xy.TableXYDatasetTest Tests run: 9 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.179sec
+Starting class org.jfree.data.xy.VectorDataItemTest
+Finishing class org.jfree.data.xy.VectorDataItemTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.081sec
+Starting class org.jfree.data.xy.VectorSeriesCollectionTest
+Finishing class org.jfree.data.xy.VectorSeriesCollectionTest Tests run: 5 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.1sec
+Starting class org.jfree.data.xy.VectorSeriesTest
+Finishing class org.jfree.data.xy.VectorSeriesTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.205sec
+Starting class org.jfree.data.xy.VectorTest
+Finishing class org.jfree.data.xy.VectorTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.078sec
+Starting class org.jfree.data.xy.XIntervalDataItemTest
+Finishing class org.jfree.data.xy.XIntervalDataItemTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.08sec
+Starting class org.jfree.data.xy.XIntervalSeriesCollectionTest
+Finishing class org.jfree.data.xy.XIntervalSeriesCollectionTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.111sec
+Starting class org.jfree.data.xy.XIntervalSeriesTest
+Finishing class org.jfree.data.xy.XIntervalSeriesTest Tests run: 13 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.249sec
+Starting class org.jfree.data.xy.XYBarDatasetTest
+Finishing class org.jfree.data.xy.XYBarDatasetTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.076sec
+Starting class org.jfree.data.xy.XYCoordinateTest
+Finishing class org.jfree.data.xy.XYCoordinateTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.data.xy.XYDataItemTest
+Finishing class org.jfree.data.xy.XYDataItemTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.055sec
+Starting class org.jfree.data.xy.XYIntervalDataItemTest
+Finishing class org.jfree.data.xy.XYIntervalDataItemTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.074sec
+Starting class org.jfree.data.xy.XYIntervalSeriesCollectionTest
+Finishing class org.jfree.data.xy.XYIntervalSeriesCollectionTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.113sec
+Starting class org.jfree.data.xy.XYIntervalSeriesTest
+Finishing class org.jfree.data.xy.XYIntervalSeriesTest Tests run: 12 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.224sec
+Starting class org.jfree.data.xy.XYIntervalTest
+Finishing class org.jfree.data.xy.XYIntervalTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.071sec
+Starting class org.jfree.data.xy.XYSeriesCollectionTest
+Finishing class org.jfree.data.xy.XYSeriesCollectionTest Tests run: 18 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.339sec
+Starting class org.jfree.data.xy.XYSeriesTest
+Finishing class org.jfree.data.xy.XYSeriesTest Tests run: 37 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.709sec
+Starting class org.jfree.data.xy.YIntervalDataItemTest
+Finishing class org.jfree.data.xy.YIntervalDataItemTest Tests run: 4 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.086sec
+Starting class org.jfree.data.xy.YIntervalSeriesCollectionTest
+Finishing class org.jfree.data.xy.YIntervalSeriesCollectionTest Tests run: 6 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.124sec
+Starting class org.jfree.data.xy.YIntervalSeriesTest
+Finishing class org.jfree.data.xy.YIntervalSeriesTest Tests run: 11 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.223sec
+Starting class org.jfree.data.xy.YIntervalTest
+Finishing class org.jfree.data.xy.YIntervalTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.06sec
+Starting class org.jfree.data.xy.YWithXIntervalTest
+Finishing class org.jfree.data.xy.YWithXIntervalTest Tests run: 3 Failures: 0 Errors: 0 Skipped: 0 Time elapsed: 0.061sec
+-------------------------------------------------
+Tacoco Execution Time: 39.90799999999999sec
+Run Counts:2189
+Failure Counts:0
+Ignore Counts:2
+Number of Thread:1
+-------------------------------------------------

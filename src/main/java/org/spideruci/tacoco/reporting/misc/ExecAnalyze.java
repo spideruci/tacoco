@@ -1,10 +1,21 @@
 package org.spideruci.tacoco.reporting.misc;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.jacoco.core.*;
-import org.jacoco.core.analysis.*;
-import org.jacoco.core.data.*;
+import org.jacoco.core.analysis.ICounter;
+import org.jacoco.core.analysis.ICoverageNode;
+import org.jacoco.core.analysis.ILine;
+import org.jacoco.core.analysis.ISourceFileCoverage;
+import org.jacoco.core.analysis.ISourceNode;
+import org.jacoco.core.data.ExecutionDataReader;
+import org.jacoco.core.data.ExecutionDataStore;
+import org.jacoco.core.data.SessionInfo;
+import org.jacoco.core.data.SessionInfoStore;
 
 public class ExecAnalyze 
 {
