@@ -178,8 +178,8 @@ public class  DBUtil{
 
 	}
 
-	public void prepareDBFor(String projectFQN) {
-		String sql = "SELECT PROJECT_ID, FQN FROM PROJECT";
+	public void prepareDBFor(String projectFQN, String buildType) {
+		String sql = "SELECT PROJECT_ID, FQN FROM PROJECT ORDER BY PROJECT_ID";
 		try{
 			Statement stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -196,16 +196,19 @@ public class  DBUtil{
 		if(sid.containsKey(projectFQN)) {
 			deleteTablesFor(sid.get(projectFQN));
 		}
+		else{
+			insertProject(projectFQN, buildType);
+		}
 	}
 
 	private void deleteTablesFor(int project_id) {
 
-		String deleteProject="DELETE FROM PROJECT WHERE PROJECT_ID=?";
+		//String deleteProject="DELETE FROM PROJECT WHERE PROJECT_ID=?";
 		String deleteTest="DELETE FROM TESTCASE WHERE PROJECT_ID=?";
 		String deleteSource="DELETE FROM SOURCE WHERE PROJECT_ID=?";
 		String deleteLineCoverage="DELETE FROM LINE_COVERAGE WHERE PROJECT_ID=?";
 
-		execPsmt(deleteProject, project_id);
+		//execPsmt(deleteProject, project_id);
 		execPsmt(deleteTest, project_id);
 		execPsmt(deleteSource, project_id);
 		execPsmt(deleteLineCoverage, project_id);	

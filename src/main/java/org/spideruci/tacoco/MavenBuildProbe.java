@@ -37,7 +37,6 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		List<String> ret = new ArrayList<>();
 		for(String s: scanner.getIncludedFiles()){
 			ret.add(s.replaceAll("/", ".").replaceAll("\\.class",""));
-			System.out.println(s);
 		}
 		return ret;
 	}
