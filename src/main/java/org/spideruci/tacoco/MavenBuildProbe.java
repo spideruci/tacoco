@@ -79,7 +79,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 				excludes.add(n.getValue().replaceAll("\\.java", "\\.class"));
 		}
 		//add default filter
-		if(includes.size() == 0) scanner.setIncludes(new String[]{"**/Test*.class","**/*Test.class"});
+		if(includes.size() == 0) scanner.setIncludes(new String[]{"**/Test*.class","**/*Test.class","**/*TestCase.class"});
 	}
 
 

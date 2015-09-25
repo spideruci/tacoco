@@ -127,9 +127,10 @@ public final class JUnitRunner extends Thread{
 		if(Modifier.isAbstract(c.getModifiers())) return false;
 		//Run a class which has @Test annotation //JUnit4
 		for(Method m:c.getMethods()){
-			if(m.getAnnotation(Test.class) != null ||
-					m.getName().startsWith("test")) return true;  
+			if(m.getAnnotation(Test.class) != null) return true;  
 		}
+		//JUnit3
+		if(TestCase.class.isAssignableFrom(c)) return true;
 		return false;
 	}
 }
