@@ -1,20 +1,19 @@
 #!/bin/bash
 
-cd $1
-mvn dependency:build-classpath -Dmdep.outputFile="cp.txt"
-export CLASSPATH=`cat cp.txt`:$CLASSPATH
-echo $CLASSPATH
-export CLASSPATH=$1/target/test-classes:$1/target/classes:$CLASSPATH
-echo $CLASSPATH
+project_name=$(echo $1 | rev | cut -d'/' -f 1 | rev)
+echo $project_name
 
 cd $2
-mvn dependency:build-classpath -Dmdep.outputFile="cp.txt"
-export CLASSPATH=`cat cp.txt`:$CLASSPATH
-echo $CLASSPATH
-export CLASSPATH=$2/target/test-classes:$2/target/classes:$CLASSPATH
-echo $CLASSPATH
-mvn dependency:copy-dependencies -DoutputDirectory=lib
+echo "RUNNING TACOCO"
+mvn -q exec:java -Plauncher -Dtacoco.sut=$1 -Dtacoco.home=$2
+echo "RUNNING TACOCO --- DONE"
 
-cd $1
-java -Dtacoco.pm=classes -javaagent:$2/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile=jacoco.exec,dumponexit=false org.spideruci.tacoco.TacocoRunner $1/target/test-classes
+echo "ANALYZING EXEC FILE"
+mvn -q exec:java -Panalyzer -Dtacoco.sut=$1 -Dtacoco.exec=tacoco_output/$project_name.exec -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
+echo "ANALYZING EXEC FILE --- DONE"
 
+echo "READING COVERAGE MATRIX"
+mvn -q exec:java -Preader -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
+echo "READING COVERAGE MATRIX --- DONE"
+
+open tacoco_output/$project_name"-cov-matrix.json"
