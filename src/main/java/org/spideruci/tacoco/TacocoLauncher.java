@@ -1,6 +1,7 @@
 package org.spideruci.tacoco;
 
 import static org.spideruci.tacoco.cli.CliAble.DB;
+import static org.spideruci.tacoco.cli.CliAble.EXEC;
 import static org.spideruci.tacoco.cli.CliAble.HOME;
 import static org.spideruci.tacoco.cli.CliAble.OUTDIR;
 import static org.spideruci.tacoco.cli.CliAble.SUT;
@@ -25,9 +26,13 @@ public class TacocoLauncher {
 	}
 
 	public static void main(String[] args) throws Exception{
+		
+		String targetDir = readArgumentValue(SUT);
+		if(targetDir.endsWith("/")) targetDir = targetDir.substring(0, targetDir.length());
+		
 
 		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME,System.getProperty("user.dir"))
-													,readArgumentValue(SUT));
+													,targetDir);
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
 		
 		launcher.setTacocoEnv();
@@ -45,11 +50,12 @@ public class TacocoLauncher {
 	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs) {
 		
 		String outdir = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output");
+		String execFile = readOptionalArgumentValue(EXEC, id+".exec");
 		
 		if(!new File(outdir).exists()) new File(outdir).mkdirs();
 		
 		//delete files before execution, 
-		File exec = new File(outdir, id+".exec");
+		File exec = new File(outdir, execFile);
 		File err = new File(outdir, id+".err");
 		File log = new File(outdir, id+".log");
 		if(exec.exists()) exec.delete();
@@ -61,7 +67,7 @@ public class TacocoLauncher {
 				"java",
 				"-cp", classpath,
 				"-Xmx1536M",// "-Duser.language=hi", "-Duser.country=IN",
-				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile="+outdir+"/"+id+".exec,dumponexit=false",
+				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile="+outdir+"/"+execFile+",dumponexit=false",
 				"-Dtacoco.sut="+targetDir,
 				"-Dtacoco.output="+outdir,
 				"-Dtacoco.log=off",
