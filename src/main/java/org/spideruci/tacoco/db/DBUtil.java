@@ -44,6 +44,7 @@ public class  DBUtil{
 	}
 
 	public int getProjectID(String FQN){
+		
 		int id;
 		if(!pid.containsKey(FQN)){
 			id = nextProjectID++;
@@ -55,7 +56,7 @@ public class  DBUtil{
 
 
 	public static DBUtil getInstance(String dbFile){
-		if(instance != null) return instance;
+		//if(instance != null) return instance;
 		instance = new DBUtil(dbFile);
 		return instance;
 	};
@@ -92,7 +93,7 @@ public class  DBUtil{
 				+ "FOREIGN KEY(PROJECT_ID) REFERENCES PROJECT(PROJECT_ID)"
 				+ ");";
 
-		String lineC ="CREATE TABLE IF NOT EXISTS `LINE_COVERAGE` ( "
+		String lineC ="CREATE TABLE IF NOT EXISTS `STMT_COVERAGE` ( "
 				+ "`TEST_ID`	INTEGER,"
 				+ "`SOURCE_ID`	INTEGER,"
 				+ "`LINE_NUM`   INTEGER,"
@@ -135,8 +136,8 @@ public class  DBUtil{
 	}
 
 	public void insertProject(String FQN, String builderType) {
-		int id = getProjectID(FQN);
-
+		int id = nextProjectID++;
+		pid.put(FQN, id);
 		String sql = "INSERT INTO PROJECT"
 				+ " VALUES(?,?,?)";
 		execPsmt(sql, id, FQN, builderType);	
@@ -150,6 +151,7 @@ public class  DBUtil{
 			}
 			psmt.execute();
 		}catch(Exception e){
+			System.out.println(sql);
 			e.printStackTrace();
 		}
 
@@ -169,7 +171,7 @@ public class  DBUtil{
 	}
 
 	public void insertLineCoverage(int testID, int sourceID, int lineNumber, int projectID) {
-		String sql = "INSERT INTO LINE_COVERAGE "
+		String sql = "INSERT INTO STMT_COVERAGE "
 				+"VALUES(?,?,?,?)";
 		execPsmt(sql, testID, sourceID, lineNumber, projectID);
 	}
@@ -184,7 +186,7 @@ public class  DBUtil{
 			Statement stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
-				sid.put(rs.getString("FQN"), rs.getInt("PROJECT_ID"));
+				pid.put(rs.getString("FQN"), rs.getInt("PROJECT_ID"));
 				++nextProjectID;
 			}
 			stmt.close();
@@ -193,8 +195,8 @@ public class  DBUtil{
 			e.printStackTrace();
 		}
 		
-		if(sid.containsKey(projectFQN)) {
-			deleteTablesFor(sid.get(projectFQN));
+		if(pid.containsKey(projectFQN)) {
+			deleteTablesFor(pid.get(projectFQN));
 		}
 		else{
 			insertProject(projectFQN, buildType);
@@ -206,7 +208,7 @@ public class  DBUtil{
 		//String deleteProject="DELETE FROM PROJECT WHERE PROJECT_ID=?";
 		String deleteTest="DELETE FROM TESTCASE WHERE PROJECT_ID=?";
 		String deleteSource="DELETE FROM SOURCE WHERE PROJECT_ID=?";
-		String deleteLineCoverage="DELETE FROM LINE_COVERAGE WHERE PROJECT_ID=?";
+		String deleteLineCoverage="DELETE FROM STMT_COVERAGE WHERE PROJECT_ID=?";
 
 		//execPsmt(deleteProject, project_id);
 		execPsmt(deleteTest, project_id);
