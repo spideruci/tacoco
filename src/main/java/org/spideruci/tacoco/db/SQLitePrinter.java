@@ -1,10 +1,7 @@
 package org.spideruci.tacoco.db;
 
-import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.buildCompact;
 import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.buildDense;
-import static org.spideruci.tacoco.reporting.data.SourceFileCoverageBuilder.buildLoose;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,15 +10,11 @@ import org.jacoco.core.analysis.ICounter;
 import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.spideruci.tacoco.reporting.ICoveragePrintable;
-import org.spideruci.tacoco.reporting.data.LineCoverageCoder;
 import org.spideruci.tacoco.reporting.data.LinesStatusCoder;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage;
-import org.spideruci.tacoco.reporting.data.SourceFileCoverage.LineCoverageFormat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class SQLitePrinter implements ICoveragePrintable {
   

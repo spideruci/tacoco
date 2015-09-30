@@ -20,6 +20,8 @@ public interface CliAble {
   public static final String DB = "tacoco.db";
   public static final String OUTDIR = "tacoco.outdir";
   public static final String HOME = "tacoco.home";
+  public static final String PROJECT = "tacoco.project";
+  
   
   static final String PREFIX = "-D";
   

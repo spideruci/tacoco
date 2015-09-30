@@ -1,10 +1,18 @@
 package org.spideruci.tacoco.reporting.misc;
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.jacoco.core.*;
-import org.jacoco.core.analysis.*;
-import org.jacoco.core.data.*;
+import org.jacoco.core.analysis.Analyzer;
+import org.jacoco.core.analysis.CoverageBuilder;
+import org.jacoco.core.analysis.ISourceFileCoverage;
+import org.jacoco.core.data.ExecutionData;
+import org.jacoco.core.data.ExecutionDataStore;
+import org.jacoco.core.data.IExecutionDataVisitor;
+import org.jacoco.core.data.ISessionInfoVisitor;
+import org.jacoco.core.data.SessionInfo;
 
 public class PerJUnitTestCaseVisitor implements ISessionInfoVisitor,IExecutionDataVisitor
 {

@@ -1,7 +1,15 @@
 package org.spideruci.tacoco.reporting;
 
+import static org.spideruci.tacoco.cli.CliAble.EXEC;
+import static org.spideruci.tacoco.cli.CliAble.FMT;
+import static org.spideruci.tacoco.cli.CliAble.HELP;
+import static org.spideruci.tacoco.cli.CliAble.JSON;
+import static org.spideruci.tacoco.cli.CliAble.PP;
+import static org.spideruci.tacoco.cli.CliAble.SUT;
+import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.printAnalyzerHelp;
+import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.*;
 
 import java.io.File;
 import java.io.FileInputStream;

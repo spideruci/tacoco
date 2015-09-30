@@ -1,12 +1,11 @@
 package org.spideruci.tacoco.reporting.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.jacoco.core.analysis.ICounter;
-import org.jacoco.core.internal.analysis.LineImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

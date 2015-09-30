@@ -1,9 +1,13 @@
 package org.spideruci.tacoco.reporting.data;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
-import static org.spideruci.hamcrest.primitive.IsIntArrayContaining.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.spideruci.hamcrest.primitive.IsIntArrayContaining.hasInt;
 
 import java.util.ArrayList;
 import java.util.Arrays;

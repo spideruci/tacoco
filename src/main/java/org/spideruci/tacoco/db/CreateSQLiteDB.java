@@ -48,10 +48,9 @@ public class CreateSQLiteDB {
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(sut);
 		final String projectFQN = probe.getId();
 		final DBUtil db = DBUtil.getInstance(dbFile);
-		db.prepareDBFor(projectFQN);
+		db.prepareDBFor(projectFQN, probe.getBuilderType().toString());
 		DBDumper dumper = createDBDumper(db);
 		final DataParser parser = new DataParser(projectRoot, dumper, db.getProjectID(projectFQN));
-		db.insertProject(projectFQN, probe.getBuilderType().toString());
 		
 
 		reader.setSessionInfoVisitor(new ISessionInfoVisitor() {

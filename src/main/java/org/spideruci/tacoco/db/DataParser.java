@@ -3,7 +3,6 @@ package org.spideruci.tacoco.db;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 
 import org.jacoco.core.analysis.Analyzer;
 import org.jacoco.core.analysis.CoverageBuilder;
@@ -11,9 +10,6 @@ import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.IExecutionDataVisitor;
-import org.spideruci.tacoco.reporting.CoverageJsonPrinter;
-import org.spideruci.tacoco.reporting.ExecDataPrintManager;
-import org.spideruci.tacoco.reporting.ICoveragePrintable;
 
 
 public class DataParser implements IExecutionDataVisitor {

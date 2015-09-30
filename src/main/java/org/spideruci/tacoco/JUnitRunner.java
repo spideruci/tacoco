@@ -129,8 +129,8 @@ public final class JUnitRunner extends Thread{
 		for(Method m:c.getMethods()){
 			if(m.getAnnotation(Test.class) != null) return true;  
 		}
-		//Run a class which extends TestCase //JUnit3
-		if(c.getSuperclass().equals(TestCase.class)) return true;  
+		//JUnit3
+		if(TestCase.class.isAssignableFrom(c)) return true;
 		return false;
 	}
 }

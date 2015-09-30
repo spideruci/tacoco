@@ -3,6 +3,7 @@ package org.spideruci.tacoco;
 import static org.spideruci.tacoco.cli.CliAble.DB;
 import static org.spideruci.tacoco.cli.CliAble.HOME;
 import static org.spideruci.tacoco.cli.CliAble.OUTDIR;
+import static org.spideruci.tacoco.cli.CliAble.PROJECT;
 import static org.spideruci.tacoco.cli.CliAble.SUT;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
@@ -25,20 +26,23 @@ public class TacocoLauncher {
 	}
 
 	public static void main(String[] args) throws Exception{
-
+		
+		String targetDir = readArgumentValue(SUT);
+		if(targetDir.endsWith("/")) targetDir = targetDir.substring(0, targetDir.length());
 		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME,System.getProperty("user.dir"))
-													,readArgumentValue(SUT));
+													,targetDir);
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
+		String name = readOptionalArgumentValue(PROJECT, probe.getId());
 		
 		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath(); 
 
 		if(probe.hasChild()){	
 			for(Child child : probe.getChildren()){
-				launcher.startJUnitRunner(child.id, child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
+				launcher.startJUnitRunner(name+"."+child.id, child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
 			}
 		}
-		launcher.startJUnitRunner(probe.getId(), parentCP, launcher.targetDir, null);
+		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null);
 	}
 
 	
@@ -61,7 +65,8 @@ public class TacocoLauncher {
 				"java",
 				"-cp", classpath,
 				"-Xmx1536M",// "-Duser.language=hi", "-Duser.country=IN",
-				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile="+outdir+"/"+id+".exec,dumponexit=false",
+				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile="
+						+outdir+"/"+id+".exec"+",dumponexit=false",
 				"-Dtacoco.sut="+targetDir,
 				"-Dtacoco.output="+outdir,
 				"-Dtacoco.log=off",
@@ -84,12 +89,11 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		String dbFile = outdir+"/tacoco.db";
+		String dbFile = outdir+"/"+id+".db";
 		if(System.getProperties().containsKey(DB))
 			try {
 				CreateSQLiteDB.dump(dbFile, targetDir, exec.toString());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}

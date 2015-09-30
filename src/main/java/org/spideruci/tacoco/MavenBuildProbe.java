@@ -2,56 +2,41 @@ package org.spideruci.tacoco;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 public class MavenBuildProbe extends AbstractBuildProbe {
+	private static final boolean String = false;
 	private String classpath=null;
 	private String targetDir;
 	private String[] modules = {};
 
 	//file filters from Maven surefire configuration
-	ArrayList<String> includes;
-	ArrayList<String> excludes;
+	DirectoryScanner scanner;
 
 	public MavenBuildProbe(String absolutTargetPath) {
 		this.targetDir = absolutTargetPath;
+		scanner = new DirectoryScanner(); 
 	}
 
 	@Override
-	public ArrayList<String> getClasses() {
-		final ArrayList<String> ret = new ArrayList<>();
-
-		try{
-			makeFilter();
-			final String p = targetDir+"/target/test-classes"; //MAVEN TEST CLASS FOLDER
-			if(!new File(p).exists()) return ret;
-			Files.walkFileTree(Paths.get(p), new SimpleFileVisitor<Path>() {
-				@Override
-				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-					String str = file.toString();
-					//
-					if(str.endsWith(".class") && !str.matches("(.*)\\$(.*)") && accept(file)) {
-						//if(str.matches(".*CharMatcher.*")) System.out.println(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class",""));
-						ret.add(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class",""));
-					}
-					return FileVisitResult.CONTINUE;
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
+	public List<String> getClasses() {
+		makeFilter();
+		scanner.setBasedir(targetDir+"/target/test-classes"); //MAVEN TEST CLASS FOLDER
+		scanner.setCaseSensitive(true);
+		scanner.scan();
+		
+		List<String> ret = new ArrayList<>();
+		for(String s: scanner.getIncludedFiles()){
+			ret.add(s.replaceAll("/", ".").replaceAll("\\.class",""));
 		}
 		return ret;
 	}
@@ -69,8 +54,6 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 
 	private void makeFilter(){
 		Xpp3Dom dom=null;
-		includes = new ArrayList<>();
-		excludes = new ArrayList<>();
 
 		if(getModel().getBuild() != null){
 			for(Plugin p : getModel().getBuild().getPlugins()){
@@ -79,38 +62,26 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 				}
 			}
 		}
-		
+
 		Xpp3Dom node = null;
+		List<String> includes = new ArrayList<>();
+		List<String> excludes = new ArrayList<>();
+		
 		if(dom !=null) node = dom.getChild("includes");
 		if(node != null){
 			for(Xpp3Dom n : node.getChildren("include"))
-				includes.add(n.getValue().replace("**/", "").replace("*", "").replaceAll("\\.java", ""));
+				includes.add(n.getValue().replaceAll("\\.java", "\\.class"));
+			scanner.setIncludes(includes.toArray(new String[0]));
 		}
 		if(dom !=null) node = dom.getChild("excludes");
 		if(node != null){
 			for(Xpp3Dom n : node.getChildren("exclude"))
-				excludes.add(n.getValue().replace("**/", "").replace("*", "").replaceAll("\\.java", ""));
+				excludes.add(n.getValue().replaceAll("\\.java", "\\.class"));
 		}
 		//add default filter
-		if(includes.size()==0) includes.add("Test");
-		
-		System.out.println("----------------Filters");
-		System.out.println("----------------includes"+includes);
-		System.out.println("----------------excludes"+excludes);
+		if(includes.size() == 0) scanner.setIncludes(new String[]{"**/Test*.class","**/*Test.class","**/*TestCase.class"});
 	}
 
-	private boolean accept(Path file) {
-
-		if(includes.size() == 0 && excludes.size() ==0) return true;
-
-		for(String in : includes){
-			if(file.toString().matches(".*"+in+".class")) return true;
-		}
-		for(String ex : excludes){
-			if(file.toString().matches(".*"+ex+".class")) return false;
-		}
-		return false;
-	}
 
 	@Override
 	public BuilderType getBuilderType() {
@@ -120,23 +91,23 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	@Override
 	public String getClasspath(){
 		try{
-		if(classpath != null) return classpath;
-		if(!new File(targetDir+"/tacoco.cp").exists()) {
-			ProcessBuilder builder = new ProcessBuilder(
-					"mvn","dependency:build-classpath","-Dmdep.outputFile=tacoco.cp").inheritIO();
-			builder.directory(new File(targetDir));
-			Process p = builder.start();
-			p.waitFor();
-		}
-		classpath = new String(Files.readAllBytes(Paths.get(targetDir,"tacoco.cp")))
-				+":"+ targetDir + "/target/test-classes"
-				+":"+ targetDir + "/target/classes";
+			if(classpath != null) return classpath;
+			if(!new File(targetDir+"/tacoco.cp").exists()) {
+				ProcessBuilder builder = new ProcessBuilder(
+						"mvn","dependency:build-classpath","-Dmdep.outputFile=tacoco.cp").inheritIO();
+				builder.directory(new File(targetDir));
+				Process p = builder.start();
+				p.waitFor();
+			}
+			classpath = new String(Files.readAllBytes(Paths.get(targetDir,"tacoco.cp")))
+					+":"+ targetDir + "/target/test-classes"
+					+":"+ targetDir + "/target/classes";
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return classpath;
 	}
-	
+
 	@Override
 	public boolean hasChild() {
 		return !getModel().getModules().isEmpty();
@@ -153,9 +124,9 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		}
 		return list;
 	}
-	
+
 	private boolean moduleSharesParentTarget(String module) {
-	  return module.endsWith(".xml");
+		return module.endsWith(".xml");
 	}
 
 	@Override
