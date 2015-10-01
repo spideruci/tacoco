@@ -67,19 +67,29 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		List<String> includes = new ArrayList<>();
 		List<String> excludes = new ArrayList<>();
 		
-		if(dom !=null) node = dom.getChild("includes");
-		if(node != null){
-			for(Xpp3Dom n : node.getChildren("include"))
-				includes.add(n.getValue().replaceAll("\\.java", "\\.class"));
-			scanner.setIncludes(includes.toArray(new String[0]));
+		if(dom !=null) {
+			node = dom.getChild("includes");
+			if(node != null){
+				for(Xpp3Dom n : node.getChildren("include"))
+					includes.add(n.getValue().replaceAll("\\.java", "\\.class"));
+			}
+			node = dom.getChild("test");
+			if(node != null){
+				includes.add(node.getValue().replaceAll("\\.java", "\\.class"));
+			}
+			
+			node = dom.getChild("excludes");
+			if(node != null){
+				for(Xpp3Dom n : node.getChildren("exclude"))
+					excludes.add(n.getValue().replaceAll("\\.java", "\\.class"));
+			}
 		}
-		if(dom !=null) node = dom.getChild("excludes");
-		if(node != null){
-			for(Xpp3Dom n : node.getChildren("exclude"))
-				excludes.add(n.getValue().replaceAll("\\.java", "\\.class"));
-		}
-		//add default filter
-		if(includes.size() == 0) scanner.setIncludes(new String[]{"**/Test*.class","**/*Test.class","**/*TestCase.class"});
+		//excludes inner classes
+		excludes.add("*$*");
+		
+		if(includes.size() == 0) this.scanner.setIncludes(new String[]{"**/Test*.class","**/*Test.class","**/*TestCase.class"});
+		else this.scanner.setIncludes(includes.toArray(new String[0]));
+		this.scanner.setExcludes(excludes.toArray(new String[0]));
 	}
 
 

@@ -125,9 +125,12 @@ public final class JUnitRunner extends Thread{
 	private static boolean shouldRun(Class<?> c) {
 		//Do not run Abstract Class
 		if(Modifier.isAbstract(c.getModifiers())) return false;
-		//Run a class which has @Test annotation //JUnit4
+		
 		for(Method m:c.getMethods()){
-			if(m.getAnnotation(Test.class) != null) return true;  
+			//Run a class which has @Test annotation //JUnit4
+			if(m.getAnnotation(Test.class) != null) return true;
+			//Run Test Suite Class
+			if(m.getName().equals("suite")) return true;
 		}
 		//JUnit3
 		if(TestCase.class.isAssignableFrom(c)) return true;
