@@ -12,7 +12,6 @@ public abstract class AbstractCli {
   public static final String EXEC = "tacoco.exec";
   
   //parallel execution mode: none(default), class, method, both
-  public static final String PM = "tacoco.pm";
   public static final String THREAD = "tacoco.thread";
   
   //log level: off(default), on
