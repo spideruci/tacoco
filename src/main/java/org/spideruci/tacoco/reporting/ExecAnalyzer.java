@@ -1,14 +1,14 @@
 package org.spideruci.tacoco.reporting;
 
-import static org.spideruci.tacoco.cli.CliAble.EXEC;
-import static org.spideruci.tacoco.cli.CliAble.FMT;
-import static org.spideruci.tacoco.cli.CliAble.HELP;
-import static org.spideruci.tacoco.cli.CliAble.JSON;
-import static org.spideruci.tacoco.cli.CliAble.PP;
-import static org.spideruci.tacoco.cli.CliAble.SUT;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.printAnalyzerHelp;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.EXEC;
+import static org.spideruci.tacoco.cli.AbstractCli.FMT;
+import static org.spideruci.tacoco.cli.AbstractCli.HELP;
+import static org.spideruci.tacoco.cli.AbstractCli.JSON;
+import static org.spideruci.tacoco.cli.AbstractCli.PP;
+import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AnalyzerCli.printAnalyzerHelp;
+import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
 
 import java.io.File;

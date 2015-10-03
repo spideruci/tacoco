@@ -1,12 +1,12 @@
 package org.spideruci.tacoco;
 
-import static org.spideruci.tacoco.cli.CliAble.DB;
-import static org.spideruci.tacoco.cli.CliAble.HOME;
-import static org.spideruci.tacoco.cli.CliAble.OUTDIR;
-import static org.spideruci.tacoco.cli.CliAble.PROJECT;
-import static org.spideruci.tacoco.cli.CliAble.SUT;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.DB;
+import static org.spideruci.tacoco.cli.AbstractCli.HOME;
+import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
+import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
+import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 
 import java.io.File;
 import java.nio.file.Files;

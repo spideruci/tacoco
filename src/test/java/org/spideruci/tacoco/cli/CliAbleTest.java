@@ -11,7 +11,7 @@ public class CliAbleTest {
     //given
     String argMenu = getAnalyzerArgumentMenu();
     //when
-    String helpMenu = CliAble.AnalyzerCli.getHelpMenu(null);
+    String helpMenu = AnalyzerCli.getHelpMenu(null);
     //then
     assertEquals(argMenu, helpMenu);
   }
@@ -22,7 +22,7 @@ public class CliAbleTest {
     String errorMessage = "some random error";
     String argMenu = getAnalyzerArgumentMenu(errorMessage);
     //when
-    String helpMenu = CliAble.AnalyzerCli.getHelpMenu(errorMessage);
+    String helpMenu = AnalyzerCli.getHelpMenu(errorMessage);
     //then
     assertEquals(argMenu, helpMenu);
   }
@@ -59,7 +59,7 @@ public class CliAbleTest {
     //given
     String argMenu = getReaderArgumentMenu();
     //when
-    String helpMenu = CliAble.ReaderCli.getHelpMenu(null);
+    String helpMenu = ReaderCli.getHelpMenu(null);
     //then
     assertEquals(argMenu, helpMenu);
   }
@@ -70,7 +70,7 @@ public class CliAbleTest {
     String errorMessage = "some random error";
     String argMenu = getReaderArgumentMenu(errorMessage);
     //when
-    String helpMenu = CliAble.ReaderCli.getHelpMenu(errorMessage);
+    String helpMenu = ReaderCli.getHelpMenu(errorMessage);
     //then
     assertEquals(argMenu, helpMenu);
   }

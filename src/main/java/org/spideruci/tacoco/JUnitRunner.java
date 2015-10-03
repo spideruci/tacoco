@@ -1,10 +1,10 @@
 package org.spideruci.tacoco;
 
-import static org.spideruci.tacoco.cli.CliAble.LOG;
-import static org.spideruci.tacoco.cli.CliAble.SUT;
-import static org.spideruci.tacoco.cli.CliAble.THREAD;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.LOG;
+import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
+import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

@@ -1,7 +1,7 @@
 package org.spideruci.tacoco;
 
-import static org.spideruci.tacoco.cli.CliAble.LOG;
-import static org.spideruci.tacoco.cli.CliAble.AnalyzerCli.readOptionalArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.LOG;
+import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 
 import org.jacoco.agent.rt.IAgent;
 import org.jacoco.agent.rt.RT;
