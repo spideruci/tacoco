@@ -1,6 +1,8 @@
 package org.spideruci.tacoco.cli;
 
 import static org.junit.Assert.assertEquals;
+import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.READER_CLI;
 
 import org.junit.Test;
 
@@ -11,7 +13,7 @@ public class CliAbleTest {
     //given
     String argMenu = getAnalyzerArgumentMenu();
     //when
-    String helpMenu = AnalyzerCli.getHelpMenu(null);
+    String helpMenu = ANALYZER_CLI.getHelpMenu(null);
     //then
     assertEquals(argMenu, helpMenu);
   }
@@ -22,7 +24,7 @@ public class CliAbleTest {
     String errorMessage = "some random error";
     String argMenu = getAnalyzerArgumentMenu(errorMessage);
     //when
-    String helpMenu = AnalyzerCli.getHelpMenu(errorMessage);
+    String helpMenu = ANALYZER_CLI.getHelpMenu(errorMessage);
     //then
     assertEquals(argMenu, helpMenu);
   }
@@ -59,7 +61,7 @@ public class CliAbleTest {
     //given
     String argMenu = getReaderArgumentMenu();
     //when
-    String helpMenu = ReaderCli.getHelpMenu(null);
+    String helpMenu = READER_CLI.getHelpMenu(null);
     //then
     assertEquals(argMenu, helpMenu);
   }
@@ -70,7 +72,7 @@ public class CliAbleTest {
     String errorMessage = "some random error";
     String argMenu = getReaderArgumentMenu(errorMessage);
     //when
-    String helpMenu = ReaderCli.getHelpMenu(errorMessage);
+    String helpMenu = READER_CLI.getHelpMenu(errorMessage);
     //then
     assertEquals(argMenu, helpMenu);
   }

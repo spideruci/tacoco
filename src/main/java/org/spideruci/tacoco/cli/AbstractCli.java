@@ -24,16 +24,39 @@ public abstract class AbstractCli {
   
   static final String PREFIX = "-D";
   
-  protected static String readArgumentValue(String arg) {
-    String value = System.getProperty(arg);
-    return value;
-  }
+  public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
+  public static final ReaderCli READER_CLI = new ReaderCli();
+  public static final LauncherCli LANUCHER_CLI = new LauncherCli();
   
-  public static String readOptionalArgumentValue(String arg, String defolt) {
-    String value = readArgumentValue(arg);
+  protected String readOptionalArgumentValueInternal(String arg, String defolt) {
+    String value = System.getProperty(arg);
     if(value == null) {
       return defolt;
     }
     return value;
   }
+  
+  protected String readArgumentValueInternal(String arg) {
+    String value = System.getProperty(arg);
+    if(value == null) {
+      printHelpForMissingArgError(arg);
+    }
+    return value;
+  }
+  
+  public void printHelpForMissingArgError(final String arg) {
+    final String errorMessage = PREFIX + arg + " is a required argument.";
+    printHelp(errorMessage);
+  }
+  
+  public void printHelp() {
+    printHelp(null);
+  }
+  
+  public void printHelp(final String errorMessage) {
+    System.out.println(getHelpMenu(errorMessage));
+    System.exit(0);
+  }
+  
+  public abstract String getHelpMenu(final String errorMessage);
 }

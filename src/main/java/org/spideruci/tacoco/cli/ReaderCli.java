@@ -3,28 +3,14 @@ package org.spideruci.tacoco.cli;
 public class ReaderCli extends AbstractCli {
   
   public static String readArgumentValue(String arg) {
-    String value = AbstractCli.readArgumentValue(arg);
-    if(value == null) {
-      printReaderHelpForMissingArgError(arg);
-    }
-    return value;
+    return READER_CLI.readArgumentValueInternal(arg);
   }
   
-  public static void printReaderHelpForMissingArgError(final String arg) {
-    final String errorMessage = PREFIX + arg + " is a required argument.";
-    printReaderHelp(errorMessage);
+  public static String readOptionalArgumentValue(String arg, String defolt) {
+    return READER_CLI.readOptionalArgumentValueInternal(arg, defolt);
   }
   
-  public static void printReaderHelp(final String errorMessage) {
-    System.out.println(getHelpMenu(errorMessage));
-    System.exit(0);
-  }
-  
-  public static void printReaderHelp() {
-    printReaderHelp(null);
-  }
-  
-  public static String getHelpMenu(final String errorMessage) {
+  public String getHelpMenu(final String errorMessage) {
     final String error = errorMessage == null ? null :
         ("ERROR! " + errorMessage + 
         "\nRefer to the following commandline arguments.\n"); 

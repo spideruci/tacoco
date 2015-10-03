@@ -4,7 +4,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.JSON;
 import static org.spideruci.tacoco.cli.AbstractCli.OUT;
 import static org.spideruci.tacoco.cli.AbstractCli.PP;
-import static org.spideruci.tacoco.cli.ReaderCli.printReaderHelp;
+import static org.spideruci.tacoco.cli.AbstractCli.READER_CLI;
 import static org.spideruci.tacoco.cli.ReaderCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.ReaderCli.readOptionalArgumentValue;
 
@@ -32,7 +32,7 @@ public class CoverageJsonReader {
   
   public static void main(String[] args) throws IOException {
     if(System.getProperties().containsKey(HELP)) {
-      printReaderHelp();
+      READER_CLI.printHelp();
     }
     String jsonFilePath = readArgumentValue(JSON);
     String outFilePath = 

@@ -6,7 +6,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.JSON;
 import static org.spideruci.tacoco.cli.AbstractCli.PP;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AnalyzerCli.printAnalyzerHelp;
+import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_CLI;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
@@ -34,7 +34,7 @@ public final class ExecAnalyzer {
 	public static void main(final String[] args) throws IOException {
 	  
 	  if(System.getProperties().containsKey(HELP)) {
-	    printAnalyzerHelp();
+	    ANALYZER_CLI.printHelp();
 	  }
 	  
 	  ExecAnalyzer execAnalyzer = processArgs(args);
@@ -92,6 +92,4 @@ public final class ExecAnalyzer {
 		in.close();
 		parser.close();
 	}
-	
-	
 }
