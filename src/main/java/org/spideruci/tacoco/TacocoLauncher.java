@@ -60,13 +60,15 @@ public class TacocoLauncher {
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 		
-		
+		InstrumenterConfig jacocoConfig = 
+		    InstrumenterConfig.get("org.jacoco.agent-0.7.4.201502262128-runtime.jar",
+		        tacocoHome+"/lib/",
+		        "destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,
-				"-Xmx1536M",// "-Duser.language=hi", "-Duser.country=IN",
-				"-javaagent:"+tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar=destfile="
-						+outdir+"/"+id+".exec"+",dumponexit=false",
+				"-Xmx1536M",
+				jacocoConfig.buildJavaagentOpt(),
 				"-Dtacoco.sut="+targetDir,
 				"-Dtacoco.output="+outdir,
 				"-Dtacoco.log=off",
