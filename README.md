@@ -40,6 +40,29 @@ chmod +x export-sut-cp # you need to do this just once.
 ### Help Menu
 
 ```
+tacoco$ mvn -q exec:java -Plauncher -Dtacoco.help
+
+Tacoco: Launcher
+usage: mvn exec:java -q -Plauncher [arguments]
+
+Arguments:
+-Dtacoco.sut=<dir>		(Required) Absolute-path of system-
+				under-test's root.
+-Dtacoco.home=<dir>		(Defalult: current dir) Tacoco's Home dir
+-Dtacoco.project=<string>	(Default: ID from sut's build system)
+				MAVEN: GroupID.ArtifactID
+				All Tacoco's output files(exec, db, log, err)-
+				use this for prefix.
+-Dtacoco.thread=<number>	(Default: 1) Number of JUnit Runner Thread
+-Dtacoco.log=<on/off>		(Default: off) Print Detailed Logs
+-Dtacoco.outdir=<dir>		(Default: tacoco.home/tacoco_out)
+-Dtacoco.db			Dump exec output to sqlite3 db file
+-Dtacoco.help			Prints this message and exits (with 0).
+```
+
+### Help Menu
+
+```
 tacoco$ mvn -q exec:java -Panalyzer -Dtacoco.help
 
 Tacoco: Exec-file Analyzer
