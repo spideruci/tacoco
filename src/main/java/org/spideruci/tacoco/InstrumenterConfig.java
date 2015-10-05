@@ -2,8 +2,7 @@ package org.spideruci.tacoco;
 
 public class InstrumenterConfig {
   
-  private final String path;
-  private final String name;
+  private final String location;
   private final String arguments;
   private final String memory;
   private final String classPath;
@@ -11,15 +10,15 @@ public class InstrumenterConfig {
   private final boolean prependBootpath;
   
   private final static String JAVAAGENT = "-javaagent:";
-  private final static String XBOOTCLASSPATH = "-xbootclasspath/p:";
+  private final static String XBOOTCLASSPATH_P = "-xbootclasspath/p:";
+  private final static String XBOOTCLASSPATH_A = "-xbootclasspath/a:";
   
-  public static InstrumenterConfig get(String name, String path, String arguments) {
-    return new InstrumenterConfig(name, path, arguments, null, null);
+  public static InstrumenterConfig get(String location, String arguments) {
+    return new InstrumenterConfig(location, arguments, null, null);
   }
   
-  private InstrumenterConfig(String name, String path, String arguments, String classPath, String xbootpath) {
-    this.name = name;
-    this.path = path;
+  private InstrumenterConfig(String location, String arguments, String classPath, String xbootpath) {
+    this.location = location;
     this.arguments = arguments;
     this.classPath = classPath;
     this.xbootpath = xbootpath;
@@ -29,16 +28,14 @@ public class InstrumenterConfig {
   
   public String buildJavaagentOpt() {
     String agentOpt = JAVAAGENT;
-    agentOpt += path + name;
+    agentOpt += location;
     agentOpt += "=" + arguments;
     return agentOpt;
   }
   
   public String xbootclassPathOpt() {
-    String xbootpathOpt = XBOOTCLASSPATH;
-    if(!this.prependBootpath) {
-      xbootpathOpt.replace("/p", "/a");
-    }
+    String xbootpathOpt = 
+        this.prependBootpath ? XBOOTCLASSPATH_P : XBOOTCLASSPATH_A;
     xbootpathOpt += xbootpath;
     return xbootpathOpt;
   }

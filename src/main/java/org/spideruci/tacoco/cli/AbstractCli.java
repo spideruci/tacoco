@@ -21,6 +21,11 @@ public abstract class AbstractCli {
   public static final String HOME = "tacoco.home";
   public static final String PROJECT = "tacoco.project";
   
+  public static final String INST = "tacoco.inst";
+  public static final String INST_ARGS = "tacoco.inst.arg";
+  public static final String INST_MEM = "tacoco.inst.mem";
+  public static final String INST_XBOOT = "tacoco.inst.xboot";
+  
   static final String PREFIX = "-D";
   
   public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();

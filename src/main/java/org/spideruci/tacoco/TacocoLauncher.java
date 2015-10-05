@@ -6,6 +6,10 @@ import static org.spideruci.tacoco.cli.AbstractCli.HOME;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AbstractCli.INST;
+import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
+import static org.spideruci.tacoco.cli.AbstractCli.INST_MEM;
+import static org.spideruci.tacoco.cli.AbstractCli.INST_XBOOT;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
@@ -66,20 +70,22 @@ public class TacocoLauncher {
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 		
-		InstrumenterConfig jacocoConfig = 
-		    InstrumenterConfig.get("org.jacoco.agent-0.7.4.201502262128-runtime.jar",
-		        tacocoHome+"/lib/",
-		        "destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
+		final String instrumenterLocation = readOptionalArgumentValue(INST, 
+		    tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar");
+		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
+		    "destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
+		
+		InstrumenterConfig jacocoConfig = InstrumenterConfig.get(instrumenterLocation, instrumentedArgs);
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,
-				"-Xmx1536M",
+				jacocoConfig.getMemory(),
 				jacocoConfig.buildJavaagentOpt(),
 				"-Dtacoco.sut="+targetDir,
 				"-Dtacoco.output="+outdir,
 				"-Dtacoco.log=off",
 				"-Dtacoco.thread="+1,
-				"org.spideruci.tacoco.JUnitRunner");//.inheritIO();
+				"org.spideruci.tacoco.JUnitRunner");
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		builder.redirectError(err);
