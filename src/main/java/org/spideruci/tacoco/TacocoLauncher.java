@@ -92,7 +92,7 @@ public class TacocoLauncher {
 		builder.redirectError(err);
 		builder.redirectOutput(log);
 
-		/*
+		
 		final Process p;
 		try{
 			p= builder.start();
@@ -105,7 +105,7 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		*/
+		
 
 		String dbFile = outdir+"/"+id+".db";
 		if(System.getProperties().containsKey(DB))
@@ -189,7 +189,7 @@ public class TacocoLauncher {
 	 */
 	private void setTacocoEnv() {
 		if(new File(tacocoHome+"/lib").exists()) return;
-		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
+		ProcessBuilder builder = new ProcessBuilder("/usr/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
 		builder.directory(new File(tacocoHome));
 		try{
 			Process p = builder.start();
