@@ -86,16 +86,25 @@ public class TacocoLauncher {
 		    tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar");
 		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
 		    "destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
+		final String xbootclasspath = readOptionalArgumentValue(INST_XBOOT, null);
 		
-		InstrumenterConfig jacocoConfig = InstrumenterConfig.get(instrumenterLocation, instrumentedArgs);
+		InstrumenterConfig jacocoConfig = 
+		    InstrumenterConfig.get(instrumenterLocation, instrumentedArgs, xbootclasspath);
 		List<String> command = new ArrayList<>();
 		command.add("java");
+		
+		
+		if(xbootclasspath != null) {
+		  command.add(jacocoConfig.xbootclassPathArg());
+		}
+		
 		command.add("-cp");
 		command.add(classpath);
 		command.add(jacocoConfig.getMemory());
-		command.add(jacocoConfig.buildJavaagentOpt());
+		command.add(jacocoConfig.buildJavaagentArg());
 		command.add(argEquals(SUT) +targetDir);
 		command.add("-Dtacoco.output="+outdir);
+		
 		if(readBooleanArgument(LOG)) {
 		  command.add(arg(LOG));
 		}
@@ -126,7 +135,6 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
 	}
 
 	private String getTacocoClasspath() throws Exception{

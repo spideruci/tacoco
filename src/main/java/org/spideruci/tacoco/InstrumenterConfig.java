@@ -10,11 +10,15 @@ public class InstrumenterConfig {
   private final boolean prependBootpath;
   
   private final static String JAVAAGENT = "-javaagent:";
-  private final static String XBOOTCLASSPATH_P = "-xbootclasspath/p:";
-  private final static String XBOOTCLASSPATH_A = "-xbootclasspath/a:";
+  private final static String XBOOTCLASSPATH_P = "-Xbootclasspath/p:";
+  private final static String XBOOTCLASSPATH_A = "-Xbootclasspath/a:";
   
   public static InstrumenterConfig get(String location, String arguments) {
-    return new InstrumenterConfig(location, arguments, null, null);
+    return get(location, arguments, null);
+  }
+  
+  public static InstrumenterConfig get(String location, String arguments, String xbootpath) {
+    return new InstrumenterConfig(location, arguments, null, xbootpath);
   }
   
   private InstrumenterConfig(String location, String arguments, String classPath, String xbootpath) {
@@ -26,14 +30,14 @@ public class InstrumenterConfig {
     this.prependBootpath = true;
   }
   
-  public String buildJavaagentOpt() {
+  public String buildJavaagentArg() {
     String agentOpt = JAVAAGENT;
     agentOpt += location;
     agentOpt += "=" + arguments;
     return agentOpt;
   }
   
-  public String xbootclassPathOpt() {
+  public String xbootclassPathArg() {
     String xbootpathOpt = 
         this.prependBootpath ? XBOOTCLASSPATH_P : XBOOTCLASSPATH_A;
     xbootpathOpt += xbootpath;
