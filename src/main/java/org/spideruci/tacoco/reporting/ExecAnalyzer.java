@@ -9,6 +9,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_CLI;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
 
 import java.io.File;
@@ -52,7 +53,7 @@ public final class ExecAnalyzer {
       String jsonFilePath = readOptionalArgumentValue(JSON, null);
       
       String format = System.getProperty(FMT, "DENSE");
-      boolean prettyPrint = System.getProperties().containsKey(PP);
+      boolean prettyPrint = readBooleanArgument(PP);
       
       ExecDataPrintManager printManager = 
           createPrintManager(jsonFilePath, format, prettyPrint);

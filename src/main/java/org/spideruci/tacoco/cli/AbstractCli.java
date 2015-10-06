@@ -32,6 +32,10 @@ public abstract class AbstractCli {
   public static final ReaderCli READER_CLI = new ReaderCli();
   public static final LauncherCli LANUCHER_CLI = new LauncherCli();
   
+  public static boolean readBooleanArgument(String arg) {
+    return System.getProperties().containsKey(arg);
+  }
+  
   protected String readOptionalArgumentValueInternal(String arg, String defolt) {
     String value = System.getProperty(arg);
     if(value == null) {

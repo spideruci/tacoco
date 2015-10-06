@@ -4,6 +4,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 
 import java.lang.reflect.Method;
@@ -18,24 +19,30 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
+import org.spideruci.tacoco.testers.JunitJacocoListener;
 
 import junit.framework.TestCase;
 
-public final class JUnitRunner extends Thread{
+public final class JUnitRunner extends Thread {
 	
 	private Class<?> testClass;
 	private static JUnitCore core = new JUnitCore();
-	static{
-		core.addListener(new JUnitListener());
+	static {
+		core.addListener(new JunitJacocoListener());
 	}
 	
+	public static boolean LOGGING = false;
+
 	double runTime=0;
-	int runCnt=0, failCnt=0, ignoreCnt=0;
+	int runCnt=0;
+	int failCnt=0;
+	int ignoreCnt=0;
 	
-    public JUnitRunner(Class<?> testClass) {
-    	this.testClass = testClass;
+	public JUnitRunner(Class<?> testClass) {
+	  this.testClass = testClass;
 	}
 
+	@Override
 	public void run() {
     	try {
 			System.out.println("Starting "+testClass);
@@ -67,9 +74,8 @@ public final class JUnitRunner extends Thread{
     }
 	
 	public static void main(String[] args) {
-
-		boolean log=false;
-		if(readOptionalArgumentValue(LOG,"off").equals("on")) log=true;
+	  
+	  LOGGING = readBooleanArgument(LOG);
 		String targetDir = readArgumentValue(SUT);
 
 		System.out.println("---------------------------------------------");
@@ -88,7 +94,9 @@ public final class JUnitRunner extends Thread{
 			try {
 				//if(!testClass.matches("com.google.common.cache.Lo.*")) continue;
 				c = Class.forName(testClass);
-				if(!shouldRun(c)) continue;
+				if(!shouldRun(c)) {
+				  continue;
+				}
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}

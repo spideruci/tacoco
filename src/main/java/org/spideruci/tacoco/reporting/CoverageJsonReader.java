@@ -38,6 +38,13 @@ public class CoverageJsonReader {
     String outFilePath = 
         readOptionalArgumentValue(OUT, 
             jsonFilePath.replaceFirst("\\.json", "") + "-cov-matrix.json");
+    File outFile = new File(outFilePath);
+    if(outFile.exists()) {
+      System.err.println("DELETING EXISTING COVERAGE.JSON FILE");
+      outFile.delete();
+      outFile.createNewFile();
+    }
+    
     File jsonFile = new File(jsonFilePath);
     LineCoverageFormat covFormat = readCoverageFormat(jsonFile);
     InputStreamReader jsonIn = 
@@ -47,7 +54,8 @@ public class CoverageJsonReader {
     CoverageMatrix2 covMat = reader.read2(covFormat);
     
     boolean shouldPrettyPrint = System.getProperties().containsKey(PP);
-    covMat.dumpMatrix(new PrintStream(new File(outFilePath)), shouldPrettyPrint);
+    
+    covMat.dumpMatrix(new PrintStream(outFile), shouldPrettyPrint);
   }
   
   private final JsonReader jsonReader;

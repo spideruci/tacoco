@@ -34,7 +34,7 @@ public class LauncherCli extends AbstractCli {
 				+ white + "All Tacoco's output files(exec, db, log, err)-\n"
 				+ white + "use this for prefix.\n"
 				+ PREFIX + THREAD + "=<number>\t(Default: 1) Number of JUnit Runner Thread\n" 
-				+ PREFIX + LOG+"=<on/off>\t\t(Default: off) Print Detailed Logs\n"
+				+ PREFIX + LOG+"\t\t Prints Detailed Logs for Tacoco\n"
 				+ PREFIX + OUTDIR+"=<dir>\t\t(Default: tacoco.home/tacoco_out)\n"
 				+ PREFIX + DB+"\t\t\tDump exec output to sqlite3 db file\n"
 				+ PREFIX + HELP+ "\t\t\tPrints this message and exits (with 0).\n"

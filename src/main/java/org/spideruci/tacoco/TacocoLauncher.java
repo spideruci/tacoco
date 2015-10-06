@@ -10,6 +10,8 @@ import static org.spideruci.tacoco.cli.AbstractCli.INST;
 import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
 import static org.spideruci.tacoco.cli.AbstractCli.INST_MEM;
 import static org.spideruci.tacoco.cli.AbstractCli.INST_XBOOT;
+import static org.spideruci.tacoco.cli.AbstractCli.LOG;
+import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
@@ -17,8 +19,11 @@ import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.spideruci.tacoco.AbstractBuildProbe.Child;
+import org.spideruci.tacoco.cli.AbstractCli;
 import org.spideruci.tacoco.db.CreateSQLiteDB;
 
 public class TacocoLauncher {
@@ -76,16 +81,21 @@ public class TacocoLauncher {
 		    "destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
 		
 		InstrumenterConfig jacocoConfig = InstrumenterConfig.get(instrumenterLocation, instrumentedArgs);
-		ProcessBuilder builder = new ProcessBuilder(
-				"java",
-				"-cp", classpath,
-				jacocoConfig.getMemory(),
-				jacocoConfig.buildJavaagentOpt(),
-				"-Dtacoco.sut="+targetDir,
-				"-Dtacoco.output="+outdir,
-				"-Dtacoco.log=off",
-				"-Dtacoco.thread="+1,
-				"org.spideruci.tacoco.JUnitRunner");
+		List<String> command = new ArrayList<>();
+		command.add("java");
+		command.add("-cp");
+		command.add(classpath);
+		command.add(jacocoConfig.getMemory());
+		command.add(jacocoConfig.buildJavaagentOpt());
+		command.add("-Dtacoco.sut="+targetDir);
+		command.add("-Dtacoco.output="+outdir);
+		if(readBooleanArgument(LOG)) {
+		  command.add("-Dtacoco.log");
+		}
+		command.add("-Dtacoco.thread="+1);
+		command.add("org.spideruci.tacoco.JUnitRunner");
+		
+		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		builder.redirectError(err);
@@ -93,7 +103,7 @@ public class TacocoLauncher {
 
 		final Process p;
 		try{
-			p= builder.start();
+			p = builder.start();
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					p.destroy();
@@ -103,13 +113,7 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		String dbFile = outdir+"/"+id+".db";
-		if(System.getProperties().containsKey(DB))
-			try {
-				CreateSQLiteDB.dump(dbFile, targetDir, exec.toString());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		
 	}
 
 	private String getTacocoClasspath() throws Exception{
