@@ -3,9 +3,10 @@ package org.spideruci.tacoco;
 import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
-import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.LISTENER;
+import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
-import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
+import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -19,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
+import org.junit.runner.notification.RunListener;
 import org.spideruci.tacoco.testers.JunitJacocoListener;
 
 import junit.framework.TestCase;
@@ -28,7 +30,7 @@ public final class JUnitRunner extends Thread {
 	private Class<?> testClass;
 	private static JUnitCore core = new JUnitCore();
 	static {
-		core.addListener(new JunitJacocoListener());
+//		core.addListener(new JunitJacocoListener());
 	}
 	
 	public static boolean LOGGING = false;
@@ -37,6 +39,34 @@ public final class JUnitRunner extends Thread {
 	int runCnt=0;
 	int failCnt=0;
 	int ignoreCnt=0;
+	
+	public static void addListener() {
+	  String listenerClassName = readOptionalArgumentValue(LISTENER, null);
+	  if(listenerClassName == null) {
+	    return;
+	  }
+	  
+	  try {
+      Class<?> listenerClass = Class.forName(listenerClassName);
+      if(listenerClass == null) {
+        return;
+      }
+      
+      if(RunListener.class.isAssignableFrom(listenerClass)) {
+        RunListener listener = (RunListener) listenerClass.newInstance();
+        if(listener == null) {
+          return;
+        }
+        core.addListener(listener);
+      } else {
+        return;
+      }
+      
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+      e.printStackTrace();
+      return;
+    }
+	}
 	
 	public JUnitRunner(Class<?> testClass) {
 	  this.testClass = testClass;
@@ -74,6 +104,8 @@ public final class JUnitRunner extends Thread {
     }
 	
 	public static void main(String[] args) {
+	  
+	  addListener();
 	  
 	  LOGGING = readBooleanArgument(LOG);
 		String targetDir = readArgumentValue(SUT);

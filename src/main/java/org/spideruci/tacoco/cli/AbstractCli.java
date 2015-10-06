@@ -26,11 +26,21 @@ public abstract class AbstractCli {
   public static final String INST_MEM = "tacoco.inst.mem";
   public static final String INST_XBOOT = "tacoco.inst.xboot";
   
+  public static final String LISTENER = "tacoco.listener";
+  
   static final String PREFIX = "-D";
   
   public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
   public static final ReaderCli READER_CLI = new ReaderCli();
   public static final LauncherCli LANUCHER_CLI = new LauncherCli();
+  
+  public static String arg(String argName) {
+    return PREFIX + argName;
+  }
+  
+  public static String argEquals(String argName) {
+    return arg(argName) + "=";
+  }
   
   public static boolean readBooleanArgument(String arg) {
     return System.getProperties().containsKey(arg);

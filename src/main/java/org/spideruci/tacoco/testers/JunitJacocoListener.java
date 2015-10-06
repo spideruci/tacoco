@@ -59,7 +59,6 @@ public class JunitJacocoListener extends RunListener {
 		super.testIgnored(description);
 	}
 	
-	
 	@SuppressWarnings("unused")
   private static void storeInDb(String outdir, String projectName, String targetDir, File exec) {
 	  String dbFile = outdir+"/"+projectName+".db";

@@ -19,6 +19,8 @@ public class LauncherCli extends AbstractCli {
 				+ "usage: mvn exec:java -q -Plauncher [arguments]\n\nArguments:\n" 
 				+ PREFIX + SUT+ "=<dir>\t\t(Required) Absolute-path of system-\n" 
 				+ white + "under-test's root.\n"
+				+ PREFIX + LISTENER + "=<com.example.RunListener> ...\n"
+				+ white + "Fully-qualified class name of the run listener.\n"
 				+ PREFIX + INST + "=<*.jar>\t\t(Required) Absolute path of jar\n"
 				+ white + "reposnsible for instrumentation\n"
 				+ white + "through a java-agent.\n"

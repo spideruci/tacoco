@@ -11,10 +11,17 @@ import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
 import static org.spideruci.tacoco.cli.AbstractCli.INST_MEM;
 import static org.spideruci.tacoco.cli.AbstractCli.INST_XBOOT;
 import static org.spideruci.tacoco.cli.AbstractCli.LOG;
+import static org.spideruci.tacoco.cli.AbstractCli.arg;
+import static org.spideruci.tacoco.cli.AbstractCli.argEquals;
 import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.LISTENER;
+import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
+import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
+
 
 import java.io.File;
 import java.nio.file.Files;
@@ -87,12 +94,18 @@ public class TacocoLauncher {
 		command.add(classpath);
 		command.add(jacocoConfig.getMemory());
 		command.add(jacocoConfig.buildJavaagentOpt());
-		command.add("-Dtacoco.sut="+targetDir);
+		command.add(argEquals(SUT) +targetDir);
 		command.add("-Dtacoco.output="+outdir);
 		if(readBooleanArgument(LOG)) {
-		  command.add("-Dtacoco.log");
+		  command.add(arg(LOG));
 		}
-		command.add("-Dtacoco.thread="+1);
+		
+		String listenerClassName = readOptionalArgumentValue(LISTENER, null);
+		if(listenerClassName != null) {
+		  command.add(argEquals(LISTENER) + listenerClassName);
+		}
+		
+		command.add(argEquals(THREAD) + 1);
 		command.add("org.spideruci.tacoco.JUnitRunner");
 		
 		ProcessBuilder builder = new ProcessBuilder(command);
