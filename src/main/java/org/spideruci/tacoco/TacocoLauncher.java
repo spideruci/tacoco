@@ -116,12 +116,12 @@ public class TacocoLauncher {
 			}
 
 		if(System.getProperties().containsKey(PIT)){
-			runPit(classpath, targetDir, probe, outdir);
+			runPit(id, classpath, targetDir, probe, outdir);
 		}
 
 	}
 
-	private void runPit(String classpath, String targetDir, AbstractBuildProbe probe, String outdir) {
+	private void runPit(String id, String classpath, String targetDir, AbstractBuildProbe probe, String outdir) {
 		StringBuffer testClasses= new StringBuffer();
 		StringBuffer classes= new StringBuffer();
 		
@@ -137,18 +137,24 @@ public class TacocoLauncher {
 		String pitPath = this.tacocoHome+"/lib/pitest-command-line-1.1.7.jar:"
 						+this.tacocoHome+"/lib/pitest-1.1.7.jar";
 		
+		File err = new File(outdir, id+".pit.err");
+		File log = new File(outdir, id+".pit.log");
+		if(err.exists()) err.delete();
+		if(log.exists()) log.delete();
+		
+		
 		ProcessBuilder pitRunner = new ProcessBuilder(
 				"java",
 				"-cp", classpath+":"+pitPath,
 				"org.pitest.mutationtest.commandline.MutationCoverageReport",
-			    "--reportDir="+outdir,
+			    "--reportDir="+outdir+"/"+id,
 			    "--targetClasses="+classes,
 			    "--targetTests="+testClasses,
-			    "--sourceDirs="+targetDir+"/src").inheritIO();
+			    "--sourceDirs="+targetDir+"/src",
+			    "--outputFormats=XML");
 		pitRunner.directory(new File(targetDir));
-		//builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-		//builder.redirectError(err);
-		//builder.redirectOutput(log);
+		pitRunner.redirectError(err);
+		pitRunner.redirectOutput(log);
 
 		final Process pit;
 		try{
