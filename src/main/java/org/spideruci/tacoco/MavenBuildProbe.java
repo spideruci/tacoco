@@ -28,7 +28,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public List<String> getClasses() {
+	public List<String> getTestClasses() {
 		makeFilter();
 		scanner.setBasedir(targetDir+"/target/test-classes"); //MAVEN TEST CLASS FOLDER
 		scanner.setCaseSensitive(true);
@@ -85,7 +85,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 			}
 		}
 		//excludes inner classes
-		excludes.add("*$*");
+		excludes.add("**/*$*.class");
 		
 		if(includes.size() == 0) this.scanner.setIncludes(new String[]{"**/Test*.class","**/*Test.class","**/*TestCase.class"});
 		else this.scanner.setIncludes(includes.toArray(new String[0]));
@@ -145,5 +145,21 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		String group = getModel().getGroupId();
 		if(group != null) id = group + "." + id;
 		return id;
+	}
+
+	@Override
+	public List<java.lang.String> getClasses() {
+		DirectoryScanner classScanner = new DirectoryScanner();
+		classScanner.setBasedir(targetDir+"/target/classes");
+		classScanner.setCaseSensitive(true);
+		classScanner.setIncludes(new String[]{"**/*class"});
+		classScanner.setExcludes(new String[]{"**/*$*.class"});
+		classScanner.scan();
+		
+		List<String> ret = new ArrayList<>();
+		for(String s: classScanner.getIncludedFiles()){
+			ret.add(s.replaceAll("/", ".").replaceAll("\\.class",""));
+		}
+		return ret;
 	}
 }

@@ -116,41 +116,52 @@ public class TacocoLauncher {
 			}
 
 		if(System.getProperties().containsKey(PIT)){
-			
-			StringBuffer targetTests= new StringBuffer();
-			for(String s : probe.getClasses()){
-				targetTests.append(s+",");
-			}
-			String pitPath = this.tacocoHome+"/lib/pitest-command-line-1.1.7.jar:"
-							+this.tacocoHome+"/lib/pitest-1.1.7.jar";
-			ProcessBuilder pitRunner = new ProcessBuilder(
-					"java",
-					"-cp", classpath+":"+pitPath,
-					"org.pitest.mutationtest.commandline.MutationCoverageReport",
-				    "--reportDir="+outdir,
-				    "--targetClasses=org.joda.time*",
-				    "--targetTests="+targetTests,
-				    "--sourceDirs="+targetDir+"/src").inheritIO();
-			pitRunner.directory(new File(targetDir));
-			//builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-			//builder.redirectError(err);
-			//builder.redirectOutput(log);
-
-			final Process pit;
-			try{
-				pit= pitRunner.start();
-				Runtime.getRuntime().addShutdownHook(new Thread() {
-					public void run() {
-						pit.destroy();
-					}
-				}); 
-				pit.waitFor();
-			}catch(Exception e){
-				e.printStackTrace();
-			}
+			runPit(classpath, targetDir, probe, outdir);
 		}
 
+	}
 
+	private void runPit(String classpath, String targetDir, AbstractBuildProbe probe, String outdir) {
+		StringBuffer testClasses= new StringBuffer();
+		StringBuffer classes= new StringBuffer();
+		
+		
+		for(String s : probe.getTestClasses()){
+			testClasses.append(s+",");
+		}
+		
+		for(String s : probe.getClasses()){
+			classes.append(s+",");
+		}
+		
+		String pitPath = this.tacocoHome+"/lib/pitest-command-line-1.1.7.jar:"
+						+this.tacocoHome+"/lib/pitest-1.1.7.jar";
+		
+		ProcessBuilder pitRunner = new ProcessBuilder(
+				"java",
+				"-cp", classpath+":"+pitPath,
+				"org.pitest.mutationtest.commandline.MutationCoverageReport",
+			    "--reportDir="+outdir,
+			    "--targetClasses="+classes,
+			    "--targetTests="+testClasses,
+			    "--sourceDirs="+targetDir+"/src").inheritIO();
+		pitRunner.directory(new File(targetDir));
+		//builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+		//builder.redirectError(err);
+		//builder.redirectOutput(log);
+
+		final Process pit;
+		try{
+			pit= pitRunner.start();
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				public void run() {
+					pit.destroy();
+				}
+			}); 
+			pit.waitFor();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	private String getTacocoClasspath() throws Exception{
