@@ -3,16 +3,15 @@ package org.spideruci.tacoco;
 import static org.spideruci.tacoco.cli.AbstractCli.DB;
 import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.HOME;
+import static org.spideruci.tacoco.cli.AbstractCli.INST;
+import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
+import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.INST;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_MEM;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_XBOOT;
+import static org.spideruci.tacoco.cli.AbstractCli.PIT;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
-import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -45,18 +44,20 @@ public class TacocoLauncher {
 		String name = readOptionalArgumentValue(PROJECT, probe.getId());
 
 		launcher.setTacocoEnv();
-		String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath(); 
+		String parentCP = launcher.getTacocoClasspath() +":"+ probe.getClasspath(); 
+		//String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath()  ; 
 
+		
 		if(probe.hasChild()){	
 			for(Child child : probe.getChildren()){
-				launcher.startJUnitRunner(name+"."+child.id, child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
+				launcher.startJUnitRunner(name+"."+child.id, child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs, probe);
 			}
 		}
-		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null);
+		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null, probe);
 	}
 
 
-	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs) {
+	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs, AbstractBuildProbe probe) {
 
 		String outdir = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output");
 
@@ -69,12 +70,12 @@ public class TacocoLauncher {
 		if(exec.exists()) exec.delete();
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
-		
+
 		final String instrumenterLocation = readOptionalArgumentValue(INST, 
-		    tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar");
+				tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar");
 		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
-		    "destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
-		
+				"destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
+
 		InstrumenterConfig jacocoConfig = InstrumenterConfig.get(instrumenterLocation, instrumentedArgs);
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
@@ -91,6 +92,7 @@ public class TacocoLauncher {
 		builder.redirectError(err);
 		builder.redirectOutput(log);
 
+		/*
 		final Process p;
 		try{
 			p= builder.start();
@@ -103,6 +105,8 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		*/
+
 		String dbFile = outdir+"/"+id+".db";
 		if(System.getProperties().containsKey(DB))
 			try {
@@ -110,6 +114,43 @@ public class TacocoLauncher {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
+		if(System.getProperties().containsKey(PIT)){
+			
+			StringBuffer targetTests= new StringBuffer();
+			for(String s : probe.getClasses()){
+				targetTests.append(s+",");
+			}
+			String pitPath = this.tacocoHome+"/lib/pitest-command-line-1.1.7.jar:"
+							+this.tacocoHome+"/lib/pitest-1.1.7.jar";
+			ProcessBuilder pitRunner = new ProcessBuilder(
+					"java",
+					"-cp", classpath+":"+pitPath,
+					"org.pitest.mutationtest.commandline.MutationCoverageReport",
+				    "--reportDir="+outdir,
+				    "--targetClasses=org.joda.time*",
+				    "--targetTests="+targetTests,
+				    "--sourceDirs="+targetDir+"/src").inheritIO();
+			pitRunner.directory(new File(targetDir));
+			//builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+			//builder.redirectError(err);
+			//builder.redirectOutput(log);
+
+			final Process pit;
+			try{
+				pit= pitRunner.start();
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+					public void run() {
+						pit.destroy();
+					}
+				}); 
+				pit.waitFor();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+
 	}
 
 	private String getTacocoClasspath() throws Exception{
@@ -131,7 +172,7 @@ public class TacocoLauncher {
 	 */
 	private void setTacocoEnv() {
 		if(new File(tacocoHome+"/lib").exists()) return;
-		ProcessBuilder builder = new ProcessBuilder("/usr/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
+		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
 		builder.directory(new File(tacocoHome));
 		try{
 			Process p = builder.start();
