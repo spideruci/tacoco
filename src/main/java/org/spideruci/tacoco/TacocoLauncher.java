@@ -68,15 +68,13 @@ public class TacocoLauncher {
 		String outdir = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output");
 
 		if(!new File(outdir).exists()) new File(outdir).mkdirs();
-
-		//delete files before execution, 
+		
 		File exec = new File(outdir, id+".exec");
 		File err = new File(outdir, id+".err");
 		File log = new File(outdir, id+".log");
-		if(exec.exists()) exec.delete();
-		if(err.exists()) err.delete();
-		if(log.exists()) log.delete();
-
+		
+		
+		
 		final String instrumenterLocation = readOptionalArgumentValue(INST, 
 				tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar");
 		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
@@ -95,10 +93,17 @@ public class TacocoLauncher {
 				"org.spideruci.tacoco.JUnitRunner");
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-		builder.redirectError(err);
-		builder.redirectOutput(log);
 		
 		if(!System.getProperties().containsKey(NOJUNIT)){
+			
+			//delete files before execution, 
+			if(exec.exists()) exec.delete();
+			if(err.exists()) err.delete();
+			if(log.exists()) log.delete();
+
+			builder.redirectError(err);
+			builder.redirectOutput(log);
+			
 			final Process p;
 			try{
 				p= builder.start();
