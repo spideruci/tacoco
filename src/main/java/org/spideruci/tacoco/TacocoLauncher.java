@@ -6,16 +6,23 @@ import static org.spideruci.tacoco.cli.AbstractCli.HOME;
 import static org.spideruci.tacoco.cli.AbstractCli.INST;
 import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
 import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.NOJUNIT;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
+import static org.spideruci.tacoco.cli.AbstractCli.PIT;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.PIT;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.spideruci.tacoco.AbstractBuildProbe.Child;
 import org.spideruci.tacoco.db.CreateSQLiteDB;
@@ -91,21 +98,21 @@ public class TacocoLauncher {
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		builder.redirectError(err);
 		builder.redirectOutput(log);
-
 		
-		final Process p;
-		try{
-			p= builder.start();
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-				public void run() {
-					p.destroy();
-				}
-			}); 
-			p.waitFor();
-		}catch(Exception e){
-			e.printStackTrace();
+		if(!System.getProperties().containsKey(NOJUNIT)){
+			final Process p;
+			try{
+				p= builder.start();
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+					public void run() {
+						p.destroy();
+					}
+				}); 
+				p.waitFor();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
-		
 
 		String dbFile = outdir+"/"+id+".db";
 		if(System.getProperties().containsKey(DB))
@@ -115,6 +122,7 @@ public class TacocoLauncher {
 				e.printStackTrace();
 			}
 
+		
 		if(System.getProperties().containsKey(PIT)){
 			runPit(id, classpath, targetDir, probe, outdir);
 		}
@@ -125,10 +133,21 @@ public class TacocoLauncher {
 		StringBuffer testClasses= new StringBuffer();
 		StringBuffer classes= new StringBuffer();
 		
+		Set<String> excludeTests = null;
+		File pitErrFile = new File(outdir, id+".pit.err");
+		if(pitErrFile.exists()){
+			excludeTests = getPITexcludeTests(pitErrFile);
+		}
 		
 		for(String s : probe.getTestClasses()){
+			if(excludeTests != null && excludeTests.contains(s)) continue;
 			testClasses.append(s+",");
 		}
+		
+		System.out.println(testClasses);
+		System.exit(0);
+		
+		
 		
 		for(String s : probe.getClasses()){
 			classes.append(s+",");
@@ -168,6 +187,31 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+
+	private Set<String> getPITexcludeTests(File pitErrFile) {
+		
+		Set<String> set = new HashSet<>();
+		Pattern p = Pattern.compile("testClass=.*,");
+		
+		try {
+			for(String line:Files.readAllLines(Paths.get(pitErrFile.toURI()))){
+				if(line.endsWith("did not pass without mutation.")){
+					Matcher m = p.matcher(line);
+					if(m.find()) {
+						String match = m.group(0);
+						String exClass = match.substring(10,match.length()-1);
+						set.add(exClass);
+					}
+				}
+			}
+			
+			
+		} catch (IOException e) {
+			set = null;
+		}
+		
+		return set;
 	}
 
 	private String getTacocoClasspath() throws Exception{

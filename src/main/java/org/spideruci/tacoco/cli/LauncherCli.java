@@ -38,6 +38,7 @@ public class LauncherCli extends AbstractCli {
 				+ PREFIX + OUTDIR+"=<dir>\t\t(Default: tacoco.home/tacoco_out)\n"
 				+ PREFIX + DB+"\t\t\tDump exec output to sqlite3 db file\n"
 				+ PREFIX + PIT+"\t\t\tRun PIT mutation test\n"
+				+ PREFIX + NOJUNIT+"\t\t\tDo not run junit test\n"
 				+ PREFIX + HELP+ "\t\t\tPrints this message and exits (with 0).\n"
 				;
 		if (error != null) {
