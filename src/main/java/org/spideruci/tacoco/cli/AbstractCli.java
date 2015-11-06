@@ -20,10 +20,6 @@ public abstract class AbstractCli {
   public static final String OUTDIR = "tacoco.outdir";
   public static final String HOME = "tacoco.home";
   public static final String PROJECT = "tacoco.project";
-  public static final String PIT = "tacoco.pit";
-  public static final String NOJUNIT = "tacoco.nojunit";
-  
-  
   
   public static final String INST = "tacoco.inst";
   public static final String INST_ARGS = "tacoco.inst.arg";

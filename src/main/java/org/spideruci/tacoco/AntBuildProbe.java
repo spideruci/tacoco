@@ -10,7 +10,7 @@ public class AntBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public ArrayList<String> getTestClasses() {
+	public ArrayList<String> getClasses() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -41,12 +41,6 @@ public class AntBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<String> getClasses() {
 		// TODO Auto-generated method stub
 		return null;
 	}
