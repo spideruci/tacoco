@@ -1,30 +1,22 @@
 package org.spideruci.tacoco;
 
-import static org.spideruci.tacoco.cli.AbstractCli.DB;
-import static org.spideruci.tacoco.cli.AbstractCli.HELP;
-import static org.spideruci.tacoco.cli.AbstractCli.HOME;
-import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
-import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.INST;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_MEM;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_XBOOT;
-import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
-import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
+import org.apache.maven.cli.MavenCli;
+import org.spideruci.tacoco.AbstractBuildProbe.Child;
+import org.spideruci.tacoco.db.CreateSQLiteDB;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.spideruci.tacoco.AbstractBuildProbe.Child;
-import org.spideruci.tacoco.db.CreateSQLiteDB;
+import static org.spideruci.tacoco.cli.AbstractCli.*;
+import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 public class TacocoLauncher {
 
 	private String tacocoHome, targetDir;
 	private static String tacocoClasspath = null;
+    private static String USER_DIR = System.getProperty("user.dir");
 
 	private TacocoLauncher(String tacocoHome, String targetDir){
 		this.tacocoHome = tacocoHome;
@@ -37,9 +29,11 @@ public class TacocoLauncher {
 			LANUCHER_CLI.printHelp();
 		}
 
+        System.setProperty("maven.multiModuleProjectDirectory", USER_DIR);
+
 		String targetDir = readArgumentValue(SUT);
 		if(targetDir.endsWith("/")) targetDir = targetDir.substring(0, targetDir.length());
-		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME,System.getProperty("user.dir"))
+		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME, USER_DIR)
 				,targetDir);
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
 		String name = readOptionalArgumentValue(PROJECT, probe.getId());
@@ -116,11 +110,9 @@ public class TacocoLauncher {
 
 		if(tacocoClasspath != null) return tacocoClasspath;
 		if(!new File(tacocoHome+"/cp.txt").exists()) {
-			ProcessBuilder builder = new ProcessBuilder(
-					"/usr/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=cp.txt").inheritIO();
-			builder.directory(new File(tacocoHome));
-			Process p = builder.start();
-			p.waitFor();
+            MavenCli mavenCli = new MavenCli();
+            mavenCli.doMain(new String[] {"dependency:build-classpath", "-Dmdep.outputFile=cp.txt"}, tacocoHome,
+                    System.out, System.out);
 		}
 		tacocoClasspath = new String(Files.readAllBytes(Paths.get("cp.txt")))+":"+ tacocoHome + "/target/classes";
 		return tacocoClasspath;
@@ -131,14 +123,8 @@ public class TacocoLauncher {
 	 */
 	private void setTacocoEnv() {
 		if(new File(tacocoHome+"/lib").exists()) return;
-		ProcessBuilder builder = new ProcessBuilder("/usr/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
-		builder.directory(new File(tacocoHome));
-		try{
-			Process p = builder.start();
-			p.waitFor();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+        MavenCli mavenCli = new MavenCli();
+        mavenCli.doMain(new String[]{"dependency:copy-dependencies", "-DoutputDirectory=lib"}, tacocoHome, System.out, System.out);
 	}
 
 }
