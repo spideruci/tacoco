@@ -47,7 +47,6 @@ public abstract class AbstractBuildProbe {
 		return BuilderType.TBD;
 	}
 	
-	public abstract List<String> getTestClasses();
 	public abstract List<String> getClasses();
 	public abstract BuilderType getBuilderType();
 	public abstract String getClasspath();

@@ -22,7 +22,7 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public ArrayList<String> getTestClasses() {
+	public ArrayList<String> getClasses() {
 		final ArrayList<String> ret = new ArrayList<>();
 
 		try{
@@ -98,12 +98,6 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<String> getClasses() {
 		// TODO Auto-generated method stub
 		return null;
 	}
