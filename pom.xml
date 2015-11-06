@@ -80,7 +80,6 @@
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-model</artifactId>
-			<version>3.3.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
@@ -94,8 +93,19 @@
 		</dependency>
         <dependency>
             <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
+            <artifactId>org.jacoco.core</artifactId>
             <version>0.7.4.201502262128</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.report</artifactId>
+            <version>0.7.4.201502262128</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.agent</artifactId>
+            <version>0.7.4.201502262128</version>
+            <classifier>runtime</classifier>
         </dependency>
 	</dependencies>
 
