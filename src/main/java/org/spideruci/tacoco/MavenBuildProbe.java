@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.maven.cli.MavenCli;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
@@ -103,11 +104,9 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		try{
 			if(classpath != null) return classpath;
 			if(!new File(targetDir+"/tacoco.cp").exists()) {
-				ProcessBuilder builder = new ProcessBuilder(
-						"mvn","dependency:build-classpath","-Dmdep.outputFile=tacoco.cp").inheritIO();
-				builder.directory(new File(targetDir));
-				Process p = builder.start();
-				p.waitFor();
+                MavenCli mavenCli = new MavenCli();
+                mavenCli.doMain(new String[] {"dependency:build-classpath", "-Dmdep.outputFile=tacoco.cp"}, targetDir,
+                        System.out, System.out);
 			}
 			classpath = new String(Files.readAllBytes(Paths.get(targetDir,"tacoco.cp")))
 					+":"+ targetDir + "/target/test-classes"
