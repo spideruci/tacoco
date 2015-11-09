@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.cli.MavenCli;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
@@ -31,7 +32,8 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	@Override
 	public List<String> getClasses() {
 		makeFilter();
-		scanner.setBasedir(targetDir+"/target/test-classes"); //MAVEN TEST CLASS FOLDER
+        String testClassDirectoryPath = StringUtils.join(new String[] {targetDir, "target", "test-classes"}, File.separator);
+		scanner.setBasedir(testClassDirectoryPath); //MAVEN TEST CLASS FOLDER
 		scanner.setCaseSensitive(true);
 		scanner.scan();
 		
@@ -103,14 +105,14 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	public String getClasspath(){
 		try{
 			if(classpath != null) return classpath;
-			if(!new File(targetDir+"/tacoco.cp").exists()) {
+			if(!new File(targetDir + File.separator + "tacoco.cp").exists()) {
                 MavenCli mavenCli = new MavenCli();
-                mavenCli.doMain(new String[] {"dependency:build-classpath", "-Dmdep.outputFile=tacoco.cp"}, targetDir,
+                mavenCli.doMain(new String[]{"dependency:build-classpath", "-Dmdep.outputFile=tacoco.cp"}, targetDir,
                         System.out, System.out);
 			}
 			classpath = new String(Files.readAllBytes(Paths.get(targetDir,"tacoco.cp")))
-					+":"+ targetDir + "/target/test-classes"
-					+":"+ targetDir + "/target/classes";
+					+ File.pathSeparator + StringUtils.join(new String[]{targetDir, "target", "test-classes"}, File.separator)
+					+ File.pathSeparator + StringUtils.join(new String[]{targetDir, "target", "classes"}, File.separator);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -127,7 +129,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		List<Child> list = new ArrayList<>();
 		for(String module: getModel().getModules()){
 			if(moduleSharesParentTarget(module)) continue;
-			String childDir=targetDir+"/"+module;
+			String childDir=targetDir + File.separator + module;
 			MavenBuildProbe p = new MavenBuildProbe(childDir);
 			list.add(new Child(p.getId(), p.getClasspath(), childDir, null));
 		}
