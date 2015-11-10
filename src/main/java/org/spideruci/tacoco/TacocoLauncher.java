@@ -24,6 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.spideruci.tacoco.AbstractBuildProbe.Child;
+import org.spideruci.tacoco.PIT.PITHandler;
 import org.spideruci.tacoco.db.CreateSQLiteDB;
 
 public class TacocoLauncher {
@@ -128,98 +129,20 @@ public class TacocoLauncher {
 
 		
 		if(System.getProperties().containsKey(PIT)){
-			runPit(id, classpath, targetDir, probe, outdir);
+			PITHandler h = new PITHandler();
+			h.runPit(id, classpath, targetDir, probe, outdir, tacocoHome);
 		}
 
 	}
 
-	private void runPit(String id, String classpath, String targetDir, AbstractBuildProbe probe, String outdir) {
-		StringBuffer testClasses= new StringBuffer();
-		StringBuffer classes= new StringBuffer();
-		
-		Set<String> excludeTests = null;
-		File pitErrFile = new File(outdir, id+".pit.err");
-		if(pitErrFile.exists()){
-			excludeTests = getPITexcludeTests(pitErrFile);
-		}
-		
-		for(String s : probe.getTestClasses()){
-			if(excludeTests != null && excludeTests.contains(s)) continue;
-			testClasses.append(s+",");
-		}
-		
-		for(String s : probe.getClasses()){
-			classes.append(s+",");
-		}
-		
-		String pitPath = this.tacocoHome+"/lib/pitest-command-line-1.1.7.jar:"
-						+this.tacocoHome+"/lib/pitest-1.1.7.jar";
-		
-		File err = new File(outdir, id+".pit.err");
-		File log = new File(outdir, id+".pit.log");
-		if(err.exists()) err.delete();
-		if(log.exists()) log.delete();
-		
-		
-		ProcessBuilder pitRunner = new ProcessBuilder(
-				"java",
-				"-cp", classpath+":"+pitPath,
-				"-Xmx2048M",
-				"org.pitest.mutationtest.commandline.MutationCoverageReport",
-			    "--reportDir="+outdir+"/"+id,
-			    "--targetClasses="+classes,
-			    "--targetTests="+testClasses,
-			    "--sourceDirs="+targetDir+"/src",
-			    "--outputFormats=XML");
-		pitRunner.directory(new File(targetDir));
-		pitRunner.redirectError(err);
-		pitRunner.redirectOutput(log);
-
-		final Process pit;
-		try{
-			pit= pitRunner.start();
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-				public void run() {
-					pit.destroy();
-				}
-			}); 
-			pit.waitFor();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	private Set<String> getPITexcludeTests(File pitErrFile) {
-		
-		Set<String> set = new HashSet<>();
-		Pattern p = Pattern.compile("testClass=.*,");
-		
-		try {
-			for(String line:Files.readAllLines(Paths.get(pitErrFile.toURI()))){
-				if(line.endsWith("did not pass without mutation.")){
-					Matcher m = p.matcher(line);
-					if(m.find()) {
-						String match = m.group(0);
-						String exClass = match.substring(10,match.length()-1);
-						set.add(exClass);
-					}
-				}
-			}
-			
-			
-		} catch (IOException e) {
-			set = null;
-		}
-		
-		return set;
-	}
+	
 
 	private String getTacocoClasspath() throws Exception{
 
 		if(tacocoClasspath != null) return tacocoClasspath;
 		if(!new File(tacocoHome+"/cp.txt").exists()) {
 			ProcessBuilder builder = new ProcessBuilder(
-					"/usr/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=cp.txt").inheritIO();
+					"/usr/local/bin/mvn","dependency:build-classpath","-Dmdep.outputFile=cp.txt").inheritIO();
 			builder.directory(new File(tacocoHome));
 			Process p = builder.start();
 			p.waitFor();
@@ -233,7 +156,7 @@ public class TacocoLauncher {
 	 */
 	private void setTacocoEnv() {
 		if(new File(tacocoHome+"/lib").exists()) return;
-		ProcessBuilder builder = new ProcessBuilder("/usr/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
+		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/mvn","dependency:copy-dependencies","-DoutputDirectory=lib").inheritIO();
 		builder.directory(new File(tacocoHome));
 		try{
 			Process p = builder.start();
