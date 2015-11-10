@@ -13,6 +13,7 @@ import org.apache.maven.model.Plugin;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
+import org.spideruci.tacoco.util.PathBuilder;
 
 public class MavenBuildProbe extends AbstractBuildProbe {
 	private static final boolean String = false;
@@ -31,7 +32,8 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	@Override
 	public List<String> getClasses() {
 		makeFilter();
-		scanner.setBasedir(targetDir+"/target/test-classes"); //MAVEN TEST CLASS FOLDER
+        final String testClassPath = new PathBuilder().path(targetDir).path("target").path("test-classes").buildFilePath(); //MAVEN TEST CLASS FOLDER
+		scanner.setBasedir(testClassPath);
 		scanner.setCaseSensitive(true);
 		scanner.scan();
 		
@@ -103,14 +105,23 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	public String getClasspath(){
 		try{
 			if(classpath != null) return classpath;
-			if(!new File(targetDir+"/tacoco.cp").exists()) {
+            final String tacocoCpPath = new PathBuilder().path(targetDir).path("tacoco.cp").buildFilePath();
+
+			if(!new File(tacocoCpPath).exists()) {
                 MavenCli mavenCli = new MavenCli();
-                mavenCli.doMain(new String[] {"dependency:build-classpath", "-Dmdep.outputFile=tacoco.cp"}, targetDir,
+                mavenCli.doMain(new String[]{"dependency:build-classpath", "-Dmdep.outputFile=tacoco.cp"}, targetDir,
                         System.out, System.out);
 			}
-			classpath = new String(Files.readAllBytes(Paths.get(targetDir,"tacoco.cp")))
-					+":"+ targetDir + "/target/test-classes"
-					+":"+ targetDir + "/target/classes";
+
+            final String tacocoDependencies = new String(Files.readAllBytes(Paths.get(targetDir, "tacoco.cp")));
+            final String targetPath = new PathBuilder().path(targetDir).path("classes").buildFilePath();
+            final String targetTestPath = new PathBuilder().path(targetDir).path("test-classes").buildFilePath();
+
+			classpath = new PathBuilder().path(tacocoDependencies)
+                                         .path(targetPath)
+                                         .path(targetTestPath)
+                                         .buildClassPath();
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -127,7 +138,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		List<Child> list = new ArrayList<>();
 		for(String module: getModel().getModules()){
 			if(moduleSharesParentTarget(module)) continue;
-			String childDir=targetDir+"/"+module;
+			String childDir = new PathBuilder().path(targetDir).path(module).buildFilePath();
 			MavenBuildProbe p = new MavenBuildProbe(childDir);
 			list.add(new Child(p.getId(), p.getClasspath(), childDir, null));
 		}

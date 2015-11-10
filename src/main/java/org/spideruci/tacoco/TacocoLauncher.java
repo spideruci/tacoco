@@ -3,6 +3,7 @@ package org.spideruci.tacoco;
 import org.apache.maven.cli.MavenCli;
 import org.spideruci.tacoco.AbstractBuildProbe.Child;
 import org.spideruci.tacoco.db.CreateSQLiteDB;
+import org.spideruci.tacoco.util.PathBuilder;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -32,18 +33,18 @@ public class TacocoLauncher {
         System.setProperty("maven.multiModuleProjectDirectory", USER_DIR);
 
 		String targetDir = readArgumentValue(SUT);
-		if(targetDir.endsWith("/")) targetDir = targetDir.substring(0, targetDir.length());
+		if(targetDir.endsWith(File.separator)) targetDir = targetDir.substring(0, targetDir.length());
 		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME, USER_DIR)
 				,targetDir);
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
 		String name = readOptionalArgumentValue(PROJECT, probe.getId());
 
 		launcher.setTacocoEnv();
-		String parentCP = probe.getClasspath() +":"+ launcher.getTacocoClasspath(); 
+		String parentCP = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
 
 		if(probe.hasChild()){	
 			for(Child child : probe.getChildren()){
-				launcher.startJUnitRunner(name+"."+child.id, child.classpath+":"+ parentCP, child.targetDir, child.jvmArgs);
+				launcher.startJUnitRunner(name+"."+child.id, child.classpath + File.pathSeparator + parentCP, child.targetDir, child.jvmArgs);
 			}
 		}
 		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null);
@@ -52,7 +53,8 @@ public class TacocoLauncher {
 
 	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs) {
 
-		String outdir = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output");
+        final String defaultOutputPath = new PathBuilder().path(tacocoHome).path("tacoco_output").buildFilePath();
+		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
 
 		if(!new File(outdir).exists()) new File(outdir).mkdirs();
 
@@ -63,11 +65,13 @@ public class TacocoLauncher {
 		if(exec.exists()) exec.delete();
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
-		
-		final String instrumenterLocation = readOptionalArgumentValue(INST, 
-		    tacocoHome+"/lib/org.jacoco.agent-0.7.4.201502262128-runtime.jar");
+
+        final String jacocoRuntimeLibPath = new PathBuilder().path(tacocoHome).path("lib").
+                path("org.jacoco.agent-0.7.4.201502262128-runtime.jar").buildFilePath();
+
+		final String instrumenterLocation = readOptionalArgumentValue(INST, jacocoRuntimeLibPath);
 		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
-		    "destfile=" + outdir + "/" + id + ".exec" + ",dumponexit=false");
+		    "destfile=" + outdir + File.separator + id + ".exec" + ",dumponexit=false");
 		
 		InstrumenterConfig jacocoConfig = InstrumenterConfig.get(instrumenterLocation, instrumentedArgs);
 		ProcessBuilder builder = new ProcessBuilder(
@@ -97,7 +101,7 @@ public class TacocoLauncher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		String dbFile = outdir+"/"+id+".db";
+		String dbFile = outdir + File.separator + id + ".db";
 		if(System.getProperties().containsKey(DB))
 			try {
 				CreateSQLiteDB.dump(dbFile, targetDir, exec.toString());
@@ -109,12 +113,18 @@ public class TacocoLauncher {
 	private String getTacocoClasspath() throws Exception{
 
 		if(tacocoClasspath != null) return tacocoClasspath;
-		if(!new File(tacocoHome+"/cp.txt").exists()) {
+
+        final String tacocoCpPath = new PathBuilder().path(tacocoHome).path("cp.txt").buildFilePath();
+		if(!new File(tacocoCpPath).exists()) {
             MavenCli mavenCli = new MavenCli();
             mavenCli.doMain(new String[] {"dependency:build-classpath", "-Dmdep.outputFile=cp.txt"}, tacocoHome,
                     System.out, System.out);
 		}
-		tacocoClasspath = new String(Files.readAllBytes(Paths.get("cp.txt")))+":"+ tacocoHome + "/target/classes";
+
+        final String cpDependencies = new String(Files.readAllBytes(Paths.get("cp.txt")));
+        final String tacocoTargetPath = new PathBuilder().path(tacocoHome).path("target").path("classes").buildFilePath();
+
+		tacocoClasspath = new PathBuilder().path(cpDependencies).path(tacocoTargetPath).buildClassPath();
 		return tacocoClasspath;
 	}
 
@@ -122,7 +132,8 @@ public class TacocoLauncher {
 	 * Move jacoco.jar from mvn repo to tacocoHome/lib
 	 */
 	private void setTacocoEnv() {
-		if(new File(tacocoHome+"/lib").exists()) return;
+        final String dependencyLibPath = new PathBuilder().path(tacocoHome).path("lib").buildFilePath();
+		if(new File(dependencyLibPath).exists()) return;
         MavenCli mavenCli = new MavenCli();
         mavenCli.doMain(new String[]{"dependency:copy-dependencies", "-DoutputDirectory=lib"}, tacocoHome, System.out, System.out);
 	}
