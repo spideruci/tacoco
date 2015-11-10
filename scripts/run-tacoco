@@ -5,7 +5,7 @@ echo $project_name
 
 cd $2
 echo "RUNNING TACOCO"
-mvn -q exec:java -Plauncher -Dtacoco.sut=$1 -Dtacoco.home=$2 -Dtacoco.exec=$project_name.exec
+mvn -q exec:java -Plauncher -Dtacoco.sut=$1 -Dtacoco.home=$2 -Dtacoco.project=$project_name
 echo "RUNNING TACOCO --- DONE"
 
 echo "ANALYZING EXEC FILE"
