@@ -105,7 +105,8 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	public String getClasspath(){
 		try{
 			if(classpath != null) return classpath;
-            final String tacocoCpPath = new PathBuilder().path(targetDir).path("tacoco.cp").buildFilePath();
+            final String tacocoCpPath = 
+                new PathBuilder().path(targetDir).path("tacoco.cp").buildFilePath();
 
 			if(!new File(tacocoCpPath).exists()) {
                 MavenCli mavenCli = new MavenCli();
@@ -114,8 +115,8 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 			}
 
             final String tacocoDependencies = new String(Files.readAllBytes(Paths.get(targetDir, "tacoco.cp")));
-            final String targetPath = new PathBuilder().path(targetDir).path("classes").buildFilePath();
-            final String targetTestPath = new PathBuilder().path(targetDir).path("test-classes").buildFilePath();
+            final String targetPath = new PathBuilder().path(targetDir).path("target").path("classes").buildFilePath();
+            final String targetTestPath = new PathBuilder().path(targetDir).path("target").path("test-classes").buildFilePath();
 
 			classpath = new PathBuilder().path(tacocoDependencies)
                                          .path(targetPath)

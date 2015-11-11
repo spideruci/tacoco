@@ -10,22 +10,18 @@ import java.util.List;
 public class PathBuilder {
 
     private List<String> paths;
+    
+    public PathBuilder() {
+      paths = new ArrayList<>();
+    }
 
     public PathBuilder path(final String directory) {
-        if (paths == null) {
-            paths = new ArrayList<>();
-        }
-
         paths.add(directory);
         return this;
     }
 
     public PathBuilder path(final List<String> directories) {
-        if (paths == null || paths.isEmpty()) {
-            paths = directories;
-        } else {
-            paths.addAll(directories);
-        }
+        paths.addAll(directories);
         return this;
     }
 
@@ -36,14 +32,20 @@ public class PathBuilder {
     public String buildClassPath() {
         return buildPath(File.pathSeparator);
     }
-    private String buildPath(final String delimiter) {
-        StringBuffer path = new StringBuffer();
-        for (int i = 0; i < paths.size(); i++) {
-            if (i > 0)
-                path.append(delimiter);
-            path.append(paths.get(i));
-        }
-        return path.toString();
-    }
+    
+      private String buildPath(final String delimiter) {
+          if(paths.isEmpty()) {
+            return "";
+          }
+        
+          StringBuffer path = new StringBuffer();
+          for (int i = 0; i < paths.size() - 1; i++) {
+              path.append(paths.get(i));
+              path.append(delimiter);
+          }
+          
+          path.append(paths.get(paths.size() - 1));
+          return path.toString();
+      }
 
 }
