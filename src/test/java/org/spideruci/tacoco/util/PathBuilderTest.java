@@ -15,7 +15,7 @@ public class PathBuilderTest {
 
 
     @Test
-    public void test() {
+    public void testPathBuilderWithStrings() {
         PathBuilder pathBuilder = new PathBuilder();
         pathBuilder.path("spider").path("uci").path("tacoco");
         assertEquals("spider" + File.separator +"uci" + File.separator + "tacoco", pathBuilder.buildFilePath());
@@ -23,7 +23,21 @@ public class PathBuilderTest {
     }
 
     @Test
-    public void testStringList() {
+    public void testPathBuilderWithStringList() {
+        PathBuilder pathBuilder = new PathBuilder();
+        final List<String> directories = new ArrayList<>();
+        directories.add("org");
+        directories.add("spider");
+        directories.add("uci");
+        directories.add("tacoco");
+        pathBuilder.path(directories);
+        assertEquals("org" + File.separator +"spider" + File.separator +"uci" + File.separator + "tacoco", pathBuilder.buildFilePath());
+        assertEquals("org" + File.pathSeparator +"spider" + File.pathSeparator +"uci" + File.pathSeparator + "tacoco", pathBuilder.buildClassPath());
+    }
+
+
+    @Test
+    public void testPathBuilderWithStringListAndStrings() {
         PathBuilder pathBuilder = new PathBuilder();
         final List<String> directories = new ArrayList<>();
         directories.add("org");
@@ -34,7 +48,7 @@ public class PathBuilderTest {
     }
 
     @Test
-    public void testStringList2() {
+    public void testPathBuilderWithStringsAndStringList() {
         PathBuilder pathBuilder = new PathBuilder();
         final List<String> directories = new ArrayList<>();
         directories.add("uci");
