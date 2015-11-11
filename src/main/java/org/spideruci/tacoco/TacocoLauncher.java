@@ -52,8 +52,9 @@ public class TacocoLauncher {
 
 
 	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs) {
-
-        final String defaultOutputPath = new PathBuilder().path(tacocoHome).path("tacoco_output").buildFilePath();
+	  
+	  final String defaultOutputPath = 
+	      new PathBuilder().path(tacocoHome).path("tacoco_output").buildFilePath();
 		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
 
 		if(!new File(outdir).exists()) new File(outdir).mkdirs();
@@ -66,8 +67,12 @@ public class TacocoLauncher {
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 
-        final String jacocoRuntimeLibPath = new PathBuilder().path(tacocoHome).path("lib").
-                path("org.jacoco.agent-0.7.4.201502262128-runtime.jar").buildFilePath();
+        final String jacocoRuntimeLibPath = 
+            new PathBuilder()
+            .path(tacocoHome)
+            .path("lib")
+            .path("org.jacoco.agent-0.7.4.201502262128-runtime.jar")
+            .buildFilePath();
 
 		final String instrumenterLocation = readOptionalArgumentValue(INST, jacocoRuntimeLibPath);
 		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
