@@ -17,7 +17,7 @@ public class TacocoLauncher {
 
 	private String tacocoHome, targetDir;
 	private static String tacocoClasspath = null;
-    private static String USER_DIR = System.getProperty("user.dir");
+	private static String USER_DIR = System.getProperty("user.dir");
 
 	private TacocoLauncher(String tacocoHome, String targetDir){
 		this.tacocoHome = tacocoHome;
@@ -30,7 +30,7 @@ public class TacocoLauncher {
 			LANUCHER_CLI.printHelp();
 		}
 
-        System.setProperty("maven.multiModuleProjectDirectory", USER_DIR);
+		System.setProperty("maven.multiModuleProjectDirectory", USER_DIR);
 
 		String targetDir = readArgumentValue(SUT);
 		if(targetDir.endsWith(File.separator)) targetDir = targetDir.substring(0, targetDir.length());
@@ -52,9 +52,9 @@ public class TacocoLauncher {
 
 
 	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs) {
-	  
-	  final String defaultOutputPath = 
-	      new PathBuilder().path(tacocoHome).path("tacoco_output").buildFilePath();
+
+		final String defaultOutputPath = 
+				new PathBuilder().path(tacocoHome).path("tacoco_output").buildFilePath();
 		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
 
 		if(!new File(outdir).exists()) new File(outdir).mkdirs();
@@ -67,17 +67,17 @@ public class TacocoLauncher {
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 
-        final String jacocoRuntimeLibPath = 
-            new PathBuilder()
-            .path(tacocoHome)
-            .path("lib")
-            .path("org.jacoco.agent-0.7.4.201502262128-runtime.jar")
-            .buildFilePath();
+		final String jacocoRuntimeLibPath = 
+				new PathBuilder()
+				.path(tacocoHome)
+				.path("lib")
+				.path("org.jacoco.agent-0.7.4.201502262128-runtime.jar")
+				.buildFilePath();
 
 		final String instrumenterLocation = readOptionalArgumentValue(INST, jacocoRuntimeLibPath);
 		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
-		    "destfile=" + outdir + File.separator + id + ".exec" + ",dumponexit=false");
-		
+				"destfile=" + outdir + File.separator + id + ".exec" + ",dumponexit=false");
+
 		InstrumenterConfig jacocoConfig = InstrumenterConfig.get(instrumenterLocation, instrumentedArgs);
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
@@ -119,15 +119,15 @@ public class TacocoLauncher {
 
 		if(tacocoClasspath != null) return tacocoClasspath;
 
-        final String tacocoCpPath = new PathBuilder().path(tacocoHome).path("cp.txt").buildFilePath();
+		final String tacocoCpPath = new PathBuilder().path(tacocoHome).path("cp.txt").buildFilePath();
 		if(!new File(tacocoCpPath).exists()) {
-            MavenCli mavenCli = new MavenCli();
-            mavenCli.doMain(new String[] {"dependency:build-classpath", "-Dmdep.outputFile=cp.txt"}, tacocoHome,
-                    System.out, System.out);
+			MavenCli mavenCli = new MavenCli();
+			mavenCli.doMain(new String[] {"dependency:build-classpath", "-Dmdep.outputFile=cp.txt"}, tacocoHome,
+					System.out, System.out);
 		}
 
-        final String cpDependencies = new String(Files.readAllBytes(Paths.get("cp.txt")));
-        final String tacocoTargetPath = new PathBuilder().path(tacocoHome).path("target").path("classes").buildFilePath();
+		final String cpDependencies = new String(Files.readAllBytes(Paths.get("cp.txt")));
+		final String tacocoTargetPath = new PathBuilder().path(tacocoHome).path("target").path("classes").buildFilePath();
 
 		tacocoClasspath = new PathBuilder().path(cpDependencies).path(tacocoTargetPath).buildClassPath();
 		return tacocoClasspath;
@@ -137,10 +137,10 @@ public class TacocoLauncher {
 	 * Move jacoco.jar from mvn repo to tacocoHome/lib
 	 */
 	private void setTacocoEnv() {
-        final String dependencyLibPath = new PathBuilder().path(tacocoHome).path("lib").buildFilePath();
+		final String dependencyLibPath = new PathBuilder().path(tacocoHome).path("lib").buildFilePath();
 		if(new File(dependencyLibPath).exists()) return;
-        MavenCli mavenCli = new MavenCli();
-        mavenCli.doMain(new String[]{"dependency:copy-dependencies", "-DoutputDirectory=lib"}, tacocoHome, System.out, System.out);
+		MavenCli mavenCli = new MavenCli();
+		mavenCli.doMain(new String[]{"dependency:copy-dependencies", "-DoutputDirectory=lib"}, tacocoHome, System.out, System.out);
 	}
 
 }
