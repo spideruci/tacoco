@@ -9,43 +9,43 @@ import java.util.List;
  */
 public class PathBuilder {
 
-    private List<String> paths;
-    
-    public PathBuilder() {
-      paths = new ArrayList<>();
-    }
+	private List<String> paths;
 
-    public PathBuilder path(final String directory) {
-        paths.add(directory);
-        return this;
-    }
+	public PathBuilder() {
+		paths = new ArrayList<>();
+	}
 
-    public PathBuilder path(final List<String> directories) {
-        paths.addAll(directories);
-        return this;
-    }
+	public PathBuilder path(final String directory) {
+		paths.add(directory);
+		return this;
+	}
 
-    public String buildFilePath() {
-        return buildPath(File.separator);
-    }
+	public PathBuilder path(final List<String> directories) {
+		paths.addAll(directories);
+		return this;
+	}
 
-    public String buildClassPath() {
-        return buildPath(File.pathSeparator);
-    }
-    
-      private String buildPath(final String delimiter) {
-          if(paths.isEmpty()) {
-            return "";
-          }
-        
-          StringBuffer path = new StringBuffer();
-          for (int i = 0; i < paths.size() - 1; i++) {
-              path.append(paths.get(i));
-              path.append(delimiter);
-          }
-          
-          path.append(paths.get(paths.size() - 1));
-          return path.toString();
-      }
+	public String buildFilePath() {
+		return buildPath(File.separator);
+	}
+
+	public String buildClassPath() {
+		return buildPath(File.pathSeparator);
+	}
+
+	private String buildPath(final String delimiter) {
+		if(paths.isEmpty()) {
+			return "";
+		}
+
+		StringBuffer path = new StringBuffer();
+		for (int i = 0; i < paths.size() - 1; i++) {
+			path.append(paths.get(i));
+			path.append(delimiter);
+		}
+
+		path.append(paths.get(paths.size() - 1));
+		return path.toString();
+	}
 
 }
