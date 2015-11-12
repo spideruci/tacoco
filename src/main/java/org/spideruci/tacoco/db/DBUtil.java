@@ -167,7 +167,7 @@ public class  DBUtil{
 	public void insertSource(String FQN, int sloc, int projectID) {
 		String sql = "INSERT INTO SOURCE "
 				+"VALUES(?,?,?,?)";
-		execPsmt(sql, getSourceID(FQN), FQN, sloc, projectID);
+		execPsmt(sql, getSourceID(FQN), FQN.replaceAll("/", "."), sloc, projectID);
 	}
 
 	public void insertLineCoverage(int testID, int sourceID, int lineNumber, int projectID) {
