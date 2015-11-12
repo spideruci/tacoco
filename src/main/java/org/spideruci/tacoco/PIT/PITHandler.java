@@ -48,6 +48,8 @@ public class PITHandler {
 
 		//parsing mutationXML and update tacocodb
 		try{
+			this.conn.setAutoCommit(false);
+			
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document doc = builder.parse(mutationXml);
@@ -58,7 +60,8 @@ public class PITHandler {
 				Mutation m = new Mutation(i, node);
 				insertDB(m);
 			}
-
+			
+			this.conn.setAutoCommit(true);
 			conn.close();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -241,7 +244,7 @@ public class PITHandler {
 			e.printStackTrace();
 		}
 
-		updateTacocoDB(outdir+"/"+id+".db",outdir+"/"+id);
+		//updateTacocoDB(outdir+"/"+id+".db",outdir+"/"+id);
 	}
 
 	private Set<String> getPITexcludeTests(File pitErrFile) {

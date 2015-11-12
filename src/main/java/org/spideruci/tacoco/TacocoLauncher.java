@@ -9,19 +9,15 @@ import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
 import static org.spideruci.tacoco.cli.AbstractCli.NOJUNIT;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PIT;
+import static org.spideruci.tacoco.cli.AbstractCli.PITDB;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.spideruci.tacoco.AbstractBuildProbe.Child;
 import org.spideruci.tacoco.PIT.PITHandler;
@@ -127,12 +123,17 @@ public class TacocoLauncher {
 				e.printStackTrace();
 			}
 
-		
+		//run PIT test and produce mutation.xml
+		PITHandler h = new PITHandler();
 		if(System.getProperties().containsKey(PIT)){
-			PITHandler h = new PITHandler();
 			h.runPit(id, classpath, targetDir, probe, outdir, tacocoHome);
 		}
-
+		
+		//update tacocoDB with PIT test info
+		if(System.getProperties().containsKey(PITDB)){
+			h.updateTacocoDB(outdir+"/"+id+".db",outdir+"/"+id);
+		}
+		
 	}
 
 	
