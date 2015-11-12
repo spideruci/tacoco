@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/inf295uci-2015/tacoco.svg?branch=master)](https://travis-ci.org/inf295uci-2015/tacoco)
 [![Coverage Status](https://coveralls.io/repos/inf295uci-2015/tacoco/badge.svg?branch=master)](https://coveralls.io/r/inf295uci-2015/tacoco?branch=master)
 
+<<<<<<< HEAD
 ## Compiling Tacoco
 1. Install [Primitive Hamcrest (https://github.com/inf295uci-2015/primitive-hamcrest)](https://github.com/inf295uci-2015/primitive-hamcrest) in your local repository (check instruction in given in primitive-hamcrest's Readme.md).
 2. Run `mvn comile` as a sanity check to make sure that there are no compile-time errors.
@@ -161,3 +162,6 @@ Arguments:
 - More to come ...
   + converting the boolean arrays into bit arrays/vectors
   + (optional) including an index to the test-case names. currently only the test-case-ids are listed in the per-source-coverage-matrices.
+=======
+Check out the Tacoco Wiki for installation and usage details: [https://github.com/spideruci/tacoco/wiki](https://github.com/spideruci/tacoco/wiki)
+>>>>>>> master

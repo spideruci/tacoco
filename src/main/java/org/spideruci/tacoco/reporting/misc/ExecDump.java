@@ -27,58 +27,58 @@ import org.jacoco.core.data.SessionInfo;
  */
 public final class ExecDump {
 
-  /**
-   * Reads all execution data files specified as the arguments and dumps the
-   * content.
-   * 
-   * @param args
-   *            list of execution data files
-   * @throws IOException
-   */
-  public static void main(final String[] args) throws IOException {
-    for (final String file : args) {
-      dumpContent(file);
-    }
-  }
+	/**
+	 * Reads all execution data files specified as the arguments and dumps the
+	 * content.
+	 * 
+	 * @param args
+	 *            list of execution data files
+	 * @throws IOException
+	 */
+	public static void main(final String[] args) throws IOException {
+		for (final String file : args) {
+			dumpContent(file);
+		}
+	}
 
-  private static void dumpContent(final String file) throws IOException {
-    System.out.printf("exec file: %s%n", file);
-    System.out.println("CLASS ID         HITS/PROBES   CLASS NAME");
-    
-    final FileInputStream in = new FileInputStream(file);
-    final ExecutionDataReader reader = new ExecutionDataReader(in);
-    
-    reader.setSessionInfoVisitor(new ISessionInfoVisitor() {
-      public void visitSessionInfo(final SessionInfo info) {
-        System.out.printf("Session \"%s\": %s - %s%n", info.getId(),
-            new Date(info.getStartTimeStamp()),
-            new Date(info.getDumpTimeStamp()));
-      }
-    });
-    
-    reader.setExecutionDataVisitor(new IExecutionDataVisitor() {
-      public void visitClassExecution(final ExecutionData data) {
-        System.out.printf("%016x  %3d of %3d   %s%n",
-            Long.valueOf(data.getId()),
-            Integer.valueOf(getHitCount(data.getProbes())),
-            Integer.valueOf(data.getProbes().length), data.getName());
-      }
-    });
-    reader.read();
-    in.close();
-    System.out.println();
-  }
+	private static void dumpContent(final String file) throws IOException {
+		System.out.printf("exec file: %s%n", file);
+		System.out.println("CLASS ID         HITS/PROBES   CLASS NAME");
 
-  private static int getHitCount(final boolean[] data) {
-    int count = 0;
-    for (final boolean hit : data) {
-      if (hit) {
-        count++;
-      }
-    }
-    return count;
-  }
+		final FileInputStream in = new FileInputStream(file);
+		final ExecutionDataReader reader = new ExecutionDataReader(in);
 
-  private ExecDump() {
-  }
+		reader.setSessionInfoVisitor(new ISessionInfoVisitor() {
+			public void visitSessionInfo(final SessionInfo info) {
+				System.out.printf("Session \"%s\": %s - %s%n", info.getId(),
+						new Date(info.getStartTimeStamp()),
+						new Date(info.getDumpTimeStamp()));
+			}
+		});
+
+		reader.setExecutionDataVisitor(new IExecutionDataVisitor() {
+			public void visitClassExecution(final ExecutionData data) {
+				System.out.printf("%016x  %3d of %3d   %s%n",
+						Long.valueOf(data.getId()),
+						Integer.valueOf(getHitCount(data.getProbes())),
+						Integer.valueOf(data.getProbes().length), data.getName());
+			}
+		});
+		reader.read();
+		in.close();
+		System.out.println();
+	}
+
+	private static int getHitCount(final boolean[] data) {
+		int count = 0;
+		for (final boolean hit : data) {
+			if (hit) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	private ExecDump() {
+	}
 }

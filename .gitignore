@@ -61,11 +61,16 @@ local.properties
 # R script
 *.R
 
+# IntelliJ
+*.iml
+
+
 # TACOCO
 cp.txt
 *.cp
 lib/*
 tacoco_output/*
+
 
 # OSX
 .DS_Store
