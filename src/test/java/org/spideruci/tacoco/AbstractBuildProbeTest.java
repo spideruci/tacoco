@@ -20,35 +20,35 @@ public class AbstractBuildProbeTest {
 
 	private File testDir;
 	private File testConf;
-	
+
 	//Parameters
 	private String confFileName;
 	private BuilderType builderName;
-	
+
 	public AbstractBuildProbeTest(String confFileName, BuilderType builderName) {
 		this.confFileName = confFileName;
 		this.builderName = builderName;
 	}
-	
+
 	@Parameters
 	public static Collection<Object[]> builders() {
-	        return Arrays.asList(new Object[][]{
-	        	{"pom.xml",BuilderType.MAVEN},
-	        	{"build.xml",BuilderType.ANT},
-	        	{"build.gradle",BuilderType.GRADLE}
-	        	});
+		return Arrays.asList(new Object[][]{
+			{"pom.xml",BuilderType.MAVEN},
+			{"build.xml",BuilderType.ANT},
+			{"build.gradle",BuilderType.GRADLE}
+		});
 	}
 
-	
+
 	@Before
-    public void setUp() throws Exception {
+	public void setUp() throws Exception {
 		testDir = new File("testDir");
 		testDir.mkdir();
 		testConf = new File(testDir, confFileName);
 		testConf.createNewFile();
-		
+
 	}
-	
+
 	@Test
 	public void getInstanceTest() throws IOException{
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(testDir.getAbsolutePath());
