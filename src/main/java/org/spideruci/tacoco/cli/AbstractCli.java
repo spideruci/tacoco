@@ -24,8 +24,6 @@ public abstract class AbstractCli {
   public static final String PITDB = "tacoco.pitdb";
   public static final String NOJUNIT = "tacoco.nojunit";
   
-  
-  
   public static final String INST = "tacoco.inst";
   public static final String INST_ARGS = "tacoco.inst.arg";
   public static final String INST_MEM = "tacoco.inst.mem";
@@ -68,4 +66,40 @@ public abstract class AbstractCli {
   }
   
   public abstract String getHelpMenu(final String errorMessage);
+
+	public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
+	public static final ReaderCli READER_CLI = new ReaderCli();
+	public static final LauncherCli LANUCHER_CLI = new LauncherCli();
+
+	protected String readOptionalArgumentValueInternal(String arg, String defolt) {
+		String value = System.getProperty(arg);
+		if(value == null) {
+			return defolt;
+		}
+		return value;
+	}
+
+	protected String readArgumentValueInternal(String arg) {
+		String value = System.getProperty(arg);
+		if(value == null) {
+			printHelpForMissingArgError(arg);
+		}
+		return value;
+	}
+
+	public void printHelpForMissingArgError(final String arg) {
+		final String errorMessage = PREFIX + arg + " is a required argument.";
+		printHelp(errorMessage);
+	}
+
+	public void printHelp() {
+		printHelp(null);
+	}
+
+	public void printHelp(final String errorMessage) {
+		System.out.println(getHelpMenu(errorMessage));
+		System.exit(0);
+	}
+
+	public abstract String getHelpMenu(final String errorMessage);
 }

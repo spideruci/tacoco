@@ -22,35 +22,35 @@ import org.junit.runner.notification.Failure;
 import junit.framework.TestCase;
 
 public final class JUnitRunner extends Thread{
-	
+
 	private Class<?> testClass;
 	private static JUnitCore core = new JUnitCore();
 	static{
 		core.addListener(new JUnitListener());
 	}
-	
+
 	double runTime=0;
 	int runCnt=0, failCnt=0, ignoreCnt=0;
-	
-    public JUnitRunner(Class<?> testClass) {
-    	this.testClass = testClass;
+
+	public JUnitRunner(Class<?> testClass) {
+		this.testClass = testClass;
 	}
 
 	public void run() {
-    	try {
+		try {
 			System.out.println("Starting "+testClass);
 			Result result = core.run(testClass);
 			runTime=result.getRunTime()/1000.0;
 			runCnt=result.getRunCount();
 			failCnt=result.getFailureCount();
 			ignoreCnt=result.getIgnoreCount();
-			
+
 			System.out.println("Finishing "+testClass
-								+" Tests run: "+runCnt
-								+" Failures: "+failCnt
-								+" Errors: 0"   //TBD
-								+" Skipped: "+ignoreCnt
-								+" Time elapsed: "+ runTime +"sec");
+					+" Tests run: "+runCnt
+					+" Failures: "+failCnt
+					+" Errors: 0"   //TBD
+					+" Skipped: "+ignoreCnt
+					+" Time elapsed: "+ runTime +"sec");
 			if(result.getFailureCount() !=0) {
 				System.out.println("---------------------Failures--------------------");
 				for(Failure f: result.getFailures()){
@@ -64,8 +64,8 @@ public final class JUnitRunner extends Thread{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
-	
+	}
+
 	public static void main(String[] args) {
 
 		boolean log=false;
@@ -75,11 +75,10 @@ public final class JUnitRunner extends Thread{
 		System.out.println("---------------------------------------------");
 		System.out.println("Starting Tacoco JUnitRunner: "+targetDir);
 		System.out.println("---------------------------------------------");
-		
+
 		int nThread=Integer.parseInt(readOptionalArgumentValue(THREAD,"1"));
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(targetDir);
 		List<String> klasses = probe.getTestClasses();
-		
 		List<JUnitRunner> runners = new ArrayList<>();
 		JUnitRunner runner=null;
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThread);
@@ -102,7 +101,7 @@ public final class JUnitRunner extends Thread{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		double rTime=0;
 		int rCnt=0, fCnt=0, iCnt=0;
 		for(JUnitRunner r: runners){
@@ -125,7 +124,7 @@ public final class JUnitRunner extends Thread{
 	private static boolean shouldRun(Class<?> c) {
 		//Do not run Abstract Class
 		if(Modifier.isAbstract(c.getModifiers())) return false;
-		
+
 		for(Method m:c.getMethods()){
 			//Run a class which has @Test annotation //JUnit4
 			if(m.getAnnotation(Test.class) != null) return true;
