@@ -70,6 +70,7 @@ cp.txt
 *.cp
 lib/*
 tacoco_output/*
+tacoco.cp
 
 
 # OSX
@@ -98,3 +99,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#Checkstyle
+.checkstyle
