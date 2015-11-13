@@ -53,7 +53,7 @@ public class TacocoLauncher {
 		
 		if(probe.hasChild()){	
 			for(Child child : probe.getChildren()){
-				launcher.startJUnitRunner(name+"."+child.id, child.classpath + File.pathSeparator + parentCP, child.targetDir, child.jvmArgs);
+				launcher.startJUnitRunner(name+"."+child.id, child.classpath + File.pathSeparator + parentCP, child.targetDir, child.jvmArgs, probe);
 			}
 		}
 		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null, probe);
