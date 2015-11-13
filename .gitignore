@@ -60,9 +60,6 @@ local.properties
 # R script
 *.R
 
-# IntelliJ
-*.iml
-
 cp.txt
 lib/*
 tacoco_output/*

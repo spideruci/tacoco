@@ -1,24 +1,35 @@
 package org.spideruci.tacoco;
 
+import static org.spideruci.tacoco.cli.AbstractCli.DB;
+import static org.spideruci.tacoco.cli.AbstractCli.HELP;
+import static org.spideruci.tacoco.cli.AbstractCli.HOME;
+import static org.spideruci.tacoco.cli.AbstractCli.INST;
+import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
+import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.NOJUNIT;
+import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
+import static org.spideruci.tacoco.cli.AbstractCli.PIT;
+import static org.spideruci.tacoco.cli.AbstractCli.PITDB;
+import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
+import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
+import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import org.apache.maven.cli.MavenCli;
 import org.spideruci.tacoco.AbstractBuildProbe.Child;
 import org.spideruci.tacoco.db.CreateSQLiteDB;
 import org.spideruci.tacoco.util.PathBuilder;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static org.spideruci.tacoco.cli.AbstractCli.*;
-import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
+import org.spideruci.tacoco.AbstractBuildProbe.Child;
+import org.spideruci.tacoco.PIT.PITHandler;
+import org.spideruci.tacoco.db.CreateSQLiteDB;
 
 public class TacocoLauncher {
 
 	private String tacocoHome, targetDir;
 	private static String tacocoClasspath = null;
 	private static String USER_DIR = System.getProperty("user.dir");
-
 	private TacocoLauncher(String tacocoHome, String targetDir){
 		this.tacocoHome = tacocoHome;
 		this.targetDir = targetDir;
@@ -34,38 +45,29 @@ public class TacocoLauncher {
 
 		String targetDir = readArgumentValue(SUT);
 		if(targetDir.endsWith(File.separator)) targetDir = targetDir.substring(0, targetDir.length());
-		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME, USER_DIR)
-				,targetDir);
+		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME, USER_DIR),targetDir);
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
 		String name = readOptionalArgumentValue(PROJECT, probe.getId());
-
 		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
-
+		
 		if(probe.hasChild()){	
 			for(Child child : probe.getChildren()){
-				launcher.startJUnitRunner(name+"."+child.id, child.classpath + File.pathSeparator + parentCP, child.targetDir, child.jvmArgs);
+				launcher.startJUnitRunner(name+"."+child.id, child.classpath + File.pathSeparator + parentCP, child.targetDir, child.jvmArgs, probe);
 			}
 		}
-		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null);
+		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null, probe);
 	}
 
 
-	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs) {
-
+	private void startJUnitRunner(String id, String classpath, String targetDir, String[] jvmArgs, AbstractBuildProbe probe) {
 		final String defaultOutputPath = 
 				new PathBuilder().path(tacocoHome).path("tacoco_output").buildFilePath();
 		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
-
 		if(!new File(outdir).exists()) new File(outdir).mkdirs();
-
-		//delete files before execution, 
 		File exec = new File(outdir, id+".exec");
 		File err = new File(outdir, id+".err");
 		File log = new File(outdir, id+".log");
-		if(exec.exists()) exec.delete();
-		if(err.exists()) err.delete();
-		if(log.exists()) log.delete();
 
 		final String jacocoRuntimeLibPath = 
 				new PathBuilder()
@@ -91,20 +93,29 @@ public class TacocoLauncher {
 				"org.spideruci.tacoco.JUnitRunner");
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-		builder.redirectError(err);
-		builder.redirectOutput(log);
+		
+		if(!System.getProperties().containsKey(NOJUNIT)){
+			
+			//delete files before execution, 
+			if(exec.exists()) exec.delete();
+			if(err.exists()) err.delete();
+			if(log.exists()) log.delete();
 
-		final Process p;
-		try{
-			p= builder.start();
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-				public void run() {
-					p.destroy();
-				}
-			}); 
-			p.waitFor();
-		}catch(Exception e){
-			e.printStackTrace();
+			builder.redirectError(err);
+			builder.redirectOutput(log);
+			
+			final Process p;
+			try{
+				p= builder.start();
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+					public void run() {
+						p.destroy();
+					}
+				}); 
+				p.waitFor();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		String dbFile = outdir + File.separator + id + ".db";
 		if(System.getProperties().containsKey(DB))
@@ -113,7 +124,21 @@ public class TacocoLauncher {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
+		//run PIT test and produce mutation.xml
+		PITHandler h = new PITHandler();
+		if(System.getProperties().containsKey(PIT)){
+			h.runPit(id, classpath, targetDir, probe, outdir, tacocoHome);
+		}
+		
+		//update tacocoDB with PIT test info
+		if(System.getProperties().containsKey(PITDB)){
+			h.updateTacocoDB(outdir+"/"+id+".db",outdir+"/"+id);
+		}
+		
 	}
+
+	
 
 	private String getTacocoClasspath() throws Exception{
 
