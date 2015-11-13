@@ -32,12 +32,15 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	@Override
 	public List<String> getTestClasses() {
 		makeFilter();
+		List<String> ret = new ArrayList<>();
 		final String testClassPath = new PathBuilder().path(targetDir).path("target").path("test-classes").buildFilePath(); //MAVEN TEST CLASS FOLDER
+		if(!new File(testClassPath).exists()) {
+			return ret;
+		}
 		scanner.setBasedir(testClassPath);
 		scanner.setCaseSensitive(true);
 		scanner.scan();
 
-		List<String> ret = new ArrayList<>();
 		for(String s: scanner.getIncludedFiles()){
 			ret.add(s.replaceAll("/", ".").replaceAll("\\.class",""));
 		}
@@ -161,13 +164,18 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	@Override
 	public List<java.lang.String> getClasses() {
 		DirectoryScanner classScanner = new DirectoryScanner();
-		classScanner.setBasedir(targetDir+"/target/classes");
+		String baseDir = targetDir+"/target/classes";
+		
+		List<String> ret = new ArrayList<>();
+		if(!new File(baseDir).exists()) {
+			return ret;
+		}
+		classScanner.setBasedir(baseDir);
 		classScanner.setCaseSensitive(true);
 		classScanner.setIncludes(new String[]{"**/*class"});
 		classScanner.setExcludes(new String[]{"**/*$*.class"});
 		classScanner.scan();
 		
-		List<String> ret = new ArrayList<>();
 		for(String s: classScanner.getIncludedFiles()){
 			ret.add(s.replaceAll("/", ".").replaceAll("\\.class",""));
 		}
