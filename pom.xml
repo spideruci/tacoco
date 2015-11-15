@@ -223,4 +223,14 @@
 		</profile>
 	</profiles>
 
+	<reporting>
+    	<plugins>
+      		<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-pmd-plugin</artifactId>
+        		<version>3.5</version>
+      		</plugin>
+    	</plugins>
+  </reporting>
+
 </project>
