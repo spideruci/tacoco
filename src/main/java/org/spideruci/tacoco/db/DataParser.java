@@ -67,17 +67,20 @@ public class DataParser implements IExecutionDataVisitor {
 	}
 
 	private int count = 0; 
-	private void printCoverage(IBundleCoverage coverage, boolean updateSourceIfno) {
+	private void printCoverage(IBundleCoverage coverage, boolean updateSourceInfo) {
 		SQLitePrinter printer = 
 				new SQLitePrinter(coverage, dbDumper.getDBUtil(),projectID, updateSourceInfo);
 		
 
 		printer.printCoverage();
+		/*
 		if(this.coverageTitle == null
 				|| this.coverageTitle.isEmpty()
 				|| this.coverageTitle.equals("end")) {
+			;
 		} else {
-		}
+			;
+		}*/
 		System.out.printf("completed printing coverage bundle for %s.%n", coverage.getName());
 		System.out.printf("completed printing %d coverage bundle(s).%n%n", ++count);
 	}

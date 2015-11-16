@@ -11,7 +11,7 @@ public class LinesStatusCoder {
 
 	public int[] encode(Collection<ILine> linesCoverage) {
 		int lineCount = linesCoverage.size();
-		int codeCount = (lineCount / 16) + (lineCount % 16 == 0 ? 0 : 1);
+		int codeCount = lineCount / 16 + (lineCount % 16 == 0 ? 0 : 1);
 		int[] codedCoverage = new int[codeCount];
 
 		int code = 0;

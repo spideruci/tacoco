@@ -65,7 +65,7 @@ public class PerJUnitTestCaseVisitor implements ISessionInfoVisitor,IExecutionDa
 		}
 		catch(IOException e)
 		{
-
+			e.printStackTrace();
 		}
 
 		/*

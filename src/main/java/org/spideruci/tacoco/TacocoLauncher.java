@@ -1,17 +1,6 @@
 package org.spideruci.tacoco;
 
-import static org.spideruci.tacoco.cli.AbstractCli.DB;
-import static org.spideruci.tacoco.cli.AbstractCli.HELP;
-import static org.spideruci.tacoco.cli.AbstractCli.HOME;
-import static org.spideruci.tacoco.cli.AbstractCli.INST;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
-import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
-import static org.spideruci.tacoco.cli.AbstractCli.NOJUNIT;
-import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
-import static org.spideruci.tacoco.cli.AbstractCli.PIT;
-import static org.spideruci.tacoco.cli.AbstractCli.PITDB;
-import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AbstractCli.*;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import org.apache.maven.cli.MavenCli;
@@ -21,9 +10,7 @@ import org.spideruci.tacoco.util.PathBuilder;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import org.spideruci.tacoco.AbstractBuildProbe.Child;
 import org.spideruci.tacoco.PIT.PITHandler;
-import org.spideruci.tacoco.db.CreateSQLiteDB;
 
 public class TacocoLauncher {
 
@@ -79,8 +66,12 @@ public class TacocoLauncher {
 		final String instrumenterLocation = readOptionalArgumentValue(INST, jacocoRuntimeLibPath);
 		final String instrumentedArgs = readOptionalArgumentValue(INST_ARGS, 
 				"destfile=" + outdir + File.separator + id + ".exec" + ",dumponexit=false");
-
 		InstrumenterConfig jacocoConfig = InstrumenterConfig.get(instrumenterLocation, instrumentedArgs);
+		
+		StringBuilder jvmArg = new StringBuilder();
+		for(String s : jvmArgs){
+			jvmArg = jvmArg.append(s+" ");
+		}
 		ProcessBuilder builder = new ProcessBuilder(
 				"java",
 				"-cp", classpath,
@@ -90,6 +81,7 @@ public class TacocoLauncher {
 				"-Dtacoco.output="+outdir,
 				"-Dtacoco.log=off",
 				"-Dtacoco.thread="+1,
+				jvmArg.toString(),
 				"org.spideruci.tacoco.JUnitRunner");
 		builder.directory(new File(targetDir));
 		builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);

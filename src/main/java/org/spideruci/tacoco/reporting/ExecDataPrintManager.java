@@ -37,7 +37,7 @@ public class ExecDataPrintManager {
 		}
 
 		LineCoverageFormat format = 
-				(formatString == null || formatString.isEmpty()) 
+				formatString == null || formatString.isEmpty() 
 				? LineCoverageFormat.DENSE : LineCoverageFormat.valueOf(formatString);
 		boolean isPretty = prettyPrint;
 		ExecDataPrintManager printMgr = 

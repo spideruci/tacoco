@@ -1,10 +1,6 @@
 package org.spideruci.tacoco.reporting;
 
-import static org.spideruci.tacoco.cli.AbstractCli.HELP;
-import static org.spideruci.tacoco.cli.AbstractCli.JSON;
-import static org.spideruci.tacoco.cli.AbstractCli.OUT;
-import static org.spideruci.tacoco.cli.AbstractCli.PP;
-import static org.spideruci.tacoco.cli.AbstractCli.READER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.*;
 import static org.spideruci.tacoco.cli.ReaderCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.ReaderCli.readOptionalArgumentValue;
 
@@ -43,7 +39,7 @@ public class CoverageJsonReader {
 		InputStreamReader jsonIn = 
 				new InputStreamReader(new FileInputStream(jsonFile));
 		JsonReader jsonreader = new JsonReader(jsonIn);
-		CoverageJsonReader reader = new CoverageJsonReader(jsonreader);;
+		CoverageJsonReader reader = new CoverageJsonReader(jsonreader);
 		CoverageMatrix2 covMat = reader.read2(covFormat);
 
 		boolean shouldPrettyPrint = System.getProperties().containsKey(PP);

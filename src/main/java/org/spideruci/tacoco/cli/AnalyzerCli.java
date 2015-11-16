@@ -13,8 +13,7 @@ public class AnalyzerCli extends AbstractCli {
 	@Override
 	public String getHelpMenu(final String errorMessage) {
 		final String error = errorMessage == null ? null :
-			("ERROR! " + errorMessage + 
-					"\nRefer to the following commandline arguments.\n"); 
+			"ERROR! " + errorMessage + "\nRefer to the following commandline arguments.\n"; 
 		final String white = "                                    ";
 		final String helpMessage =
 				"\nTacoco: Exec-file Analyzer\n"+
