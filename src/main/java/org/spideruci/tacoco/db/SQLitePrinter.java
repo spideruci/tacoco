@@ -13,13 +13,12 @@ import org.spideruci.tacoco.reporting.ICoveragePrintable;
 import org.spideruci.tacoco.reporting.data.LinesStatusCoder;
 import org.spideruci.tacoco.reporting.data.SourceFileCoverage;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class SQLitePrinter implements ICoveragePrintable {
 
 	private final IBundleCoverage coverage;
-	private final Gson gson;
+	//private final Gson gson;
 	private final DBUtil db;
 	private final int projectID; 
 	private boolean updateSourceInfo;
@@ -29,7 +28,7 @@ public class SQLitePrinter implements ICoveragePrintable {
 		this.coverage = coverage;
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();
-		gson = gsonBuilder.create();
+		//gson = gsonBuilder.create();
 		this.db = dbUtil;
 		this.projectID = projectID;
 		this.updateSourceInfo = updateSourceInfo;

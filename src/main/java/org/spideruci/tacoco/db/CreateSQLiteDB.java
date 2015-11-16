@@ -1,9 +1,6 @@
 package org.spideruci.tacoco.db;
 
-import static org.spideruci.tacoco.cli.AbstractCli.EXEC;
-import static org.spideruci.tacoco.cli.AbstractCli.HOME;
-import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AbstractCli.*;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.db.DBDumper.createDBDumper;
@@ -66,7 +63,7 @@ public class CreateSQLiteDB {
 
 		reader.setExecutionDataVisitor(parser);
 		db.setAutoCommit(false);
-		while(reader.read()) {};
+		while(reader.read()) {;}
 		db.setAutoCommit(true);
 		parser.resetExecDataStore(parser.getCoverageTitle());
 		parser.forcePrintEnd();

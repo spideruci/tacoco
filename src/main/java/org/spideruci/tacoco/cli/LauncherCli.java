@@ -13,7 +13,7 @@ public class LauncherCli extends AbstractCli {
 	@Override
 	public String getHelpMenu(final String errorMessage) {
 		final String error = errorMessage == null ? null
-				: ("ERROR! " + errorMessage + "\nRefer to the following commandline arguments.\n");
+				: "ERROR! " + errorMessage + "\nRefer to the following commandline arguments.\n";
 		final String white = "\t\t\t\t";
 		final String helpMessage = "\nTacoco: Launcher\n"
 				+ "usage: mvn exec:java -q -Plauncher [arguments]\n\nArguments:\n" 

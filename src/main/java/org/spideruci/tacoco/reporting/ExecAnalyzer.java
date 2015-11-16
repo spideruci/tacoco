@@ -1,12 +1,6 @@
 package org.spideruci.tacoco.reporting;
 
-import static org.spideruci.tacoco.cli.AbstractCli.EXEC;
-import static org.spideruci.tacoco.cli.AbstractCli.FMT;
-import static org.spideruci.tacoco.cli.AbstractCli.HELP;
-import static org.spideruci.tacoco.cli.AbstractCli.JSON;
-import static org.spideruci.tacoco.cli.AbstractCli.PP;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.*;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
@@ -37,11 +31,11 @@ public final class ExecAnalyzer {
 			ANALYZER_CLI.printHelp();
 		}
 
-		ExecAnalyzer execAnalyzer = processArgs(args);
+		ExecAnalyzer execAnalyzer = processArgs();
 		execAnalyzer.dumpContent();
 	}
 
-	private static ExecAnalyzer processArgs(String[] args) {
+	private static ExecAnalyzer processArgs() {
 
 		String sut = readArgumentValue(SUT);
 		File projectRoot = new File(sut);
@@ -84,7 +78,7 @@ public final class ExecAnalyzer {
 		});
 
 		reader.setExecutionDataVisitor(parser);
-		while(reader.read()) {};
+		while(reader.read()) {;}
 
 		parser.resetExecDataStore(parser.getCoverageTitle());
 		parser.forcePrintEnd();

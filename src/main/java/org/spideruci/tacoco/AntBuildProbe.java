@@ -5,8 +5,11 @@ import java.util.List;
 
 public class AntBuildProbe extends AbstractBuildProbe {
 
+	String targetPath;
+	
 	public AntBuildProbe(String absolutTargetPath) {
 		// TODO Auto-generated constructor stub
+		this.targetPath = absolutTargetPath;
 	}
 
 	@Override

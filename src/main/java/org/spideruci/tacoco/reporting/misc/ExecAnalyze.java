@@ -13,20 +13,18 @@ import org.jacoco.core.analysis.ILine;
 import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.jacoco.core.analysis.ISourceNode;
 import org.jacoco.core.data.ExecutionDataReader;
-import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.SessionInfo;
-import org.jacoco.core.data.SessionInfoStore;
 
 public class ExecAnalyze 
 {
 	private final File executionDataFile;
 	private final File classesDirectory;
-	private String title;
+	//private String title;
 	//private final File sourceDirectory;
 	//private final File reportDirectory;
 
-	private ExecutionDataStore executionDataStore;
-	private SessionInfoStore sessionInfoStore;
+	//private ExecutionDataStore executionDataStore;
+	//private SessionInfoStore sessionInfoStore;
 
 	private PerJUnitTestCaseVisitor myVisitor;
 
@@ -35,7 +33,7 @@ public class ExecAnalyze
 	public ExecAnalyze(final File execFile, String classesToAnalyze)
 	{
 		this.executionDataFile = execFile;
-		this.title = "Title1";
+		//this.title = "Title1";
 		this.classesDirectory = new File(execFile.getParent(),".");
 		//this.sourceDirectory = new File(execFile.getParent(),"src");
 		//this.reportDirectory = execFile;
@@ -169,6 +167,7 @@ public class ExecAnalyze
 
 		while(executionDataReader.read())
 		{
+			;
 		}
 		myVisitor.close();
 		this.results = myVisitor.getResults();

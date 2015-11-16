@@ -12,8 +12,7 @@ public class ReaderCli extends AbstractCli {
 
 	public String getHelpMenu(final String errorMessage) {
 		final String error = errorMessage == null ? null :
-			("ERROR! " + errorMessage + 
-					"\nRefer to the following commandline arguments.\n"); 
+			"ERROR! " + errorMessage + "\nRefer to the following commandline arguments.\n"; 
 		final String helpMessage =
 				"\nTacoco: Coverage Json-file Reader\n"+
 						"usage: mvn exec:java -q -Preader [arguments]\n\nArguments:\n" +

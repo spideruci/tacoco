@@ -16,10 +16,10 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.spideruci.tacoco.util.PathBuilder;
 
 public class MavenBuildProbe extends AbstractBuildProbe {
-	private static final boolean String = false;
+	//private static final boolean String = false;
 	private String classpath=null;
 	private String targetDir;
-	private String[] modules = {};
+	//private String[] modules = {};
 
 	//file filters from Maven surefire configuration
 	DirectoryScanner scanner;

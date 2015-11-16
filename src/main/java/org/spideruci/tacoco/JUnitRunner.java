@@ -1,8 +1,6 @@
 package org.spideruci.tacoco;
 
-import static org.spideruci.tacoco.cli.AbstractCli.LOG;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
+import static org.spideruci.tacoco.cli.AbstractCli.*;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 
@@ -68,8 +66,8 @@ public final class JUnitRunner extends Thread{
 
 	public static void main(String[] args) {
 
-		boolean log=false;
-		if(readOptionalArgumentValue(LOG,"off").equals("on")) log=true;
+		//boolean log=false;
+		//if(readOptionalArgumentValue(LOG,"off").equals("on")) log=true;
 		String targetDir = readArgumentValue(SUT);
 
 		System.out.println("---------------------------------------------");
