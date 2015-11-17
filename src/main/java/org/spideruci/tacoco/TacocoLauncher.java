@@ -14,22 +14,23 @@ import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
-import org.apache.maven.cli.MavenCli;
-import org.spideruci.tacoco.AbstractBuildProbe.Child;
-import org.spideruci.tacoco.db.CreateSQLiteDB;
-import org.spideruci.tacoco.util.PathBuilder;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import org.spideruci.tacoco.AbstractBuildProbe.Child;
-import org.spideruci.tacoco.PIT.PITHandler;
+
+import org.apache.maven.cli.MavenCli;
 import org.spideruci.tacoco.db.CreateSQLiteDB;
+import org.spideruci.tacoco.mutation.PITHandler;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
+import org.spideruci.tacoco.util.PathBuilder;
 
 public class TacocoLauncher {
 
 	private String tacocoHome, targetDir;
 	private static String tacocoClasspath = null;
 	private static String USER_DIR = System.getProperty("user.dir");
+	
 	private TacocoLauncher(String tacocoHome, String targetDir){
 		this.tacocoHome = tacocoHome;
 		this.targetDir = targetDir;
@@ -42,21 +43,17 @@ public class TacocoLauncher {
 		}
 
 		System.setProperty("maven.multiModuleProjectDirectory", USER_DIR);
-
 		String targetDir = readArgumentValue(SUT);
-		if(targetDir.endsWith(File.separator)) targetDir = targetDir.substring(0, targetDir.length());
+		if(targetDir.endsWith(File.separator)) targetDir = targetDir.substring(0, targetDir.length()-1);
 		TacocoLauncher launcher = new TacocoLauncher(readOptionalArgumentValue(HOME, USER_DIR),targetDir);
+		launcher.setTacocoEnv();
+		
+		
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.targetDir);
 		String name = readOptionalArgumentValue(PROJECT, probe.getId());
-		launcher.setTacocoEnv();
-		String parentCP = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
+		String cp = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
 		
-		if(probe.hasChild()){	
-			for(Child child : probe.getChildren()){
-				launcher.startJUnitRunner(name+"."+child.id, child.classpath + File.pathSeparator + parentCP, child.targetDir, child.jvmArgs, probe);
-			}
-		}
-		launcher.startJUnitRunner(name, parentCP, launcher.targetDir, null, probe);
+		launcher.startJUnitRunner(name, cp, launcher.targetDir, null, probe);
 	}
 
 

@@ -1,9 +1,9 @@
-package org.spideruci.tacoco.PIT;
+package org.spideruci.tacoco.mutation;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class Mutation {
+public class Mutant {
 	
 	int m_id;
 	boolean detected;//<mutation detected='true' status='KILLED'>
@@ -16,7 +16,7 @@ public class Mutation {
 	String[] killingTests;//<killingTest/></mutation>
 	int src_id;
 
-	public Mutation(int id, Node node){
+	public Mutant(int id, Node node){
 		this.m_id = id;
 		this.detected = Boolean.parseBoolean(node.getAttributes().getNamedItem("detected").getNodeValue());
 		this.status = node.getAttributes().getNamedItem("status").getNodeValue();

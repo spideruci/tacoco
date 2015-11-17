@@ -1,4 +1,4 @@
-package org.spideruci.tacoco;
+package org.spideruci.tacoco.probe;
 
 import java.util.ArrayList;
 import java.util.List;

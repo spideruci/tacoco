@@ -1,4 +1,4 @@
-package org.spideruci.tacoco;
+package org.spideruci.tacoco.probe;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,7 +13,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.spideruci.tacoco.AbstractBuildProbe.BuilderType;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
+import org.spideruci.tacoco.probe.AbstractBuildProbe.BuilderType;
 
 @RunWith(Parameterized.class)
 public class AbstractBuildProbeTest {

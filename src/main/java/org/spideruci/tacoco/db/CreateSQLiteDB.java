@@ -15,7 +15,7 @@ import java.sql.Connection;
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
-import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 
 public class CreateSQLiteDB {
 
@@ -26,17 +26,6 @@ public class CreateSQLiteDB {
 	public CreateSQLiteDB(String home, String out) {
 		tacocoHome = home;
 		outdir = out;	
-	}
-
-	public static void main(String[] args) throws Exception {
-		String tacocoHome =  readOptionalArgumentValue(HOME,System.getProperty("user.dir"));
-		String dbFile = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output") + "/tacoco.db";
-		
-		String sut = readArgumentValue(SUT);
-		String exec = readArgumentValue(EXEC);
-		
-		dump(dbFile, sut, exec);
-
 	}
 
 	public static void dump(String dbFile, String sut, String exec) throws Exception{

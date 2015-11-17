@@ -1,4 +1,4 @@
-package org.spideruci.tacoco.PIT;
+package org.spideruci.tacoco.mutation;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -56,7 +56,7 @@ public class PITHandler {
 
 			for(int i=0; i<mutations.getLength(); ++i){
 				Node node = mutations.item(i);
-				Mutation m = new Mutation(i, node);
+				Mutant m = new Mutant(i, node);
 				insertDB(m);
 			}
 			
@@ -67,7 +67,7 @@ public class PITHandler {
 		}
 	}
 
-	private void insertDB(Mutation m) {
+	private void insertDB(Mutant m) {
 		
 		//insert MUTATION table
 		String sql_insert_mutions = "INSERT INTO MUTATION VALUES(?,?,?,?,?,?,?,?,?)";
