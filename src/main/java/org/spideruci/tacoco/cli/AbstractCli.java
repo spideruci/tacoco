@@ -26,6 +26,8 @@ public abstract class AbstractCli {
 	public static final String INST_MEM = "tacoco.inst.mem";
 	public static final String INST_XBOOT = "tacoco.inst.xboot";
 
+	public static final String LISTENER = "tacoco.listener";
+
 	static final String PREFIX = "-D";
 
 	public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
