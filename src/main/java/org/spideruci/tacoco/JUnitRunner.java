@@ -116,8 +116,7 @@ public final class JUnitRunner extends Thread{
 
 		int nThread=Integer.parseInt(readOptionalArgumentValue(THREAD,"1"));
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(targetDir);
-		List<String> klasses = probe.getClasses();
-
+		List<String> klasses = probe.getTestClasses();
 		List<JUnitRunner> runners = new ArrayList<>();
 		JUnitRunner runner=null;
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThread);
