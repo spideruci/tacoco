@@ -1,4 +1,4 @@
-package org.spideruci.tacoco.testers;
+package org.spideruci.tacoco.testlisteners;
 
 import static org.spideruci.tacoco.cli.AbstractCli.DB;
 
@@ -10,8 +10,8 @@ import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
-import org.spideruci.tacoco.JUnitRunner;
 import org.spideruci.tacoco.db.CreateSQLiteDB;
+import org.spideruci.tacoco.testrunners.JUnitRunner;
 
 
 public class JunitJacocoListener extends RunListener {

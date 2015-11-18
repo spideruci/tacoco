@@ -1,4 +1,4 @@
-package org.spideruci.tacoco;
+package org.spideruci.tacoco.testrunners;
 
 import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
@@ -21,8 +21,8 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
-import org.spideruci.tacoco.testers.JunitJacocoListener;
-import org.spideruci.tacoco.testrunners.AbstractTestRunner;
+import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.testlisteners.JunitJacocoListener;
 
 import junit.framework.TestCase;
 

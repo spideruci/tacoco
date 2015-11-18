@@ -1,10 +1,10 @@
-package org.spideruci.tacoco.testers;
+package org.spideruci.tacoco.testlisteners;
 
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
-import org.spideruci.tacoco.JUnitRunner;
+import org.spideruci.tacoco.testrunners.JUnitRunner;
 
 public class JunitBlinkyListener extends RunListener {
 	@Override

@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
-import org.spideruci.tacoco.testers.JunitJacocoListener;
+import org.spideruci.tacoco.testlisteners.JunitJacocoListener;
 
 public class TacocoListenerTest {
 
