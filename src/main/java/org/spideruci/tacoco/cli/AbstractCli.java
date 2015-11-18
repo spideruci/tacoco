@@ -30,6 +30,7 @@ public abstract class AbstractCli {
 	public static final String INST_XBOOT = "tacoco.inst.xboot";
 
 	public static final String LISTENER = "tacoco.listener";
+	public static final String ANALYZER = "tacoco.analyzer";
 
 	static final String PREFIX = "-D";
 

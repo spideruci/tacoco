@@ -6,6 +6,7 @@ import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +17,12 @@ import org.spideruci.tacoco.testrunners.AbstractTestRunner;
 public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 	
 	protected RunListener listener;
+	
+	@Override
+	public void setup() {
+		super.setup();
+		this.setupRuntimeListener();
+	}
 
 	public void setupRuntimeListener() {
 		String listenerClassName = readOptionalArgumentValue(LISTENER, null);
@@ -85,16 +92,23 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 			fCnt += r.failedTestCount;
 			iCnt += r.ignoredTestCount;
 		}
-
-		System.out.println("-------------------------------------------------");
-		System.out.println("Runtime Execution Time: "+ rTime +"sec");
-		System.out.println("Test Run Counts:" + rCnt);
-		System.out.println("Failure Counts:" + fCnt);
-		System.out.println("Ignore Counts:" + iCnt);
-		System.out.println("Number of Thread:" + nThread);
-		System.out.println("-------------------------------------------------");
+		
+		this.result.put("Runtime Execution Time (in sec)", rTime);
+		this.result.put("Test Run Counts", rCnt);
+		this.result.put("Failure Counts", fCnt);
+		this.result.put("Ignore Counts", iCnt);
+		this.result.put("Number of Thread", nThread);
 	}
 	
+	
+	@Override
+	public void printAnalysisSummary() {
+		System.out.println("-------------------------------------------------");
+		for(Entry<String, Object> entry : this.result) {
+			System.out.println(entry.getKey() + ": " + entry.getValue());
+		}
+		System.out.println("-------------------------------------------------");
+	}
 
 
 }

@@ -3,13 +3,7 @@ package org.spideruci.tacoco.analysis;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TacocoComputer extends AbstractRuntimeAnalyzer {
-	
-	@Override
-	public void setup() {
-		this.setBuildProbe();
-		this.setupRuntimeListener();
-	}
+public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 	
 	@Override
 	public void analyze() {

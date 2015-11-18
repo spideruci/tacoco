@@ -2,6 +2,7 @@ package org.spideruci.tacoco.testrunners;
 
 import org.junit.runner.notification.RunListener;
 import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.analysis.AnalysisResults;
 
 public abstract class AbstractTestRunner implements Runnable {
 	
@@ -9,6 +10,8 @@ public abstract class AbstractTestRunner implements Runnable {
 	public int executedTestCount=0;
 	public int failedTestCount=0;
 	public int ignoredTestCount=0;
+	
+	protected AnalysisResults results;
 	
 	public abstract boolean shouldRun();
 	public abstract void listenThrough(RunListener listener);

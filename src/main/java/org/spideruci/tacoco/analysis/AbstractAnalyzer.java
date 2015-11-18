@@ -1,6 +1,7 @@
 package org.spideruci.tacoco.analysis;
 
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
+import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 
 import org.spideruci.tacoco.AbstractBuildProbe;
@@ -13,6 +14,7 @@ import org.spideruci.tacoco.AbstractBuildProbe;
 public abstract class AbstractAnalyzer {
 	
 	protected AbstractBuildProbe buildProbe;
+	protected AnalysisResults result;
 	
 	public void setBuildProbe() {
 		String targetDir = readArgumentValue(SUT);
@@ -34,7 +36,9 @@ public abstract class AbstractAnalyzer {
 	 * analyzer), etc. The {@link #analyze()} method will assume that all necessary 
 	 * setup is completed (ideally in this method).
 	 */
-	public abstract void setup();
+	public void setup() {
+		this.setBuildProbe();
+	}
 	
 	/**
 	 * This method is responsible for implementing the actual analysis associated
@@ -50,5 +54,36 @@ public abstract class AbstractAnalyzer {
 	 * @return
 	 */
 	public abstract String getName();
+	
+	/**
+	 * 
+	 */
+	public abstract void printAnalysisSummary();
+	
+	public static AbstractAnalyzer getInstance() {
+		String analyzerClassString = readArgumentValue(ANALYZER);
+		try {
+			Class<?> analyzerClass = Class.forName(analyzerClassString);
+			AbstractAnalyzer analyzer = (AbstractAnalyzer) analyzerClass.newInstance();
+			return analyzer;
+		} catch (InstantiationException
+				| IllegalAccessException 
+				| ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * This is the main command line entry point for the execution of a desired
+	 * analysis. 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		AbstractAnalyzer analyzer = AbstractAnalyzer.getInstance();
+		analyzer.setup();
+		analyzer.analyze();
+		analyzer.printAnalysisSummary();
+	}
 
 }
