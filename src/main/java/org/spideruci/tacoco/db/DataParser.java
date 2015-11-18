@@ -10,35 +10,25 @@ import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.IExecutionDataVisitor;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 
 
 public class DataParser implements IExecutionDataVisitor {
 
-	private final File classesDirectory;
 	private final DBDumper dbDumper;
 	private String coverageTitle;
 	private ExecutionDataStore execDataStore = new ExecutionDataStore();
 	private int projectID;
 	private boolean updateSourceInfo;
+	private AbstractBuildProbe probe;
 	
-	public DataParser(final File projectDirectory,
+	public DataParser(final AbstractBuildProbe probe,
 			final DBDumper dumper, int projectID) {
-		this.coverageTitle = projectDirectory.getName();
-		File tempDirRef = new File(projectDirectory, "target/classes");
-		if(!tempDirRef.exists() || !tempDirRef.isDirectory()) {
-			tempDirRef = new File(projectDirectory, "bin");
-			if(!tempDirRef.exists() || !tempDirRef.isDirectory()) {
-				throw new RuntimeException("unable to find `target/classes/` or `bin/` "
-						+ "directories in the specified project-directory:" 
-						+ projectDirectory.getPath());
-			}
-		}
-
-		this.classesDirectory = tempDirRef;
+		this.coverageTitle = probe.getId();
 		this.dbDumper = dumper;
-		tempDirRef = null;
 		this.projectID = projectID;
 		updateSourceInfo = true;
+		this.probe = probe;
 	}
 
 	public void visitClassExecution(final ExecutionData data) {
@@ -97,7 +87,14 @@ public class DataParser implements IExecutionDataVisitor {
 			throws IOException {
 		final CoverageBuilder coverageBuilder = new CoverageBuilder();
 		final Analyzer analyzer = new Analyzer(data, coverageBuilder);
-		analyzer.analyzeAll(classesDirectory);
+		
+		for(String dir : this.probe.getClassDirs()){
+			File classDir = new File(dir);
+			if(classDir.exists()){
+				analyzer.analyzeAll(classDir);
+			}
+		}
+		
 		return coverageBuilder.getBundle(coverageTitle);
 	}
 

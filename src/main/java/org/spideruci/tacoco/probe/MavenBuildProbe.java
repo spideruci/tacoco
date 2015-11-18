@@ -17,13 +17,15 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	public MavenBuildProbe(String absolutTargetPath) {
 		this.targetDir = absolutTargetPath;
 		this.submodules = new ArrayList<>();
-		
+
 		this.submodules.add(new MavenModule(this.targetDir));
-		
-		for(String module: getModel().getModules()){
-			if(module.endsWith(".xml")) continue;
-			String childDir = new PathBuilder().path(this.targetDir).path(module).buildFilePath();
-			this.submodules.add(new MavenModule(childDir));
+		Model model = getModel();
+		if(model != null){
+			for(String module: model.getModules()){
+				if(module.endsWith(".xml")) continue;
+				String childDir = new PathBuilder().path(this.targetDir).path(module).buildFilePath();
+				this.submodules.add(new MavenModule(childDir));
+			}
 		}
 	}
 
@@ -42,7 +44,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 			MavenXpp3Reader reader = new MavenXpp3Reader();
 			model = reader.read(new FileInputStream(new File(targetDir,"pom.xml")));
 		}catch(Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return model;
 	}
@@ -66,17 +68,6 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 		return !getModel().getModules().isEmpty();
 	}
 
-	@Override
-	public List<Child> getChildren() {
-		List<Child> list = new ArrayList<>();
-		for(String module: getModel().getModules()){
-			if(module.endsWith(".xml")) continue;
-			String childDir = new PathBuilder().path(targetDir).path(module).buildFilePath();
-			MavenBuildProbe p = new MavenBuildProbe(childDir);
-			list.add(new Child(p.getId(), p.getClasspath(), childDir, null));
-		}
-		return list;
-	}
 
 	@Override
 	public String getId() {
@@ -88,11 +79,26 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public List<java.lang.String> getClasses() {
-		
+
 		List<String> ret = new ArrayList<>();
 		for(MavenModule m: this.submodules){
 			ret.addAll(m.getClasses());
 		}
 		return ret;
+	}
+
+	@Override
+	public List<String> getClassDirs() {
+		List<String> ret = new ArrayList<>();
+		for(MavenModule m : this.submodules){
+			ret.add(m.getClassDir());
+		}
+		return ret;
+	}
+
+	@Override
+	public List<String> getTestClassDirs() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

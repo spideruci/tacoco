@@ -18,10 +18,7 @@ public class MavenModuleTest {
 	
 	@BeforeClass
 	public static void setUp() throws IOException{
-		FileInputStream testProperties = new FileInputStream("resources/test.properties");
-		Properties prop = new Properties();
-		prop.load(testProperties);
-		MavenModuleTest.module = new MavenModule(prop.getProperty("spiderMath"));
+		MavenModuleTest.module = new MavenModule("resources/spiderMath/addition");
 	}
 	
 	@Test
@@ -29,7 +26,8 @@ public class MavenModuleTest {
 		Set<String> set1 = new HashSet<>();
 		Set<String> set2 = new HashSet<>();
 		
-		set1.add("org.spideruci.benchmark.spiderMath.ManagerTest");
+		set1.add("org.spideruci.benchmark.spiderMath.AdditionParamTest");
+		set1.add("org.spideruci.benchmark.spiderMath.AdditionTest");
 		set2.addAll(this.module.getTestClasses());
 		assertEquals(set1, set2);	
 	}
@@ -39,7 +37,7 @@ public class MavenModuleTest {
 		Set<String> set1 = new HashSet<>();
 		Set<String> set2 = new HashSet<>();
 		
-		set1.add("org.spideruci.benchmark.spiderMath.Manager");
+		set1.add("org.spideruci.benchmark.spiderMath.Addition");
 		set2.addAll(this.module.getClasses());
 		assertEquals(set1, set2);	
 	}

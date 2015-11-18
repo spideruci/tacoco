@@ -1,11 +1,5 @@
 package org.spideruci.tacoco.db;
 
-import static org.spideruci.tacoco.cli.AbstractCli.EXEC;
-import static org.spideruci.tacoco.cli.AbstractCli.HOME;
-import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.db.DBDumper.createDBDumper;
 
 import java.io.File;
@@ -39,7 +33,7 @@ public class CreateSQLiteDB {
 		final DBUtil db = DBUtil.getInstance(dbFile);
 		db.prepareDBFor(projectFQN, probe.getBuilderType().toString());
 		DBDumper dumper = createDBDumper(db);
-		final DataParser parser = new DataParser(projectRoot, dumper, db.getProjectID(projectFQN));
+		final DataParser parser = new DataParser(probe, dumper, db.getProjectID(projectFQN));
 		
 
 		reader.setSessionInfoVisitor(new ISessionInfoVisitor() {

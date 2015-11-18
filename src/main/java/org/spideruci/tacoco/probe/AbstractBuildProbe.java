@@ -5,20 +5,6 @@ import java.util.List;
 
 public abstract class AbstractBuildProbe {
 	
-	public class Child{
-		public String id;
-		public String classpath;
-		public String targetDir;
-		public String[] jvmArgs;
-		
-		public Child(String name, String cp, String dir, String[] args){
-			id = name;
-			classpath=cp;
-			targetDir=dir;
-			jvmArgs=args;
-		}
-	}
-	
 	public static enum BuilderType {MAVEN, ANT, GRADLE, TBD};
 	private static AbstractBuildProbe instance = null;
 	
@@ -34,6 +20,8 @@ public abstract class AbstractBuildProbe {
 			break;
 		case GRADLE:
 			instance = new GradleBuildProbe(AbsolutTargetPath);
+			break;
+		default:
 			break;
 		}
 		
@@ -52,6 +40,7 @@ public abstract class AbstractBuildProbe {
 	public abstract BuilderType getBuilderType();
 	public abstract String getClasspath();
 	public abstract boolean hasChild();
-	public abstract List<Child> getChildren();
 	public abstract String getId();
+	public abstract List<String> getClassDirs();
+	public abstract List<String> getTestClassDirs();	
 }

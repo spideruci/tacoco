@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.spideruci.tacoco.probe.AbstractBuildProbe;
 import org.spideruci.tacoco.probe.AbstractBuildProbe.BuilderType;
 
 @RunWith(Parameterized.class)

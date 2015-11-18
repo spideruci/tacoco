@@ -149,4 +149,8 @@ public class MavenModule {
 		}
 		return model;
 	}
+	
+	public String getClassDir(){
+		return this.targetDir+"/target/classes";
+	}
 }
