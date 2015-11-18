@@ -22,10 +22,11 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.spideruci.tacoco.testers.JunitJacocoListener;
+import org.spideruci.tacoco.testrunners.AbstractTestRunner;
 
 import junit.framework.TestCase;
 
-public final class JUnitRunner extends Thread{
+public final class JUnitRunner extends AbstractTestRunner {
 
 	private Class<?> testClass;
 	private static JUnitCore core = new JUnitCore();
@@ -35,10 +36,15 @@ public final class JUnitRunner extends Thread{
 
 	public static boolean LOGGING = false;
 
-	double runTime=0;
-	int runCnt=0;
-	int failCnt=0;
-	int ignoreCnt=0;
+	private JUnitCore testCore;
+	
+	public void listenThrough(RunListener listener) {
+		if(listener != null) {
+			this.testCore.addListener(listener);
+		} else {
+			return;
+		}
+	}
 
 	public static void addListener() {
 		String listenerClassName = readOptionalArgumentValue(LISTENER, null);
@@ -61,46 +67,99 @@ public final class JUnitRunner extends Thread{
 			} else {
 				return;
 			}
-
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+		} catch (ClassNotFoundException 
+				| InstantiationException 
+				| IllegalAccessException e) {
 			e.printStackTrace();
 			return;
 		}
 	}
 
-	public JUnitRunner(Class<?> testClass) {
-		this.testClass = testClass;
+	public JUnitRunner() {
+		this.testClass = null;
+		this.testCore = new JUnitCore();
 	}
-
+	
 	@Override
 	public void run() {
 		try {
 			System.out.println("Starting "+testClass);
-			Result result = core.run(testClass);
-			runTime=result.getRunTime()/1000.0;
-			runCnt=result.getRunCount();
-			failCnt=result.getFailureCount();
-			ignoreCnt=result.getIgnoreCount();
-
-			System.out.println("Finishing "+testClass
-					+" Tests run: "+runCnt
-					+" Failures: "+failCnt
-					+" Errors: 0"   //TBD
-					+" Skipped: "+ignoreCnt
-					+" Time elapsed: "+ runTime +"sec");
-			if(result.getFailureCount() !=0) {
-				System.out.println("---------------------Failures--------------------");
-				for(Failure f: result.getFailures()){
-					System.out.println("Header: " + f.getTestHeader());
-					System.out.println("Message: " + f.getMessage());
-					System.out.println("Description: " + f.getDescription());
-					System.out.println("Header: "+f.getTestHeader());
-					System.out.println("Trace: "+f.getTrace());	
-				}
-			}
+			Result result = this.testCore.run(testClass);
+			testRunTime = result.getRunTime()/1000.0;
+			executedTestCount = result.getRunCount();
+			failedTestCount = result.getFailureCount();
+			ignoredTestCount = result.getIgnoreCount();
+			this.printTestRunSummary(); // TODO Move to AbstractRuntimeAnalyzer.runTests.
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	protected void printTestRunSummary() {
+		System.out.println("Finishing "+testClass
+				+" Tests run: "+executedTestCount
+				+" Failures: "+failedTestCount
+				+" Errors: 0"   //TBD
+				+" Skipped: "+ignoredTestCount
+				+" Time elapsed: "+ testRunTime +"sec");
+//		if(this.failedTestCount !=0) {
+//			System.out.println("---------------------Failures--------------------");
+//			for(Failure f: result.getFailures()){
+//				System.out.println("Header: " + f.getTestHeader());
+//				System.out.println("Message: " + f.getMessage());
+//				System.out.println("Description: " + f.getDescription());
+//				System.out.println("Header: "+f.getTestHeader());
+//				System.out.println("Trace: "+f.getTrace());	
+//			}
+//		}
+	}
+	
+	/**
+	 * Checks to see if the given test-class should be executed as a Junit Test.
+	 * @param testClass
+	 * @return
+	 * true if:<br/>
+	 * <ul>
+	 * 	<li>at least one method in {@code testClass} has a @Test annotation //JUnit4;
+	 * 	<li>at least one method in {@code testClass} has the string `suite` in it;
+	 * 	<li>{@code testClass} is a Junit3 TestCase class type;
+	 * </ul>
+	 * false - {@code testClass} is an abstract type, or if none of the above conditions are met:
+	 * @throws NullPointerException 
+	 * if this runner is not setup with a test-class with {@code setTestClass()}. 
+	 */
+	@Override
+	public boolean shouldRun() {
+		if(Modifier.isAbstract(this.testClass.getModifiers())) {
+			return false;
+		}
+		
+		if(TestCase.class.isAssignableFrom(this.testClass)) {
+			return true;
+		}
+
+		for(Method testMethod : this.testClass.getMethods()){
+			Test annotation = testMethod.getAnnotation(Test.class);
+			if(annotation != null) {
+				return true;
+			}
+			
+			if(testMethod.getName().equals("suite")) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public void setTest(Class<?> test) {
+		if(test == null) {
+			return;
+		}
+		this.testClass = test;
 	}
 
 	public static void main(String[] args) {
@@ -123,7 +182,6 @@ public final class JUnitRunner extends Thread{
 		for(String testClass : klasses){
 			Class<?> c=null;
 			try {
-				//if(!testClass.matches("com.google.common.cache.Lo.*")) continue;
 				c = Class.forName(testClass);
 				if(!shouldRun(c)) {
 					continue;
@@ -131,13 +189,15 @@ public final class JUnitRunner extends Thread{
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
-			runner = new JUnitRunner(c);
+			runner = new JUnitRunner();
+			runner.setTest(c);
 			threadPool.submit(runner);
 			runners.add(runner);
 		}
 		threadPool.shutdown();
+		
 		try {
-			threadPool.awaitTermination(Long.MAX_VALUE,TimeUnit.MILLISECONDS);//Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+			threadPool.awaitTermination(Long.MAX_VALUE,TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -145,10 +205,10 @@ public final class JUnitRunner extends Thread{
 		double rTime=0;
 		int rCnt=0, fCnt=0, iCnt=0;
 		for(JUnitRunner r: runners){
-			rTime += r.runTime;
-			rCnt += r.runCnt;
-			fCnt += r.failCnt;
-			iCnt += r.ignoreCnt;
+			rTime += r.testRunTime;
+			rCnt += r.executedTestCount;
+			fCnt += r.failedTestCount;
+			iCnt += r.ignoredTestCount;
 		}
 
 		System.out.println("-------------------------------------------------");
@@ -160,7 +220,9 @@ public final class JUnitRunner extends Thread{
 		System.out.println("-------------------------------------------------");
 		System.exit(0);
 	}
-
+	
+	
+	
 	private static boolean shouldRun(Class<?> c) {
 		//Do not run Abstract Class
 		if(Modifier.isAbstract(c.getModifiers())) return false;

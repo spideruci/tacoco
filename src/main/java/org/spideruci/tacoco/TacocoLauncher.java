@@ -185,8 +185,6 @@ public class TacocoLauncher {
 		}
 	}
 
-	
-
 	private String getTacocoClasspath() throws Exception{
 
 		if(tacocoClasspath != null) return tacocoClasspath;
