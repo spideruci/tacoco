@@ -25,7 +25,7 @@ public class InstrumenterConfig {
 		this.arguments = arguments;
 		this.classPath = classPath;
 		this.xbootpath = xbootpath;
-		this.memory = "-Xmx1536M";
+		this.memory = "-Xms2048M";
 		this.prependBootpath = true;
 	}
 

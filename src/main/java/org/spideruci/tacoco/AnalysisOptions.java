@@ -1,12 +1,8 @@
 package org.spideruci.tacoco;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
-
-import com.esotericsoftware.yamlbeans.YamlReader;
 
 public class AnalysisOptions {
 	public static final String AGENT = "analysis.agent";

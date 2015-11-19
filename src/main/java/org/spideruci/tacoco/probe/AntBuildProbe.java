@@ -1,4 +1,4 @@
-package org.spideruci.tacoco.buildprobes;
+package org.spideruci.tacoco.probe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +34,6 @@ public class AntBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public List<Child> getChildren() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
 		return null;
@@ -47,6 +41,18 @@ public class AntBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public List<String> getClasses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getClassDirs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getTestClassDirs() {
 		// TODO Auto-generated method stub
 		return null;
 	}

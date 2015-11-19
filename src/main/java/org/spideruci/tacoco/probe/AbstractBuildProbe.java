@@ -1,23 +1,9 @@
-package org.spideruci.tacoco.buildprobes;
+package org.spideruci.tacoco.probe;
 
 import java.io.File;
 import java.util.List;
 
 public abstract class AbstractBuildProbe {
-	
-	public class Child {
-		public String id;
-		public String classpath;
-		public String targetDir;
-		public String[] jvmArgs;
-		
-		public Child(String name, String cp, String dir, String[] args){
-			id = name;
-			classpath=cp;
-			targetDir=dir;
-			jvmArgs=args;
-		}
-	}
 	
 	public static enum BuilderType {MAVEN, ANT, GRADLE, TBD};
 	private static AbstractBuildProbe instance = null;
@@ -35,24 +21,17 @@ public abstract class AbstractBuildProbe {
 		case GRADLE:
 			instance = new GradleBuildProbe(AbsolutTargetPath);
 			break;
-		case TBD:
-			throw new UnsupportedOperationException();
+		default:
+			break;
 		}
 		
 		return instance;
 	}
 	
 	private final static BuilderType detectBuilder(String AbsolutTargetPath){
-		if(new File(AbsolutTargetPath, "pom.xml").exists()) {
-			return BuilderType.MAVEN;
-		}
-		else if(new File(AbsolutTargetPath, "build.xml").exists()) {
-			return BuilderType.ANT;
-		}
-		else if(new File(AbsolutTargetPath, "build.gradle").exists()) {
-			return BuilderType.GRADLE;
-		}
-		
+		if(new File(AbsolutTargetPath, "pom.xml").exists()) return BuilderType.MAVEN;
+		else if(new File(AbsolutTargetPath, "build.xml").exists()) return BuilderType.ANT;
+		else if(new File(AbsolutTargetPath, "build.gradle").exists()) return BuilderType.GRADLE;
 		return BuilderType.TBD;
 	}
 	
@@ -61,6 +40,7 @@ public abstract class AbstractBuildProbe {
 	public abstract BuilderType getBuilderType();
 	public abstract String getClasspath();
 	public abstract boolean hasChild();
-	public abstract List<Child> getChildren();
 	public abstract String getId();
+	public abstract List<String> getClassDirs();
+	public abstract List<String> getTestClassDirs();	
 }

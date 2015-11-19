@@ -1,15 +1,10 @@
 package org.spideruci.tacoco;
 
-import static org.spideruci.tacoco.cli.AbstractCli.DB;
 import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.HOME;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.INST;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_MEM;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_XBOOT;
 import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.arg;
 import static org.spideruci.tacoco.cli.AbstractCli.argEquals;
@@ -17,26 +12,9 @@ import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
-import static org.spideruci.tacoco.cli.AbstractCli.LISTENER;
-import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_OPTS;
 
-import static org.spideruci.tacoco.cli.AbstractCli.INST;
-import static org.spideruci.tacoco.cli.AbstractCli.INST_ARGS;
-import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
-import static org.spideruci.tacoco.cli.AbstractCli.NOJUNIT;
-import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
-import static org.spideruci.tacoco.cli.AbstractCli.PIT;
-import static org.spideruci.tacoco.cli.AbstractCli.PITDB;
-import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
-
 import org.apache.maven.cli.MavenCli;
-import org.spideruci.tacoco.db.CreateSQLiteDB;
 import org.spideruci.tacoco.util.PathBuilder;
 import java.io.File;
 import java.nio.file.Files;
@@ -44,12 +22,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spideruci.tacoco.cli.AbstractCli;
-import org.spideruci.tacoco.PIT.PITHandler;
-import org.spideruci.tacoco.analysis.InstrumenterConfig;
-import org.spideruci.tacoco.buildprobes.AbstractBuildProbe;
-import org.spideruci.tacoco.buildprobes.AbstractBuildProbe.Child;
-import org.spideruci.tacoco.db.CreateSQLiteDB;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 
 
 public class Launcher {

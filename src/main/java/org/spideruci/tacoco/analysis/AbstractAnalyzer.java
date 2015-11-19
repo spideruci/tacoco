@@ -4,7 +4,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 
-import org.spideruci.tacoco.buildprobes.AbstractBuildProbe;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 
 /**
  * 
