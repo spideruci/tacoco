@@ -17,7 +17,7 @@ import org.spideruci.tacoco.analysis.AnalysisResults;
 
 public final class JUnitRunner extends AbstractTestRunner {
 	
-	public final static String JUNIT_TEST_RESULT = "test-result";
+	private final static String JUNIT_TEST_RESULT = "test-result";
 	public static boolean LOGGING = false;
 
 	private Class<?> testClass;
@@ -96,6 +96,10 @@ public final class JUnitRunner extends AbstractTestRunner {
 	 */
 	@Override
 	public boolean shouldRun() {
+		if(this.testClass == null) {
+			return false;
+		}
+		
 		if(Modifier.isAbstract(this.testClass.getModifiers())) {
 			return false;
 		}

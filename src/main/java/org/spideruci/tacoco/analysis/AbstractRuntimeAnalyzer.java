@@ -14,6 +14,11 @@ import java.util.concurrent.TimeUnit;
 import org.junit.runner.notification.RunListener;
 import org.spideruci.tacoco.testrunners.AbstractTestRunner;
 
+/**
+ * This is an AbstractAnalyzer that works with a AbstractTestRunner
+ * @author vpalepu
+ *
+ */
 public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 	
 	protected RunListener listener;
@@ -92,6 +97,12 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 			fCnt += r.failedTestCount;
 			iCnt += r.ignoredTestCount;
 		}
+		
+		
+		if(this.result == null) {
+			this.result = new AnalysisResults();
+		}
+		
 		
 		this.result.put("Runtime Execution Time (in sec)", rTime);
 		this.result.put("Test Run Counts", rCnt);

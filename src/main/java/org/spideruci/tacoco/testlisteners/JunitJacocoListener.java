@@ -17,9 +17,9 @@ import org.spideruci.tacoco.testrunners.JUnitRunner;
 public class JunitJacocoListener extends RunListener {
 
 	private IAgent agent;
-	
+
 	public JunitJacocoListener() { }
-	
+
 	@Override
 	public void testRunStarted(Description description) {
 		agent = RT.getAgent();
@@ -29,46 +29,46 @@ public class JunitJacocoListener extends RunListener {
 	public void testRunFinished(Result result) {
 		agent.setSessionId("end");
 	}
-	
+
 	@Override
 	public void testStarted(Description description) {
 		if(JUnitRunner.LOGGING) {
-		  System.out.println("Setting sessionId to "+description.getDisplayName());
+			System.out.println("Setting sessionId to "+description.getDisplayName());
 		}
 		agent.setSessionId(description.getDisplayName());
 	}
-	
+
 	@Override
 	public void testFinished(Description description) throws java.lang.Exception {
 		if(JUnitRunner.LOGGING) {
-		  System.out.println("Test case finished: " +description.getDisplayName());
+			System.out.println("Test case finished: " +description.getDisplayName());
 		}
 		agent.dump(true);
 		System.out.flush();
 	}
-	
+
 	@Override
 	public void testFailure(Failure failure) throws Exception {
 		agent.setSessionId(agent.getSessionId()+"_F");
 		super.testFailure(failure);
 	}
-	
+
 	@Override
 	public void testIgnored(Description description) throws Exception {
 		agent.setSessionId(agent.getSessionId()+"_I");
 		super.testIgnored(description);
 	}
-	
+
 	@SuppressWarnings("unused")
-  private static void storeInDb(String outdir, String projectName, String targetDir, File exec) {
-	  String dbFile = outdir+"/"+projectName+".db";
-	  if(System.getProperties().containsKey(DB)) {
-	    try {
-	      CreateSQLiteDB.dump(dbFile, targetDir, exec.toString());
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	  }
+	private static void storeInDb(String outdir, String projectName, String targetDir, File exec) {
+		String dbFile = outdir+"/"+projectName+".db";
+		if(System.getProperties().containsKey(DB)) {
+			try {
+				CreateSQLiteDB.dump(dbFile, targetDir, exec.toString());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

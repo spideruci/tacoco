@@ -1,4 +1,4 @@
-package org.spideruci.tacoco;
+package org.spideruci.tacoco.buildprobes;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -144,7 +144,13 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 			if(moduleSharesParentTarget(module)) continue;
 			String childDir = new PathBuilder().path(targetDir).path(module).buildFilePath();
 			MavenBuildProbe p = new MavenBuildProbe(childDir);
-			list.add(new Child(p.getId(), p.getClasspath(), childDir, null));
+			Child child = new Child(
+					p.getId(), /*name*/ 
+					p.getClasspath(), /*classpath*/ 
+					childDir, /*directory*/
+					null); /*jvmArgs*/
+			
+			list.add(child);
 		}
 		return list;
 	}

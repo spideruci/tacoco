@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.buildprobes.AbstractBuildProbe;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

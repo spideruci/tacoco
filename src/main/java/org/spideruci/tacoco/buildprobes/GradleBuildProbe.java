@@ -1,4 +1,4 @@
-package org.spideruci.tacoco;
+package org.spideruci.tacoco.buildprobes;
 
 import java.io.File;
 import java.io.IOException;

@@ -31,6 +31,7 @@ public abstract class AbstractCli {
 
 	public static final String LISTENER = "tacoco.listener";
 	public static final String ANALYZER = "tacoco.analyzer";
+	public static final String ANALYZER_OPTS = "analyzer.opts";
 
 	static final String PREFIX = "-D";
 
@@ -42,7 +43,7 @@ public abstract class AbstractCli {
 		return PREFIX + argName;
 	}
 
-	public static String argEquals(String argName) {
+	public static String argEquals(String argName, String value) {
 		return arg(argName) + "=";
 	}
 

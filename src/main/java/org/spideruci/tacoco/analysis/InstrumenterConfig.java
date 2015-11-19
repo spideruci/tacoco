@@ -1,4 +1,4 @@
-package org.spideruci.tacoco;
+package org.spideruci.tacoco.analysis;
 
 public class InstrumenterConfig {
 	private final String location;

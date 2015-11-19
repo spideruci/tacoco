@@ -1,8 +1,8 @@
 package org.spideruci.tacoco.testrunners;
 
 import org.junit.runner.notification.RunListener;
-import org.spideruci.tacoco.AbstractBuildProbe;
 import org.spideruci.tacoco.analysis.AnalysisResults;
+import org.spideruci.tacoco.buildprobes.AbstractBuildProbe;
 
 public abstract class AbstractTestRunner implements Runnable {
 	

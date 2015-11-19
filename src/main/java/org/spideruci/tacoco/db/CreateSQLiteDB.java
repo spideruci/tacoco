@@ -15,7 +15,7 @@ import java.sql.Connection;
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
-import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.buildprobes.AbstractBuildProbe;
 
 public class CreateSQLiteDB {
 

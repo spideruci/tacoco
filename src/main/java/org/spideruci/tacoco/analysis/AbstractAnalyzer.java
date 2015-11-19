@@ -4,7 +4,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 
-import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.buildprobes.AbstractBuildProbe;
 
 /**
  * 
@@ -16,7 +16,7 @@ public abstract class AbstractAnalyzer {
 	protected AbstractBuildProbe buildProbe;
 	protected AnalysisResults result;
 	
-	public void setBuildProbe() {
+	protected void setBuildProbe() {
 		String targetDir = readArgumentValue(SUT);
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(targetDir);
 		this.setBuildProbe(probe);
