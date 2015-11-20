@@ -55,7 +55,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	}
 
 	@Override
-	public String getClasspath(){
+	public String getClasspath() {
 		StringBuilder sb = new StringBuilder();
 		for(MavenModule m: this.submodules){
 			sb.append(m.getClasspath()+":");

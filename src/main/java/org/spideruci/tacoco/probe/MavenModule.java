@@ -74,6 +74,7 @@ public class MavenModule {
 					new PathBuilder().path(this.targetDir).path("tacoco.cp").buildFilePath();
 
 			if(!new File(tacocoCpPath).exists()) {
+				System.setProperty("maven.multiModuleProjectDirectory", this.targetDir);
 				MavenCli mavenCli = new MavenCli();
 				mavenCli.doMain(new String[]{"dependency:build-classpath", "-Dmdep.outputFile=tacoco.cp"}, this.targetDir,
 						System.out, System.out);

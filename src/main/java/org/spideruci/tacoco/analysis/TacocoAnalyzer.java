@@ -23,11 +23,11 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 	public void setup() {
 		super.setup();
 		name = readOptionalArgumentValue(PROJECT, this.buildProbe.getId());
-		String outdir = readArgumentValue(OUTDIR);
-		if(!new File(outdir).exists()) {
+		outDir = readArgumentValue(OUTDIR);
+		if(!new File(outDir).exists()) {
 			throw new RuntimeException("specified output directory does not exist: " + outDir);
 		}
-		exec = new File(outdir, "tacoco.exec");
+		exec = new File(outDir, "tacoco.exec");
 		sutHome = readArgumentValue(SUT);
 	}
 	
@@ -54,7 +54,7 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 		try {
 			String dbFile = outDir + File.separator + name + ".db";
 			CreateSQLiteDB.dump(dbFile, sutHome, exec.toString());
-			// TODO rename tacoco.exec to $name.exec
+			exec.renameTo(new File(outDir, name + ".exec"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
