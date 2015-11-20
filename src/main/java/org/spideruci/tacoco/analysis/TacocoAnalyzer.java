@@ -52,8 +52,8 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 	public void printAnalysisSummary() {
 		super.printAnalysisSummary();
 		try {
-			String dbFile = outDir + File.separator + name + ".db";
-			CreateSQLiteDB.dump(dbFile, sutHome, exec.toString());
+//			String dbFile = outDir + File.separator + name + ".db";
+//			CreateSQLiteDB.dump(dbFile, sutHome, exec.toString());
 			exec.renameTo(new File(outDir, name + ".exec"));
 		} catch (Exception e) {
 			e.printStackTrace();

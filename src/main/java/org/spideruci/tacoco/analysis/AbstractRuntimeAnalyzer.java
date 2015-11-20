@@ -103,7 +103,6 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 			this.result = new AnalysisResults();
 		}
 		
-		
 		this.result.put("Runtime Execution Time (in sec)", rTime);
 		this.result.put("Test Run Counts", rCnt);
 		this.result.put("Failure Counts", fCnt);

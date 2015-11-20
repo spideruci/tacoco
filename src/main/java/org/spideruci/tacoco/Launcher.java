@@ -58,7 +58,7 @@ public class Launcher {
 		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
 		
-		launcher.startAnalysis(projectName, parentCP, launcher.sutHome, null);
+		launcher.startAnalysis(projectName, parentCP, launcher.sutHome, new String[0]);
 	}
 
 	/**
@@ -109,6 +109,10 @@ public class Launcher {
 
 		ArrayList<String> javaOptions = AnalysisOptions.readOptions(analyzerOptsFile);
 		for(String option : javaOptions) {
+			if(option.contains("$TACOCO_HOME$")) {
+				option = option.replace("$TACOCO_HOME$", tacocoHome);
+			}
+			System.out.println(option);
 			command.add(option);
 		}
 		

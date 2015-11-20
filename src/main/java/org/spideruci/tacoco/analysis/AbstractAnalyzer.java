@@ -18,7 +18,9 @@ public abstract class AbstractAnalyzer {
 	
 	protected void setBuildProbe() {
 		String targetDir = readArgumentValue(SUT);
+		System.out.println("sut:" + targetDir);
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(targetDir);
+		
 		this.setBuildProbe(probe);
 	}
 	

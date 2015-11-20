@@ -17,14 +17,14 @@ import java.util.Map.Entry;
  */
 public class AnalysisResults implements Iterable<Entry<String, Object>> {
 	
-	private HashMap<String, Object> resultTable; // TODO change this data structure to a list or something.
+	private HashMap<String, Object> resultTable = new HashMap<>(); // TODO change this data structure to a list or something.
 	
 	public <T> T get(String name) {
 		Object object = resultTable.get(name);
 		try {
 			@SuppressWarnings("unchecked")
-			T typedObject = (T) object.getClass();
-			return typedObject;
+			Class<T> objectType = (Class<T>) object.getClass();
+			return objectType.cast(object);
 		} catch(ClassCastException e) {
 			return null;
 		}

@@ -44,7 +44,7 @@ public abstract class AbstractCli {
 	}
 
 	public static String argEquals(String argName, String value) {
-		return arg(argName) + "=";
+		return arg(argName) + "=" + value;
 	}
 
 	public static boolean readBooleanArgument(String arg) {
