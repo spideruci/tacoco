@@ -62,12 +62,12 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 		List<AbstractTestRunner> runners = new ArrayList<>();
 		int nThread  = Integer.parseInt(readOptionalArgumentValue(THREAD, "1"));
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThread);
-		AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
-		if(listener != null) {
-			runner.listenThrough(this.listener);
-		}
 		
 		for(Class<?> testClass : klasses) {
+			AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
+			if(listener != null) {
+				runner.listenThrough(this.listener);
+			}
 			try {
 				runner.setTest(testClass);
 				if(!runner.shouldRun()) {

@@ -41,6 +41,7 @@ public class Launcher {
 			LANUCHER_CLI.printHelp();
 		}
 		
+		
 		final String userDir = System.getProperty("user.dir");
 
 		System.setProperty("maven.multiModuleProjectDirectory", userDir); // how does this help us?
@@ -57,7 +58,7 @@ public class Launcher {
 		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
 		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
-		
+		System.out.println(parentCP);
 		launcher.startAnalysis(projectName, parentCP, launcher.sutHome, new String[0]);
 	}
 
