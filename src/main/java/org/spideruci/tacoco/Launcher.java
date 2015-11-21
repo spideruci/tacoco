@@ -56,7 +56,6 @@ public class Launcher {
 		
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.sutHome);
 		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
-		launcher.setTacocoEnv();
 		String parentCP = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
 		System.out.println(parentCP);
 		launcher.startAnalysis(projectName, parentCP, launcher.sutHome, new String[0]);
@@ -192,28 +191,4 @@ public class Launcher {
 				.buildClassPath();
 		return tacocoClasspath;
 	}
-
-	/*
-	 * Move jacoco.jar from mvn repo to tacocoHome/lib
-	 */
-	private void setTacocoEnv() {
-		final String dependencyLibPath = 
-				new PathBuilder()
-				.path(tacocoHome, "lib")
-				.buildFilePath();
-		
-		if(new File(dependencyLibPath).exists()) {
-			// TODO why return, why not delete the lib and then recreate this afresh?
-			return;
-		}
-		
-		MavenCli mavenCli = new MavenCli();
-		
-		mavenCli.doMain(
-				new String[]{"dependency:copy-dependencies", "-DoutputDirectory=lib"}, 
-				tacocoHome, 
-				System.out, 
-				System.out);
-	}
-
 }

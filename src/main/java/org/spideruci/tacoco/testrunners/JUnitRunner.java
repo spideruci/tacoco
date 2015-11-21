@@ -2,6 +2,7 @@ package org.spideruci.tacoco.testrunners;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.concurrent.Callable;
 
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
@@ -18,10 +19,8 @@ import org.spideruci.tacoco.analysis.AnalysisResults;
 public final class JUnitRunner extends AbstractTestRunner {
 	
 	private final static String JUNIT_TEST_RESULT = "test-result";
+	private static final String TEST_CLASS_NAME = "test-class-name";
 	public static boolean LOGGING = false;
-
-	private Class<?> testClass;
-
 
 	private JUnitCore testCore;
 	
@@ -34,40 +33,42 @@ public final class JUnitRunner extends AbstractTestRunner {
 	}
 
 	public JUnitRunner() {
-		this.testClass = null;
 		this.testCore = new JUnitCore();
 	}
 	
-	@Override
-	public void run() {
-		try {
-			System.out.println("Starting "+testClass);
-			Result result = this.testCore.run(testClass);
-			if(this.results == null) {
-				this.results = new AnalysisResults();
-			}
-			
-			this.results.put(JUNIT_TEST_RESULT, result);
-			this.printTestRunSummary(); // TODO Move to AbstractRuntimeAnalyzer.runTests.
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	@Override
+//	public void run() {
+//		try {
+//			System.out.println("Starting "+testClass);
+//			Result result = this.testCore.run(testClass);
+//			if(this.results == null) {
+//				this.results = new AnalysisResults();
+//			}
+//			
+//			this.results.put(JUNIT_TEST_RESULT, result);
+//			this.printTestRunSummary(); // TODO Move to AbstractRuntimeAnalyzer.runTests.
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	@Override
-	protected void printTestRunSummary() {
-		Result result = this.results.get(JUNIT_TEST_RESULT);
-		testRunTime = result.getRunTime()/1000.0;
-		executedTestCount = result.getRunCount();
-		failedTestCount = result.getFailureCount();
-		ignoredTestCount = result.getIgnoreCount();
-		System.out.println("Finishing "+testClass
+	public void printTestRunSummary(AnalysisResults results) {
+		Result result = results.get(JUNIT_TEST_RESULT);
+		this.testRunTime = result.getRunTime()/1000.0;
+		this.executedTestCount = result.getRunCount();
+		this.failedTestCount = result.getFailureCount();
+		this.ignoredTestCount = result.getIgnoreCount();
+		String testName = results.get(TEST_CLASS_NAME);
+		
+		System.out.println("Finishing "+ testName
 				+" Tests run: "+executedTestCount
 				+" Failures: "+failedTestCount
 				+" Errors: 0"   //TBD
 				+" Skipped: "+ignoredTestCount
 				+" Time elapsed: "+ testRunTime +"sec");
+		
 		if(this.failedTestCount !=0) {
 			System.out.println("---------------------Failures--------------------");
 			for(Failure f: result.getFailures()){
@@ -95,20 +96,20 @@ public final class JUnitRunner extends AbstractTestRunner {
 	 * if this runner is not setup with a test-class with {@code setTestClass()}. 
 	 */
 	@Override
-	public boolean shouldRun() {
-		if(this.testClass == null) {
+	public boolean shouldRun(Class<?> test) {
+		if(test == null) {
 			return false;
 		}
 		
-		if(Modifier.isAbstract(this.testClass.getModifiers())) {
+		if(Modifier.isAbstract(test.getModifiers())) {
 			return false;
 		}
 		
-		if(TestCase.class.isAssignableFrom(this.testClass)) {
+		if(TestCase.class.isAssignableFrom(test)) {
 			return true;
 		}
 
-		for(Method testMethod : this.testClass.getMethods()){
+		for(Method testMethod : test.getMethods()) {
 			Test annotation = testMethod.getAnnotation(Test.class);
 			if(annotation != null) {
 				return true;
@@ -121,12 +122,30 @@ public final class JUnitRunner extends AbstractTestRunner {
 		
 		return false;
 	}
-	
+
 	@Override
-	public void setTest(Class<?> test) {
-		if(test == null) {
-			return;
-		}
-		this.testClass = test;
+	public Callable<AnalysisResults> getExecutableTest(final Class<?> test) {
+		final JUnitCore core = this.testCore;
+		return new Callable<AnalysisResults>() {
+			
+			@Override
+			public AnalysisResults call() {
+				try {
+					System.out.println("Starting "+test);
+					Result result = core.run(test);
+					AnalysisResults results = new AnalysisResults();
+					
+					results.put(JUNIT_TEST_RESULT, result);
+					results.put(TEST_CLASS_NAME, test.getName());
+					return results;
+//					this.printTestRunSummary(); // TODO Move to AbstractRuntimeAnalyzer.runTests.
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+				
+			}
+		};
 	}
 }

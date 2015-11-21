@@ -7,8 +7,10 @@ import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.runner.notification.RunListener;
@@ -59,18 +61,18 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 	}
 	
 	protected void runTests(List<Class<?>> klasses) {
-		List<AbstractTestRunner> runners = new ArrayList<>();
+		List<Future<AnalysisResults>> futureAnalysisResults = new ArrayList<>();
 		int nThread  = Integer.parseInt(readOptionalArgumentValue(THREAD, "1"));
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThread);
+
+		AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
+		if(listener != null) {
+			runner.listenThrough(this.listener);
+		}
 		
 		for(Class<?> testClass : klasses) {
-			AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
-			if(listener != null) {
-				runner.listenThrough(this.listener);
-			}
 			try {
-				runner.setTest(testClass);
-				if(!runner.shouldRun()) {
+				if(!runner.shouldRun(testClass)) {
 					continue;
 				}
 			} catch (Throwable e) {
@@ -78,8 +80,9 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 				continue;
 			}
 			
-			threadPool.submit(runner);
-			runners.add(runner);
+			Future<AnalysisResults> futureResults = 
+					threadPool.submit(runner.getExecutableTest(testClass));
+			futureAnalysisResults.add(futureResults);
 		}
 		threadPool.shutdown();
 		
@@ -91,11 +94,17 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 
 		double rTime=0;
 		int rCnt=0, fCnt=0, iCnt=0;
-		for(AbstractTestRunner r: runners) {
-			rTime += r.testRunTime;
-			rCnt += r.executedTestCount;
-			fCnt += r.failedTestCount;
-			iCnt += r.ignoredTestCount;
+		for(Future<AnalysisResults> futureResults : futureAnalysisResults) {
+			try {
+				AnalysisResults results = futureResults.get();
+				runner.printTestRunSummary(results);
+				rTime += runner.testRunTime;
+				rCnt += runner.executedTestCount;
+				fCnt += runner.failedTestCount;
+				iCnt += runner.ignoredTestCount;
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
