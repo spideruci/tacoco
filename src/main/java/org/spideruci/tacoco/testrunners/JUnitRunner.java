@@ -20,8 +20,7 @@ public final class JUnitRunner extends AbstractTestRunner {
 	
 	private final static String JUNIT_TEST_RESULT = "test-result";
 	private static final String TEST_CLASS_NAME = "test-class-name";
-	public static boolean LOGGING = true;
-
+	
 	private JUnitCore testCore;
 	
 	public void listenThrough(Object listener) {
