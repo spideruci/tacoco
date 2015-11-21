@@ -4,29 +4,31 @@ import java.io.IOException;
 
 import org.jacoco.agent.rt.IAgent;
 import org.jacoco.agent.rt.RT;
+import org.testng.ISuite;
 import org.testng.ITestContext;
-import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 
-public class TestNGJacocoListener implements ITestListener {
+public class TestNGJacocoListener extends TestListenerAdapter{
 	private IAgent agent;
 
-	public TestNGJacocoListener() { }
+	public TestNGJacocoListener() { 
+	}
 
 	@Override
-	public void onStart(ITestContext ctx) {
+	public void onStart(ITestContext testContext)  {
+		System.out.println("Starting TestNGListner");
 		agent = RT.getAgent();
 	}
 	
-	@Override
-	public void onFinish(ITestContext ctx) {
-		agent.setSessionId("end");
-	}
 	
 	@Override
 	public void onTestStart(ITestResult result) {
-		System.out.println("Setting sessionId to "+result.getTestName());
-		agent.setSessionId(result.getTestName());
+		String method = result.getMethod().getMethodName();
+		String klass = result.getTestClass().getName();
+		String sessionId = method+"("+klass+")";
+		System.out.println("Setting sessionId to "+sessionId);
+		agent.setSessionId(sessionId);
 	}
 	
 	@Override

@@ -14,11 +14,11 @@ import org.spideruci.tacoco.db.CreateSQLiteDB;
 import org.spideruci.tacoco.testrunners.JUnitRunner;
 
 
-public class JunitJacocoListener extends RunListener {
+public class JUnitJacocoListener extends RunListener {
 
 	private IAgent agent;
 
-	public JunitJacocoListener() { }
+	public JUnitJacocoListener() { }
 
 	@Override
 	public void testRunStarted(Description description) {

@@ -56,9 +56,8 @@ public class Launcher {
 		
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.sutHome);
 		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
-		String parentCP = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
-		System.out.println(parentCP);
-		launcher.startAnalysis(projectName, parentCP, launcher.sutHome, new String[0]);
+		String classpath = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
+		launcher.startAnalysis(projectName, classpath, launcher.sutHome, new String[0]);
 	}
 
 	/**
@@ -132,6 +131,7 @@ public class Launcher {
 
 		builder.redirectError(err);
 		builder.redirectOutput(log);
+		builder.inheritIO();
 
 		final Process p;
 		try{

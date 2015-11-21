@@ -6,7 +6,7 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.spideruci.tacoco.testrunners.JUnitRunner;
 
-public class JunitBlinkyListener extends RunListener {
+public class JUnitBlinkyListener extends RunListener {
 	@Override
 	public void testRunStarted(Description description) {
 

@@ -19,7 +19,7 @@ public class MavenModuleTest {
 	
 	@BeforeClass
 	public static void setUp() throws IOException{
-		MavenModuleTest.module = new MavenModule("resources/spiderMath/addition");
+		MavenModuleTest.module = new MavenModule("resources/spiderMath_JUnit/addition");
 	}
 	
 	@Test
@@ -47,6 +47,4 @@ public class MavenModuleTest {
 	public void getClasspathTest(){
 		assertEquals(0, 0);	
 	}
-	
-	
 }

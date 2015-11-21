@@ -16,7 +16,7 @@ public class MavenBuilderProbeTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException{
-		MavenBuilderProbeTest.probe = AbstractBuildProbe.getInstance("resources/spiderMath");
+		MavenBuilderProbeTest.probe = AbstractBuildProbe.getInstance("resources/spiderMath_JUnit");
 	}
 
 	@Test

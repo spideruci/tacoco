@@ -20,13 +20,13 @@ public final class JUnitRunner extends AbstractTestRunner {
 	
 	private final static String JUNIT_TEST_RESULT = "test-result";
 	private static final String TEST_CLASS_NAME = "test-class-name";
-	public static boolean LOGGING = false;
+	public static boolean LOGGING = true;
 
 	private JUnitCore testCore;
 	
-	public void listenThrough(RunListener listener) {
-		if(listener != null) {
-			this.testCore.addListener(listener);
+	public void listenThrough(Object listener) {
+		if(listener != null && listener instanceof RunListener) {
+				this.testCore.addListener((RunListener)listener);
 		} else {
 			return;
 		}
@@ -35,23 +35,6 @@ public final class JUnitRunner extends AbstractTestRunner {
 	public JUnitRunner() {
 		this.testCore = new JUnitCore();
 	}
-	
-//	@Override
-//	public void run() {
-//		try {
-//			System.out.println("Starting "+testClass);
-//			Result result = this.testCore.run(testClass);
-//			if(this.results == null) {
-//				this.results = new AnalysisResults();
-//			}
-//			
-//			this.results.put(JUNIT_TEST_RESULT, result);
-//			this.printTestRunSummary(); // TODO Move to AbstractRuntimeAnalyzer.runTests.
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	@Override
 	public void printTestRunSummary(AnalysisResults results) {

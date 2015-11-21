@@ -1,6 +1,6 @@
 package org.spideruci.tacoco.analysis;
 
-import static org.spideruci.tacoco.cli.AbstractCli.LISTENER;
+import static org.spideruci.tacoco.cli.AbstractCli.LISTENERS;
 import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
@@ -22,9 +22,9 @@ import org.spideruci.tacoco.testrunners.AbstractTestRunner;
  *
  */
 public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
-	
-	protected RunListener listener;
-	
+
+	protected List<Object> listeners;
+
 	@Override
 	public void setup() {
 		super.setup();
@@ -32,44 +32,40 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 	}
 
 	public void setupRuntimeListener() {
-		String listenerClassName = readOptionalArgumentValue(LISTENER, null);
-		if(listenerClassName == null) {
+		this.listeners = new ArrayList<>();
+		
+		String listenerClassNames = readOptionalArgumentValue(LISTENERS, null);
+		if(listenerClassNames == null) {
 			return;
 		}
-
-		try {
-			Class<?> listenerClass = Class.forName(listenerClassName);
-			if(listenerClass == null) {
-				return;
-			}
-
-			if(RunListener.class.isAssignableFrom(listenerClass)) {
-				RunListener listener = (RunListener) listenerClass.newInstance();
-				if(listener == null) {
-					return;
+		for(String listenerClassName : listenerClassNames.split(":")){
+			try {
+				Class<?> listenerClass = Class.forName(listenerClassName);
+				if(listenerClass == null) {
+					continue;
 				}
-				this.listener = listener;
-			} else {
+				Object listener = listenerClass.newInstance();
+				this.listeners.add(listener);
+
+			} catch (ClassNotFoundException 
+					| InstantiationException 
+					| IllegalAccessException e) {
+				e.printStackTrace();
 				return;
 			}
-		} catch (ClassNotFoundException 
-				| InstantiationException 
-				| IllegalAccessException e) {
-			e.printStackTrace();
-			return;
 		}
 	}
-	
+
 	protected void runTests(List<Class<?>> klasses) {
 		List<Future<AnalysisResults>> futureAnalysisResults = new ArrayList<>();
 		int nThread  = Integer.parseInt(readOptionalArgumentValue(THREAD, "1"));
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThread);
 
 		AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
-		if(listener != null) {
-			runner.listenThrough(this.listener);
+		for(Object listener : this.listeners) {
+			runner.listenThrough(listener);
 		}
-		
+
 		for(Class<?> testClass : klasses) {
 			try {
 				if(!runner.shouldRun(testClass)) {
@@ -79,13 +75,13 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 				e.printStackTrace();
 				continue;
 			}
-			
+
 			Future<AnalysisResults> futureResults = 
 					threadPool.submit(runner.getExecutableTest(testClass));
 			futureAnalysisResults.add(futureResults);
 		}
 		threadPool.shutdown();
-		
+
 		try {
 			threadPool.awaitTermination(Long.MAX_VALUE,TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
@@ -106,20 +102,20 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
+
 		if(this.result == null) {
 			this.result = new AnalysisResults();
 		}
-		
+
 		this.result.put("Runtime Execution Time (in sec)", rTime);
 		this.result.put("Test Run Counts", rCnt);
 		this.result.put("Failure Counts", fCnt);
 		this.result.put("Ignore Counts", iCnt);
 		this.result.put("Number of Thread", nThread);
 	}
-	
-	
+
+
 	@Override
 	public void printAnalysisSummary() {
 		System.out.println("-------------------------------------------------");

@@ -6,7 +6,7 @@
 	<artifactId>tacoco</artifactId>
 	<version>0.1</version>
 	<packaging>jar</packaging>
-	
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -44,7 +44,6 @@
 		<dependency>
 			<groupId>org.eclipse.aether</groupId>
 			<artifactId>aether-transport-wagon</artifactId>
-			<version>1.0.2.v20150114</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.aether</groupId>
@@ -116,6 +115,11 @@
 			<artifactId>org.jacoco.agent</artifactId>
 			<version>0.7.4.201502262128</version>
 			<classifier>runtime</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.9.9</version>
 		</dependency>
 	</dependencies>
 
