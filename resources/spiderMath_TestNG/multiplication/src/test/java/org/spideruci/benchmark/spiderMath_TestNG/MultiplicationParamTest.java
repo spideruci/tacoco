@@ -6,10 +6,9 @@ import org.testng.annotations.Test;
 
 public class MultiplicationParamTest {
 
-	int expt, a, b;
-	
+
 	@Test(dataProvider = "numberProvider")
-	public void testMulti() {
+	public void testMulti(int expt, int a, int b) {
 		Assert.assertEquals(expt, Multiplication.multi(a, b));
 	}
 	

@@ -1,40 +1,52 @@
 package org.spideruci.tacoco.mutation;
 
+import static org.spideruci.tacoco.cli.AbstractCli.PIT_JAR;
+import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
+
 import java.io.File;
-import java.io.FilenameFilter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.spideruci.tacoco.probe.AbstractBuildProbe;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class PITHandler {
 	
 	private PITDB pitDB;
-
-	public void runPit(String id, String classpath, String targetDir, AbstractBuildProbe probe, String outdir, String tacocoHome) {
+	private AbstractBuildProbe probe;
+	private String outdir;
+	private String pit_jar_cp;
+	private String outFileName;
+	private String sutHome;
+	
+	/*
+	private String name;
+	private String outDir;
+	private File exec;
+	protected String dbFileName;
+	*/
+	
+	
+	public PITHandler(AbstractBuildProbe probe, String outdir, String outFileName, String sutHome){
+		this.probe = probe;
+		this.outdir = outdir;
+		this.outFileName = outFileName;
+		this.pit_jar_cp = readOptionalArgumentValue(PIT_JAR, "");
+		this.sutHome = sutHome;
+		this.pitDB = new PITDB();
+	}
+	
+	public void runPit() {
 		StringBuffer testClasses= new StringBuffer();
 		StringBuffer classes= new StringBuffer();
 
 		Set<String> excludeTests = null;
-		File pitErrFile = new File(outdir, id+".pit.err");
+		File pitErrFile = new File(outdir, outFileName+".pit.err");
 		if(pitErrFile.exists()){
 			excludeTests = getPITexcludeTests(pitErrFile);
 		}
@@ -48,26 +60,27 @@ public class PITHandler {
 			classes.append(s+",");
 		}
 
-		String pitPath = tacocoHome+"/lib/pitest-command-line-1.1.7.jar:"
-				+tacocoHome+"/lib/pitest-1.1.7-SNAPSHOT.jar";
-
-		File err = new File(outdir, id+".pit.err");
-		File log = new File(outdir, id+".pit.log");
+		File err = new File(outdir, outFileName+".pit.err");
+		File log = new File(outdir, outFileName+".pit.log");
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 
-
+		System.out.println(testClasses);
+		System.out.println(this.probe.getClasspath());
+		
+		//System.exit(0);
+		
 		ProcessBuilder pitRunner = new ProcessBuilder(
 				"java",
-				"-cp", pitPath+":"+classpath,
+				"-cp", this.pit_jar_cp+":"+this.probe.getClasspath(),
 				"-Xms2048M",
 				"org.pitest.mutationtest.commandline.MutationCoverageReport",
-				"--reportDir="+outdir+"/"+id,
+				"--reportDir="+outdir+File.separator+outFileName,
 				"--targetClasses="+classes,
 				"--targetTests="+testClasses,
-				"--sourceDirs="+targetDir+"/src",
+				"--sourceDirs="+this.sutHome,
 				"--outputFormats=XML");
-		pitRunner.directory(new File(targetDir));
+		pitRunner.directory(new File(this.sutHome));
 		pitRunner.redirectError(err);
 		pitRunner.redirectOutput(log);
 
@@ -110,7 +123,14 @@ public class PITHandler {
 		return set;
 	}
 
-	public void updateTacocoDB(String tacocodb, String pitReportDir) {
-		this.pitDB.updateTacocoDB(tacocodb, pitReportDir);
+	public void updateTacocoDB() {
+		String dbFile = this.outdir + File.separator + this.outFileName + ".db";
+		String reportDir = this.outdir + File.separator + this.outFileName;
+		
+		try {
+			this.pitDB.updateTacocoDB(dbFile, reportDir);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

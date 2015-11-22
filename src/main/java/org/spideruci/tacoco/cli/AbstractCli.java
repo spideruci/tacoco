@@ -35,6 +35,10 @@ public abstract class AbstractCli {
 	public static final String ANALYZER_OPTS = "analyzer.opts";
 
 	static final String PREFIX = "-D";
+	
+	
+	public static final String PIT_NO_UNIT_TEST = "tacoco.pit.no_unittest_if_result_exist";
+	public static final String PIT_JAR = "tacoco.pit.jar";
 
 	public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
 	public static final ReaderCli READER_CLI = new ReaderCli();

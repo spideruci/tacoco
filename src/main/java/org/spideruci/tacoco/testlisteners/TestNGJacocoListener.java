@@ -67,7 +67,7 @@ public class TestNGJacocoListener extends TestListenerAdapter{
 
 	private void endTest(ITestResult result) {
 		if(LOGGING) {
-			System.out.println("Test case finished: " +result.getName());
+			System.out.println("Test case finished: " +agent.getSessionId());
 		}
 		try {
 			agent.dump(true);
