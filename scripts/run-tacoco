@@ -5,15 +5,15 @@ echo $project_name
 
 cd $2
 echo "RUNNING TACOCO"
-mvn -q exec:java -Plauncher -Dtacoco.sut=$1 -Dtacoco.home=$2 -Dtacoco.project=$project_name
+mvn exec:java -Plauncher -Dtacoco.sut=$1 -Dtacoco.home=$2 -Dtacoco.project=$project_name -Danalyzer.opts="tacoco-analyzer.config"
 echo "RUNNING TACOCO --- DONE"
 
 echo "ANALYZING EXEC FILE"
-mvn -q exec:java -Panalyzer -Dtacoco.sut=$1 -Dtacoco.exec=tacoco_output/$project_name.exec -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
+mvn exec:java -Panalyzer -Dtacoco.sut=$1 -Dtacoco.exec=tacoco_output/$project_name.exec -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
 echo "ANALYZING EXEC FILE --- DONE"
 
 echo "READING COVERAGE MATRIX"
-mvn -q exec:java -Preader -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
+mvn exec:java -Preader -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
 echo "READING COVERAGE MATRIX --- DONE"
 
-echo "open tacoco_output/$project_name-cov-matrix.json"
+open "tacoco_output/$project_name-cov-matrix.json"

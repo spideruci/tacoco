@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
+import org.spideruci.tacoco.testlisteners.JUnitJacocoListener;
 
 public class TacocoListenerTest {
 
@@ -17,7 +18,7 @@ public class TacocoListenerTest {
 	public TemporaryFolder folder = new TemporaryFolder();
 	private AgentOptions options;
 	private File execfile;
-	private JUnitListener tl;
+	private JUnitJacocoListener tl;
 	
     @Before
     public void setUp() throws Exception {
@@ -25,7 +26,7 @@ public class TacocoListenerTest {
     		execfile = new File("jacoco.exec");
     		options.setOutput("file");
     		options.setDestfile(execfile.getAbsolutePath());
-    		tl = new JUnitListener();
+    		tl = new JUnitJacocoListener();
     		options.setSessionId("testsession");
     		Agent agent = Agent.getInstance(options);
     		agent.startup();

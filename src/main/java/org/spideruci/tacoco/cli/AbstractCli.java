@@ -29,11 +29,32 @@ public abstract class AbstractCli {
 	public static final String INST_MEM = "tacoco.inst.mem";
 	public static final String INST_XBOOT = "tacoco.inst.xboot";
 
+	//public static final String LISTENER = "tacoco.listener";
+	public static final String LISTENERS = "tacoco.listeners";
+	public static final String ANALYZER = "tacoco.analyzer";
+	public static final String ANALYZER_OPTS = "analyzer.opts";
+
 	static final String PREFIX = "-D";
+	
+	
+	public static final String PIT_NO_UNIT_TEST = "tacoco.pit.no_unittest_if_result_exist";
+	public static final String PIT_JAR = "tacoco.pit.jar";
 
 	public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
 	public static final ReaderCli READER_CLI = new ReaderCli();
 	public static final LauncherCli LANUCHER_CLI = new LauncherCli();
+	
+	public static String arg(String argName) {
+		return PREFIX + argName;
+	}
+
+	public static String argEquals(String argName, String value) {
+		return arg(argName) + "=" + value;
+	}
+
+	public static boolean readBooleanArgument(String arg) {
+		return System.getProperties().containsKey(arg);
+	}
 
 	protected String readOptionalArgumentValueInternal(String arg, String defolt) {
 		String value = System.getProperty(arg);
