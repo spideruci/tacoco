@@ -11,9 +11,7 @@ import org.testng.TestListenerAdapter;
 import static org.spideruci.tacoco.testrunners.AbstractTestRunner.LOGGING;
 
 public class TestNGJacocoListener extends TestListenerAdapter{
-	
-	static int invocation_counter=0;
-	
+
 	private IAgent agent;
 
 	public TestNGJacocoListener() { 
@@ -30,16 +28,19 @@ public class TestNGJacocoListener extends TestListenerAdapter{
 
 	@Override
 	public void onTestStart(ITestResult result) {
+
 		String method = result.getMethod().getMethodName();
 		String klass = result.getTestClass().getName();
-		
-		if(result.getMethod().getParameterInvocationCount() >1){
-			method = method + "["+invocation_counter+++"]";
+		StringBuilder sb = new StringBuilder();
+		for(Object each : result.getParameters()){
+			sb.append("|"+each.toString());
 		}
-		else{
-			invocation_counter = 0;
+		if(sb.length()>0){
+			sb.setCharAt(0, '[');
+			sb.append(']');
 		}
-		String sessionId = method+"("+klass+")";
+
+		String sessionId = method+sb.toString()+"("+klass+")";
 		if(LOGGING) {
 			System.out.println("Setting sessionId to "+sessionId);
 		}
@@ -67,7 +68,7 @@ public class TestNGJacocoListener extends TestListenerAdapter{
 
 	private void endTest(ITestResult result) {
 		if(LOGGING) {
-			System.out.println("Test case finished: " +result.getName());
+			System.out.println("Test case finished: " +agent.getSessionId());
 		}
 		try {
 			agent.dump(true);

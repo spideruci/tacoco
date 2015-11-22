@@ -15,10 +15,11 @@ import org.spideruci.tacoco.db.CreateSQLiteDB;
 
 public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 	
-	private String name;
-	private String outDir;
-	private File exec;
-	private String sutHome;
+	protected String name;
+	protected String outDir;
+	protected File exec;
+	protected String sutHome;
+	protected String dbFileName;
 	
 	@Override
 	public void setup() {
@@ -30,6 +31,7 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 		}
 		exec = new File(outDir, "tacoco.exec");
 		sutHome = readArgumentValue(SUT);
+		this.dbFileName = outDir + File.separator + name + ".db";
 	}
 	
 	@Override
@@ -54,8 +56,7 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 		super.printAnalysisSummary();
 		try {
 			if(System.getProperty(DB)!=null){
-				String dbFileName = outDir + File.separator + name + ".db";
-				File dbFile = new File(dbFileName);
+				File dbFile = new File(this.dbFileName);
 				if(dbFile.exists()) {
 					dbFile.delete();
 				}

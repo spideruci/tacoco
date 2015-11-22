@@ -1,6 +1,7 @@
 package org.spideruci.tacoco.mutation;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,7 +37,7 @@ public class PITDB {
 
 
 
-	public void updateTacocoDB(String tacocodb, String pitReportDir){
+	public void updateTacocoDB(String tacocodb, String pitReportDir) throws FileNotFoundException{
 
 		//open files: tacocodb, mutation_xml
 		this.conn = getConnection(tacocodb);
@@ -47,6 +48,11 @@ public class PITDB {
 				return new File(current, name).isDirectory();
 			}
 		});
+		
+		if(dirs == null) {
+			throw new FileNotFoundException("mutations.xml file not exist");
+		}
+		
 		File mutationXml = new File(pitReportDir+"/"+dirs[dirs.length-1]+"/mutations.xml");
 
 		//create mutation table
