@@ -113,7 +113,7 @@ public final class JUnitRunner extends AbstractTestRunner {
 			@Override
 			public AnalysisResults call() {
 				try {
-					System.out.println("Starting "+test);
+					//System.out.println("Starting "+test);
 					Result result = core.run(test);
 					AnalysisResults results = new AnalysisResults();
 					

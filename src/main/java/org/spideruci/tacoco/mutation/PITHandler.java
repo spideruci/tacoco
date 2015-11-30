@@ -24,7 +24,10 @@ public class PITHandler {
 	private String pit_jar_cp;
 	private String outFileName;
 	private String sutHome;
-	
+	private File pitErrFile;
+
+	private final int MAX_TRY = 5;
+
 	/*
 	private String name;
 	private String outDir;
@@ -40,16 +43,31 @@ public class PITHandler {
 		this.pit_jar_cp = readOptionalArgumentValue(PIT_JAR, "");
 		this.sutHome = sutHome;
 		this.pitDB = new PITDB();
+		this.pitErrFile = new File(outdir, outFileName+".pit.err");
 	}
 	
-	public void runPit() {
+
+	public void run(){
+		for(int i=0; i<MAX_TRY; ++i){
+			runPit();
+			if(hasGreenSuite()) break;
+		}
+	}
+
+	private boolean hasGreenSuite() {
+		Set<String> set = getPITexcludeTests();
+		if(set == null || set.size() == 0) return true;
+		return false;
+	}
+
+
+	private void runPit() {
 		StringBuffer testClasses= new StringBuffer();
 		StringBuffer classes= new StringBuffer();
 
 		Set<String> excludeTests = null;
-		File pitErrFile = new File(outdir, outFileName+".pit.err");
 		if(pitErrFile.exists()){
-			excludeTests = getPITexcludeTests(pitErrFile);
+			excludeTests = getPITexcludeTests();
 		}
 
 		for(String s : probe.getTestClasses()){
@@ -66,11 +84,9 @@ public class PITHandler {
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 
-		System.out.println(testClasses);
-		System.out.println(this.probe.getClasspath());
+		System.out.println("cp: " + this.pit_jar_cp+":"+this.probe.getClasspath());
+		System.out.println("testClasses: " + testClasses);
 		
-		//System.exit(0);
-
 		ProcessBuilder pitRunner = new ProcessBuilder(
 				"java",
 				"-cp", this.pit_jar_cp+":"+this.probe.getClasspath(),
@@ -80,7 +96,9 @@ public class PITHandler {
 				"--targetClasses="+classes,
 				"--targetTests="+testClasses,
 				"--sourceDirs="+this.sutHome,
-				"--outputFormats=XML");
+				"--outputFormats=XML",
+				"--threads=4");
+
 		pitRunner.directory(new File(this.sutHome));
 		pitRunner.redirectError(err);
 		pitRunner.redirectOutput(log);
@@ -99,7 +117,7 @@ public class PITHandler {
 		}
 	}
 
-	private Set<String> getPITexcludeTests(File pitErrFile) {
+	private Set<String> getPITexcludeTests() {
 
 		Set<String> set = new HashSet<>();
 		Pattern p = Pattern.compile("testClass=.*,");

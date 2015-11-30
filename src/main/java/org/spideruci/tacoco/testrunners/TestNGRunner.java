@@ -1,13 +1,13 @@
 package org.spideruci.tacoco.testrunners;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.concurrent.Callable;
 
 import org.spideruci.tacoco.analysis.AnalysisResults;
+import org.testng.ITestListener;
 import org.testng.ITestNGListener;
+import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
-import org.testng.annotations.Test;
 
 public class TestNGRunner extends AbstractTestRunner {
 	
@@ -34,6 +34,15 @@ public class TestNGRunner extends AbstractTestRunner {
 	@Override
 	public void printTestRunSummary(AnalysisResults results) {
 		System.out.println("testng.printTestRunSummary");
+		
+		for(ITestListener listener: this.testCore.getTestListeners()){
+			if(listener instanceof TestListenerAdapter){
+				TestListenerAdapter adapter = (TestListenerAdapter) listener;
+				for(ITestResult result : adapter.getPassedTests()){
+					System.out.println("Result: " + result);
+				}
+			}
+		}
 		/*
 		result = results.get(TESTNG_REPORT);
 		

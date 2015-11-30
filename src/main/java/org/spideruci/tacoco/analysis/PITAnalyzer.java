@@ -24,7 +24,7 @@ public class PITAnalyzer extends TacocoAnalyzer {
 	@Override
 	public void analyze() {
 		if(this.runTacoco)super.analyze();
-		this.pit.runPit();
+		this.pit.run();
 	}
 	
 	@Override
