@@ -68,7 +68,6 @@ local.properties
 # TACOCO
 cp.txt
 *.cp
-lib/*
 tacoco_output/*
 tacoco.cp
 
@@ -102,3 +101,5 @@ Temporary Items
 
 #Checkstyle
 .checkstyle
+test-output/*
+
