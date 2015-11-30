@@ -12,7 +12,7 @@ import org.spideruci.tacoco.probe.AbstractBuildProbe;
 public abstract class AbstractTestRunner {
 	
 	public static enum TestType {JUNIT, TESTNG, UNKNOWN};
-	public static boolean LOGGING = true;
+	public static boolean LOGGING = false;
 
 	
 	public double testRunTime=0;

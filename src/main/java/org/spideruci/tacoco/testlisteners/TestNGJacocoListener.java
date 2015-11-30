@@ -33,7 +33,7 @@ public class TestNGJacocoListener extends TestListenerAdapter{
 		String klass = result.getTestClass().getName();
 		StringBuilder sb = new StringBuilder();
 		for(Object each : result.getParameters()){
-			sb.append("|"+each.toString());
+			sb.append("|"+each.hashCode());
 		}
 		if(sb.length()>0){
 			sb.setCharAt(0, '[');

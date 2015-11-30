@@ -41,7 +41,10 @@ public class Mutant {
 					//remove package name prefix to compare this to jacoco output
 					for(int j=0; j<killingTests.length; ++j){
 						String s = killingTests[j];
-						killingTests[j] = s.replaceFirst(s.replaceFirst("(.*)\\((.*)\\)$", "$2")+".", ""); 
+						if(s.matches("\\w+\\.(.*)$")){
+							killingTests[j] = s.replaceFirst(s.replaceFirst("(.*)\\((.*)\\)$", "$2")+".", ""); 
+						}
+						
 					}
 					break;
 			}

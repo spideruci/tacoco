@@ -1,8 +1,12 @@
 package org.spideruci.tacoco.mutation;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,6 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 public class PITDB {
 
@@ -64,7 +69,12 @@ public class PITDB {
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(mutationXml);
+			//FileInputStream in = new FileInputStream(mutationXml);
+			InputStream is = new FileInputStream(mutationXml);
+			Reader reader = new InputStreamReader(is, "UTF-8");
+			InputSource source = new InputSource(reader);
+			Document doc = builder.parse(source);
+			
 			NodeList mutations = doc.getElementsByTagName("mutation");
 
 			for(int i=0; i<mutations.getLength(); ++i){
