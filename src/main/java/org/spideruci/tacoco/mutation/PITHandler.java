@@ -26,6 +26,7 @@ public class PITHandler {
 	private File pitErrFile;
 	
 	private final int MAX_TRY = 5;
+
 	/*
 	private String name;
 	private String outDir;
@@ -60,7 +61,6 @@ public class PITHandler {
 
 
 	private void runPit() {
-		
 		StringBuffer testClasses= new StringBuffer();
 		StringBuffer classes= new StringBuffer();
 
@@ -97,6 +97,7 @@ public class PITHandler {
 				"--sourceDirs="+this.sutHome,
 				"--outputFormats=XML",
 				"--threads=4");
+
 		pitRunner.directory(new File(this.sutHome));
 		pitRunner.redirectError(err);
 		pitRunner.redirectOutput(log);
