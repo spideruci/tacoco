@@ -6,6 +6,7 @@ import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -24,7 +25,7 @@ public class PITHandler {
 	private String outFileName;
 	private String sutHome;
 	private File pitErrFile;
-	
+
 	private final int MAX_TRY = 5;
 
 	/*
@@ -45,14 +46,14 @@ public class PITHandler {
 		this.pitErrFile = new File(outdir, outFileName+".pit.err");
 	}
 	
-	
+
 	public void run(){
 		for(int i=0; i<MAX_TRY; ++i){
 			runPit();
 			if(hasGreenSuite()) break;
 		}
 	}
-	
+
 	private boolean hasGreenSuite() {
 		Set<String> set = getPITexcludeTests();
 		if(set == null || set.size() == 0) return true;
@@ -122,7 +123,7 @@ public class PITHandler {
 		Pattern p = Pattern.compile("testClass=.*,");
 
 		try {
-			for(String line:Files.readAllLines(Paths.get(pitErrFile.toURI()))){
+			for(String line:Files.readAllLines(Paths.get(pitErrFile.toURI()), StandardCharsets.UTF_8)){
 				if(line.endsWith("did not pass without mutation.")){
 					Matcher m = p.matcher(line);
 					if(m.find()) {
