@@ -9,6 +9,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_CLI;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
+import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
 
 import java.io.File;
@@ -20,8 +21,6 @@ import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
 
 public final class ExecAnalyzer {
-
-
 
 	/**
 	 * Reads all execution data files specified as the arguments and dumps the

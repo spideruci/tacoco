@@ -10,18 +10,36 @@ import java.util.List;
 public class PathBuilder {
 
 	private List<String> paths;
+	
+	public static PathBuilder dirs(final String ... directories) {
+		PathBuilder builder = new PathBuilder();
+		builder.path(directories);
+		return builder;
+	}
 
 	public PathBuilder() {
 		paths = new ArrayList<>();
 	}
 
 	public PathBuilder path(final String directory) {
-		paths.add(directory);
+		if(directory != null) {
+			paths.add(directory);
+		}
+		
+		return this;
+	}
+	
+	public PathBuilder path(final String ... directories) {
+		for(String directory : directories) {
+			this.path(directory);
+		}
 		return this;
 	}
 
 	public PathBuilder path(final List<String> directories) {
-		paths.addAll(directories);
+		for(String directory : directories) {
+			this.path(directory);
+		}		
 		return this;
 	}
 

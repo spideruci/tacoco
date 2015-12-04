@@ -29,7 +29,6 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
 public class CoverageJsonReader {
-
 	public static void main(String[] args) throws IOException {
 		if(System.getProperties().containsKey(HELP)) {
 			READER_CLI.printHelp();
@@ -247,5 +246,5 @@ public class CoverageJsonReader {
 		long lineLongValue = lineDoubleValue.longValue();
 		int lineIntValue = (int) lineLongValue;
 		return lineIntValue;
-	}  
+	}
 }

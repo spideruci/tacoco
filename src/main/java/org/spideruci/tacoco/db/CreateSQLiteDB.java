@@ -1,11 +1,5 @@
 package org.spideruci.tacoco.db;
 
-import static org.spideruci.tacoco.cli.AbstractCli.EXEC;
-import static org.spideruci.tacoco.cli.AbstractCli.HOME;
-import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
-import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
-import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.db.DBDumper.createDBDumper;
 
 import java.io.File;
@@ -15,7 +9,7 @@ import java.sql.Connection;
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ISessionInfoVisitor;
 import org.jacoco.core.data.SessionInfo;
-import org.spideruci.tacoco.AbstractBuildProbe;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 
 public class CreateSQLiteDB {
 
@@ -26,17 +20,6 @@ public class CreateSQLiteDB {
 	public CreateSQLiteDB(String home, String out) {
 		tacocoHome = home;
 		outdir = out;	
-	}
-
-	public static void main(String[] args) throws Exception {
-		String tacocoHome =  readOptionalArgumentValue(HOME,System.getProperty("user.dir"));
-		String dbFile = readOptionalArgumentValue(OUTDIR, tacocoHome+"/tacoco_output") + "/tacoco.db";
-		
-		String sut = readArgumentValue(SUT);
-		String exec = readArgumentValue(EXEC);
-		
-		dump(dbFile, sut, exec);
-
 	}
 
 	public static void dump(String dbFile, String sut, String exec) throws Exception{
@@ -50,7 +33,7 @@ public class CreateSQLiteDB {
 		final DBUtil db = DBUtil.getInstance(dbFile);
 		db.prepareDBFor(projectFQN, probe.getBuilderType().toString());
 		DBDumper dumper = createDBDumper(db);
-		final DataParser parser = new DataParser(projectRoot, dumper, db.getProjectID(projectFQN));
+		final DataParser parser = new DataParser(probe, dumper, db.getProjectID(projectFQN));
 		
 
 		reader.setSessionInfoVisitor(new ISessionInfoVisitor() {

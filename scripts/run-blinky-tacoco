@@ -1,0 +1,16 @@
+#!/bin/bash
+
+project_name=$(echo $1 | rev | cut -d'/' -f 1 | rev)
+echo $project_name
+
+cd $2
+echo "RUNNING TACOCO"
+mvn exec:java -Plauncher\
+ -Dtacoco.sut=$1 -Dtacoco.home=$2\
+ -Dtacoco.inst.arg=l\
+ -Dtacoco.listener=org.spideruci.tacoco.testers.JunitBlinkyListener\
+ -Dtacoco.inst.xboot=~/.m2/repository/org/ow2/asm/asm-all/5.0/asm-all-5.0.jar:~/phd-open-source/blinky/target/blinky-0.0.1-SNAPSHOT.jar\
+ -Dtacoco.inst=/Users/vpalepu/phd-open-source/blinky/target/blinky-0.0.1-SNAPSHOT.jar\
+ -Dtacoco.exec=$project_name.exec\
+ -Dtacoco.log
+echo "RUNNING TACOCO --- DONE"

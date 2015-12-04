@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="5" passed="5">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="60" started-at="2015-11-21T00:01:14Z" finished-at="2015-11-21T00:01:14Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="60" started-at="2015-11-21T00:01:14Z" finished-at="2015-11-21T00:01:14Z">
+      <class name="org.spideruci.benchmark.spiderMath_TestNG.AdditionParamTest">
+        <test-method status="PASS" signature="testAdd(int, int, int)[pri:0, instance:org.spideruci.benchmark.spiderMath_TestNG.AdditionParamTest@71f2a7d5]" name="testAdd" duration-ms="3" started-at="2015-11-20T16:01:14Z" data-provider="numberProvider" finished-at="2015-11-20T16:01:14Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAdd -->
+        <test-method status="PASS" signature="testAdd(int, int, int)[pri:0, instance:org.spideruci.benchmark.spiderMath_TestNG.AdditionParamTest@71f2a7d5]" name="testAdd" duration-ms="1" started-at="2015-11-20T16:01:14Z" data-provider="numberProvider" finished-at="2015-11-20T16:01:14Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[5]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAdd -->
+      </class> <!-- org.spideruci.benchmark.spiderMath_TestNG.AdditionParamTest -->
+      <class name="org.spideruci.benchmark.spiderMath_TestNG.AdditionTest">
+        <test-method status="PASS" signature="testFail()[pri:0, instance:org.spideruci.benchmark.spiderMath_TestNG.AdditionTest@326de728]" name="testFail" duration-ms="16" started-at="2015-11-20T16:01:14Z" finished-at="2015-11-20T16:01:14Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFail -->
+        <test-method status="PASS" signature="testSuccess1()[pri:0, instance:org.spideruci.benchmark.spiderMath_TestNG.AdditionTest@326de728]" name="testSuccess1" duration-ms="6" started-at="2015-11-20T16:01:14Z" finished-at="2015-11-20T16:01:14Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSuccess1 -->
+        <test-method status="PASS" signature="testSuccess2()[pri:0, instance:org.spideruci.benchmark.spiderMath_TestNG.AdditionTest@326de728]" name="testSuccess2" duration-ms="1" started-at="2015-11-20T16:01:14Z" finished-at="2015-11-20T16:01:14Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSuccess2 -->
+      </class> <!-- org.spideruci.benchmark.spiderMath_TestNG.AdditionTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
