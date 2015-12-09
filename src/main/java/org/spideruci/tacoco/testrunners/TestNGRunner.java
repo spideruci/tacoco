@@ -3,10 +3,8 @@ package org.spideruci.tacoco.testrunners;
 import java.util.concurrent.Callable;
 
 import org.spideruci.tacoco.analysis.AnalysisResults;
-import org.testng.ITestListener;
-import org.testng.ITestNGListener;
-import org.testng.ITestResult;
-import org.testng.TestListenerAdapter;
+import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
+import org.spideruci.tacoco.testlisteners.TestNGListenerAdapter;
 import org.testng.TestNG;
 
 public class TestNGRunner extends AbstractTestRunner {
@@ -18,12 +16,9 @@ public class TestNGRunner extends AbstractTestRunner {
 	private TestNG testCore;
 	
 	@Override
-	public void listenThrough(Object listener) {
-		if(listener != null && listener instanceof ITestNGListener) {
-			this.testCore.addListener(listener);
-		} else {
-			return;
-		}
+	public void listenThrough(ITacocoTestListener listener) {
+		TestNGListenerAdapter adapter = new TestNGListenerAdapter(listener);
+			this.testCore.addListener(adapter);
 	}
 
 	public TestNGRunner() {
@@ -35,7 +30,9 @@ public class TestNGRunner extends AbstractTestRunner {
 	public void printTestRunSummary(AnalysisResults results) {
 		System.out.println("testng.printTestRunSummary");
 		
-		for(ITestListener listener: this.testCore.getTestListeners()){
+		
+		/*
+		for(ITacocoTestListener listener: this.testCore.getTestListeners()){
 			if(listener instanceof TestListenerAdapter){
 				TestListenerAdapter adapter = (TestListenerAdapter) listener;
 				for(ITestResult result : adapter.getPassedTests()){
@@ -43,6 +40,7 @@ public class TestNGRunner extends AbstractTestRunner {
 				}
 			}
 		}
+		*/
 		/*
 		result = results.get(TESTNG_REPORT);
 		
@@ -138,4 +136,5 @@ public class TestNGRunner extends AbstractTestRunner {
 			}
 		};
 	}
+
 }
