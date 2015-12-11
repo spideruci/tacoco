@@ -8,11 +8,11 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.spideruci.tacoco.analysis.AnalysisResults;
+import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
+import org.spideruci.tacoco.testlisteners.JUnitListenerAdapter;
 
 import junit.framework.TestCase;
-
-import org.spideruci.tacoco.analysis.AnalysisResults;
 
 
 
@@ -23,12 +23,9 @@ public final class JUnitRunner extends AbstractTestRunner {
 	
 	private JUnitCore testCore;
 	
-	public void listenThrough(Object listener) {
-		if(listener != null && listener instanceof RunListener) {
-				this.testCore.addListener((RunListener)listener);
-		} else {
-			return;
-		}
+	public void listenThrough(ITacocoTestListener listener) {
+		JUnitListenerAdapter adapter = new JUnitListenerAdapter(listener);
+		this.testCore.addListener(adapter);
 	}
 
 	public JUnitRunner() {

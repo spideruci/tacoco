@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.runner.notification.RunListener;
+import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
 import org.spideruci.tacoco.testrunners.AbstractTestRunner;
 
 /**
@@ -23,7 +23,7 @@ import org.spideruci.tacoco.testrunners.AbstractTestRunner;
  */
 public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 
-	protected List<Object> listeners;
+	protected List<ITacocoTestListener> listeners;
 
 	@Override
 	public void setup() {
@@ -45,8 +45,7 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 					continue;
 				}
 				Object listener = listenerClass.newInstance();
-				this.listeners.add(listener);
-
+				if(listener instanceof ITacocoTestListener) this.listeners.add((ITacocoTestListener)listener);
 			} catch (ClassNotFoundException 
 					| InstantiationException 
 					| IllegalAccessException e) {
@@ -62,7 +61,7 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThread);
 
 		AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
-		for(Object listener : this.listeners) {
+		for(ITacocoTestListener listener : this.listeners) {
 			runner.listenThrough(listener);
 		}
 
