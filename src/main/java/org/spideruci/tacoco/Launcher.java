@@ -145,26 +145,7 @@ public class Launcher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
-//		String dbFile = outdir + File.separator + id + ".db";
-//		if(System.getProperties().containsKey(DB)) {
-//			try {
-//				CreateSQLiteDB.dump(dbFile, targetDir, exec.toString());
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
 
-		//run PIT test and produce mutation.xml
-//		PITHandler h = new PITHandler();
-//		if(System.getProperties().containsKey(PIT)){
-//			h.runPit(id, classpath, targetDir, probe, outdir, tacocoHome);
-//		}
-//		
-//		//update tacocoDB with PIT test info
-//		if(System.getProperties().containsKey(PITDB)){
-//			h.updateTacocoDB(outdir+"/"+id+".db",outdir+"/"+id);
-//		}
 	}
 
 	private String getTacocoClasspath() throws Exception {

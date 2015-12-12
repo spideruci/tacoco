@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 
 import org.spideruci.tacoco.analysis.AnalysisResults;
 import org.spideruci.tacoco.probe.AbstractBuildProbe;
+import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
 
 
 
@@ -21,7 +22,7 @@ public abstract class AbstractTestRunner {
 	public int ignoredTestCount=0;
 	
 	public abstract boolean shouldRun(Class<?> test);
-	public abstract void listenThrough(Object listener);
+	public abstract void listenThrough(ITacocoTestListener listener);
 	public abstract Callable<AnalysisResults> getExecutableTest(Class<?> test);
 	public abstract void printTestRunSummary(AnalysisResults results);
 	
