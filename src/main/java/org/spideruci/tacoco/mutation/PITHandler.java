@@ -1,6 +1,7 @@
 package org.spideruci.tacoco.mutation;
 
 import static org.spideruci.tacoco.cli.AbstractCli.PIT_JAR;
+import static org.spideruci.tacoco.cli.AbstractCli.PIT_MAX_MUTATIONS_PER_CLASS;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.io.File;
@@ -25,15 +26,10 @@ public class PITHandler {
 	private String outFileName;
 	private String sutHome;
 	private File pitErrFile;
-
+	private String maxMutationsPerClass;
+	
 	private final int MAX_TRY = 5;
 
-	/*
-	private String name;
-	private String outDir;
-	private File exec;
-	protected String dbFileName;
-	*/
 	
 	
 	public PITHandler(AbstractBuildProbe probe, String outdir, String outFileName, String sutHome){
@@ -41,6 +37,8 @@ public class PITHandler {
 		this.outdir = outdir;
 		this.outFileName = outFileName;
 		this.pit_jar_cp = readOptionalArgumentValue(PIT_JAR, "");
+		this.maxMutationsPerClass = readOptionalArgumentValue(PIT_MAX_MUTATIONS_PER_CLASS, "0");
+		
 		this.sutHome = sutHome;
 		this.pitDB = new PITDB();
 		this.pitErrFile = new File(outdir, outFileName+".pit.err");
@@ -84,8 +82,9 @@ public class PITHandler {
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 
-		System.out.println("cp: " + this.pit_jar_cp+":"+this.probe.getClasspath());
-		System.out.println("testClasses: " + testClasses);
+		//System.out.println("cp: " + this.pit_jar_cp+":"+this.probe.getClasspath());
+		//System.out.println("testClasses: " + testClasses);
+		
 		
 		ProcessBuilder pitRunner = new ProcessBuilder(
 				"java",
@@ -97,7 +96,8 @@ public class PITHandler {
 				"--targetTests="+testClasses,
 				"--sourceDirs="+this.sutHome,
 				"--outputFormats=XML",
-				"--threads=4");
+				"--threads=4",
+				"--maxMutationsPerClass="+this.maxMutationsPerClass);
 
 		pitRunner.directory(new File(this.sutHome));
 		pitRunner.redirectError(err);
