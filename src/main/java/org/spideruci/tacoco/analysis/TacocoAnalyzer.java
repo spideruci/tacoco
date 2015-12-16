@@ -50,7 +50,6 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 			klasses.add(klass);
 		}
 		this.runTests(klasses);
-		
 	}
 	
 	@Override

@@ -23,13 +23,13 @@ public class PITAnalyzer extends TacocoAnalyzer {
 	
 	@Override
 	public void analyze() {
-		if(this.runTacoco)super.analyze();
+		if(this.runTacoco) super.analyze();
 		this.pit.run();
 	}
 	
 	@Override
 	public void printAnalysisSummary() {
-		if(this.runTacoco)super.printAnalysisSummary();
+		if(this.runTacoco) super.printAnalysisSummary();
 		this.pit.updateTacocoDB();
 	}
 
