@@ -82,10 +82,6 @@ public class PITHandler {
 		if(err.exists()) err.delete();
 		if(log.exists()) log.delete();
 
-		//System.out.println("cp: " + this.pit_jar_cp+":"+this.probe.getClasspath());
-		//System.out.println("testClasses: " + testClasses);
-		
-		
 		ProcessBuilder pitRunner = new ProcessBuilder(
 				"java",
 				"-cp", this.pit_jar_cp+":"+this.probe.getClasspath(),
@@ -96,7 +92,8 @@ public class PITHandler {
 				"--targetTests="+testClasses,
 				"--sourceDirs="+this.sutHome,
 				"--outputFormats=XML",
-				"--threads=4",
+				"--threads=8",
+				//"--verbose",
 				"--maxMutationsPerClass="+this.maxMutationsPerClass);
 
 		pitRunner.directory(new File(this.sutHome));
