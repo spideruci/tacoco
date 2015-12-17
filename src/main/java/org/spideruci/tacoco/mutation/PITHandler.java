@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -108,7 +109,9 @@ public class PITHandler {
 					pit.destroy();
 				}
 			}); 
-			pit.waitFor();
+			if(!pit.waitFor(3, TimeUnit.HOURS)) {
+			    pit.destroy(); // consider using destroyForcibly instead
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
