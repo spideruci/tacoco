@@ -111,6 +111,9 @@ public class Launcher {
 			if(option.contains("$TACOCO_HOME$")) {
 				option = option.replace("$TACOCO_HOME$", tacocoHome);
 			}
+			if(option.contains("$OUTDIR$")) {
+				option = option.replace("$OUTDIR$", outdir);
+			}
 			System.out.println(option);
 			command.add(option);
 		}
@@ -131,7 +134,7 @@ public class Launcher {
 
 		builder.redirectError(err);
 		builder.redirectOutput(log);
-		builder.inheritIO();
+		//builder.inheritIO();
 
 		final Process p;
 		try{
