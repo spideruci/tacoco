@@ -86,6 +86,7 @@ public abstract class AbstractAnalyzer {
 		analyzer.setup();
 		analyzer.analyze();
 		analyzer.printAnalysisSummary();
+		System.exit(0);
 	}
 
 }
