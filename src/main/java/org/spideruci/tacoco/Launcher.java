@@ -85,6 +85,7 @@ public class Launcher {
 		command.add(classpath);
 		command.add(argEquals(SUT, sutHome));
 		command.add(argEquals(OUTDIR, outdir));
+		command.add(argEquals(PROJECT, projectName));
 		if(readBooleanArgument(LOG)) {
 			command.add(arg(LOG));
 		}
