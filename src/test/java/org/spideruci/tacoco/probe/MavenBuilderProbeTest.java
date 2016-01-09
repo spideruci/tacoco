@@ -9,6 +9,7 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.spideruci.tacoco.probe.AbstractBuildProbe;
+import org.spideruci.tacoco.util.PathBuilder;
 
 public class MavenBuilderProbeTest {
 
@@ -16,7 +17,8 @@ public class MavenBuilderProbeTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException{
-		MavenBuilderProbeTest.probe = AbstractBuildProbe.getInstance("resources/spiderMath_JUnit");
+        final String targetPath = new PathBuilder().path("resources").path("spiderMath_JUnit").buildFilePath();
+        MavenBuilderProbeTest.probe = AbstractBuildProbe.getInstance(targetPath);
 	}
 
 	@Test

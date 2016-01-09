@@ -2,16 +2,15 @@ package org.spideruci.tacoco.probe;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.spideruci.tacoco.probe.MavenModule;
+import org.spideruci.tacoco.module.MavenModule;
+import org.spideruci.tacoco.util.PathBuilder;
 
 public class MavenModuleTest {
 	
@@ -19,7 +18,8 @@ public class MavenModuleTest {
 	
 	@BeforeClass
 	public static void setUp() throws IOException{
-		MavenModuleTest.module = new MavenModule("resources/spiderMath_JUnit/addition");
+        final String targetPath = new PathBuilder().path("resources").path("spiderMath_JUnit").path("addition").buildFilePath();
+        MavenModuleTest.module = new MavenModule(targetPath);
 	}
 	
 	@Test
@@ -43,8 +43,8 @@ public class MavenModuleTest {
 		assertEquals(set1, set2);	
 	}
 	
-	@Ignore
+	@Test
 	public void getClasspathTest(){
-		assertEquals(0, 0);	
+		System.out.print(this.module.getClasspath());
 	}
 }
