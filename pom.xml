@@ -31,6 +31,13 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<repositories>
+		<repository>
+			<id>repo.gradle.org</id>
+			<url>http://repo.gradle.org/gradle/libs-releases-local</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -121,6 +128,11 @@
 			<artifactId>testng</artifactId>
 			<version>6.9.9</version>
 		</dependency>
+        <dependency>
+            <groupId>org.gradle</groupId>
+            <artifactId>gradle-tooling-api</artifactId>
+            <version>2.6</version>
+        </dependency>
 	</dependencies>
 
 	<build>

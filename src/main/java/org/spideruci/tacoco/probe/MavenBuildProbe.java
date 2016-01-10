@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.spideruci.tacoco.module.MavenModule;
 import org.spideruci.tacoco.util.PathBuilder;
 
 public class MavenBuildProbe extends AbstractBuildProbe {
@@ -58,7 +59,7 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 	public String getClasspath() {
 		StringBuilder sb = new StringBuilder();
 		for(MavenModule m: this.submodules){
-			sb.append(m.getClasspath()+":");
+			sb.append(m.getClasspath() + File.pathSeparator);
 		}
 		return sb.toString();
 	}

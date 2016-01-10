@@ -1,49 +1,32 @@
 package org.spideruci.tacoco.probe;
 
+import org.gradle.tooling.GradleConnector;
+import org.gradle.tooling.ProjectConnection;
+import org.gradle.tooling.model.eclipse.EclipseProject;
+import org.spideruci.tacoco.module.GradleModule;
+import org.spideruci.tacoco.util.PathBuilder;
+
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GradleBuildProbe extends AbstractBuildProbe {
 
-	private String classpath=null;
 	private String targetDir = null;
+	private List<GradleModule> submodules;
 	
 	public GradleBuildProbe(String absolutTargetPath) {
 		targetDir = absolutTargetPath;
+		submodules = getSubmodules(absolutTargetPath);
 	}
 
-	@Override
-	public ArrayList<String> getTestClasses() {
-		final ArrayList<String> ret = new ArrayList<>();
-
-		try{
-			if(!new File(targetDir+"/tacoco.testDir").exists()) runGradleTaskForTacoco();
-			
-			final String p = new String(Files.readAllBytes(Paths.get(targetDir+"/tacoco.testDir"))); //GRADLE TEST CLASS FOLDER
-			Files.walkFileTree(Paths.get(p), new SimpleFileVisitor<Path>() {
-				@Override
-				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-					String str = file.toString();
-					if(str.endsWith(".class") && !str.matches("(.*)\\$(.*)")) {
-						//System.out.println(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class","")); 
-						ret.add(str.replaceAll(p.endsWith("/")?p:p+"/","").replace('/','.').replaceAll("\\.class",""));
-					}
-					return FileVisitResult.CONTINUE;
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
+    @Override
+	public List<String> getTestClasses() {
+        List<String> testClasses = new ArrayList<>();
+        for(GradleModule module: this.submodules){
+            testClasses.addAll(module.getTestClasses());
+        }
+        return testClasses;
 	}
 
 	@Override
@@ -53,65 +36,88 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public String getClasspath() {
-		if(classpath != null) return classpath;
-
-		try{
-		if(!new File(targetDir+"/tacoco.cp").exists()) runGradleTaskForTacoco();
-		classpath = new String(Files.readAllBytes(Paths.get(targetDir+"/tacoco.cp")));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return classpath;
-	}
-
-	private void runGradleTaskForTacoco() throws Exception{
-
-		//inject tacoco task to build.gradle
-		String task = "\ntask tacoco {\n"
-				+"File td = new File('tacoco.testDir')\n"
-				+"td<<sourceSets.test.output.classesDir\n"
-				+"File cp = new File('tacoco.cp')\n"
-				+"sourceSets.main.runtimeClasspath.each { cp<<it<<':'}\n"
-				+"cp<<sourceSets.test.output.classesDir}";
-				
-		Files.write(Paths.get(targetDir+"/build.gradle"), task.getBytes(), StandardOpenOption.APPEND);	
-
-		//run tacoco task
-		ProcessBuilder builder = new ProcessBuilder(
-				"./gradlew", "tacoco").inheritIO();
-		builder.directory(new File(targetDir));
-		Process p = builder.start();
-		p.waitFor();	
+        StringBuilder sb = new StringBuilder();
+        for(GradleModule module: this.submodules){
+            sb.append(module.getClasspath() + File.pathSeparator);
+        }
+        return sb.toString();
 	}
 
 	@Override
 	public boolean hasChild() {
-		// TODO Auto-generated method stub
-		return false;
+		EclipseProject eclipseProject = getGradleModel(targetDir);
+		return eclipseProject != null && !eclipseProject.getChildren().isEmpty();
 	}
 
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+        EclipseProject eclipseProject = getGradleModel(targetDir);
+		return eclipseProject.getName();
 	}
 
 	@Override
 	public List<String> getClasses() {
-		// TODO Auto-generated method stub
-		return null;
+        List<String> classes = new ArrayList<>();
+        for(GradleModule module: this.submodules){
+            classes.addAll(module.getClasses());
+        }
+        return classes;
 	}
 
 	@Override
 	public List<String> getClassDirs() {
-		// TODO Auto-generated method stub
-		return null;
+        List<String> classDirs = new ArrayList<>();
+        for(GradleModule module: this.submodules){
+            classDirs.add(module.getClassDir());
+        }
+        return classDirs;
 	}
 
 	@Override
 	public List<String> getTestClassDirs() {
-		// TODO Auto-generated method stub
-		return null;
+        List<String> testClassDirs = new ArrayList<>();
+        for(GradleModule module: this.submodules){
+            testClassDirs.add(module.getTestclassDir());
+        }
+        return testClassDirs;
 	}
+
+    private List<GradleModule> getSubmodules(final String absoluteTargetPath) {
+        final List<GradleModule> modules = new ArrayList<>();
+        GradleModule rootModule = new GradleModule(absoluteTargetPath);
+        modules.add(rootModule);
+
+        EclipseProject eclipseProject = getGradleModel(absoluteTargetPath);
+        if(eclipseProject != null && !eclipseProject.getChildren().isEmpty()) {
+            for(EclipseProject childProject : eclipseProject.getChildren()) {
+                String childDir = new PathBuilder().path(this.targetDir).path(childProject.getName()).buildFilePath();
+                modules.add(new GradleModule(childDir));
+            }
+        }
+
+        return modules;
+    }
+
+    private EclipseProject getGradleModel(final String absoluteTargetPath) {
+
+        GradleConnector connector = GradleConnector.newConnector();
+        File target = new File(absoluteTargetPath);
+        connector.forProjectDirectory(target);
+        ProjectConnection connection = null;
+        EclipseProject eclipseProject = null;
+        try {
+            connection = connector.connect();
+
+            eclipseProject = connection.getModel(EclipseProject.class);
+
+
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return eclipseProject;
+    }
+
 }

@@ -1,4 +1,4 @@
-package org.spideruci.tacoco.probe;
+package org.spideruci.tacoco.module;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,16 +15,14 @@ import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.spideruci.tacoco.util.PathBuilder;
 
-public class MavenModule {
-	
-	private String targetDir;
-	private String classpath;
+public class MavenModule extends AbstractModule {
 	
 	public MavenModule(String targetDir){
 		this.targetDir = targetDir;
 		this.classpath = null;
 	}
-	
+
+	@Override
 	public List<String> getTestClasses(){
 		List<String> ret = new ArrayList<>();
 		DirectoryScanner scanner = new DirectoryScanner();
@@ -42,14 +40,16 @@ public class MavenModule {
 		scanner.scan();
 
 		for(String s: scanner.getIncludedFiles()){
-			ret.add(s.replaceAll("/", ".").replaceAll("\\.class",""));
+			ret.add(s.replaceAll("/", ".").replaceAll("\\\\", ".").replaceAll("\\.class",""));
 		}
 		return ret;
 		
 	}
+
+    @Override
 	public List<String> getClasses(){
 		DirectoryScanner classScanner = new DirectoryScanner();
-		String baseDir = targetDir+"/target/classes";
+		String baseDir = new PathBuilder().path(targetDir).path("target").path("classes").buildFilePath();
 		List<String> ret = new ArrayList<>();
 		
 		if(!new File(baseDir).exists()) {
@@ -62,11 +62,13 @@ public class MavenModule {
 		classScanner.scan();
 		
 		for(String s: classScanner.getIncludedFiles()){
-			ret.add(s.replaceAll("/", ".").replaceAll("\\.class",""));
+			ret.add(s.replaceAll("/", ".").replaceAll("\\\\", ".").replaceAll("\\.class",""));
 		}
 		return ret;
 		
 	}
+
+    @Override
 	public String getClasspath(){
 		try{
 			if(this.classpath != null) return this.classpath;
@@ -81,8 +83,8 @@ public class MavenModule {
 			}
 
 			final String tacocoDependencies = new String(Files.readAllBytes(Paths.get(this.targetDir, "tacoco.cp")));
-			final String targetPath = new PathBuilder().path(this.targetDir).path("target").path("classes").buildFilePath();
-			final String targetTestPath = new PathBuilder().path(this.targetDir).path("target").path("test-classes").buildFilePath();
+			final String targetPath = getClassDir();
+			final String targetTestPath = getTestclassDir();
 
 			classpath = new PathBuilder().path(tacocoDependencies)
 					.path(targetPath)
@@ -150,8 +152,15 @@ public class MavenModule {
 		}
 		return model;
 	}
-	
+
+    @Override
 	public String getClassDir(){
-		return this.targetDir+"/target/classes";
+		return new PathBuilder().path(targetDir).path("target").path("classes").buildFilePath();
 	}
+
+    @Override
+    public String getTestclassDir() {
+        return new PathBuilder().path(targetDir).path("target").path("test-classes").buildFilePath();
+
+    }
 }
