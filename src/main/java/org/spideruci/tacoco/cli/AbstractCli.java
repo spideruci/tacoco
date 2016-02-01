@@ -39,7 +39,7 @@ public abstract class AbstractCli {
 	
 	public static final String PIT_NO_UNIT_TEST = "tacoco.pit.no_unittest_if_result_exist";
 	public static final String PIT_JAR = "tacoco.pit.jar";
-
+	public static final String PIT_MAX_MUTATIONS_PER_CLASS = "tacoco.pit.maxMutationsPerClass";
 	public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
 	public static final ReaderCli READER_CLI = new ReaderCli();
 	public static final LauncherCli LANUCHER_CLI = new LauncherCli();

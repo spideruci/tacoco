@@ -36,6 +36,7 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 	
 	@Override
 	public void analyze() {
+		
 		List<String> klassesStrings = this.buildProbe.getTestClasses();
 		List<Class<?>> klasses = new ArrayList<>();
 		for(String klassString : klassesStrings) {
@@ -66,7 +67,7 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	};
+	}
 
 	@Override
 	public String getName() {

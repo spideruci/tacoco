@@ -117,6 +117,7 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 
 	@Override
 	public void printAnalysisSummary() {
+		if(this.result==null) return;
 		System.out.println("-------------------------------------------------");
 		for(Entry<String, Object> entry : this.result) {
 			System.out.println(entry.getKey() + ": " + entry.getValue());

@@ -85,6 +85,7 @@ public class Launcher {
 		command.add(classpath);
 		command.add(argEquals(SUT, sutHome));
 		command.add(argEquals(OUTDIR, outdir));
+		command.add(argEquals(PROJECT, projectName));
 		if(readBooleanArgument(LOG)) {
 			command.add(arg(LOG));
 		}
@@ -111,6 +112,9 @@ public class Launcher {
 			if(option.contains("$TACOCO_HOME$")) {
 				option = option.replace("$TACOCO_HOME$", tacocoHome);
 			}
+			if(option.contains("$OUTDIR$")) {
+				option = option.replace("$OUTDIR$", outdir);
+			}
 			System.out.println(option);
 			command.add(option);
 		}
@@ -131,7 +135,7 @@ public class Launcher {
 
 		builder.redirectError(err);
 		builder.redirectOutput(log);
-		builder.inheritIO();
+		//builder.inheritIO();
 
 		final Process p;
 		try{
