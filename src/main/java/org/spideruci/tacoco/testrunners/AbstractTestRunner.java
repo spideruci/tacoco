@@ -2,6 +2,11 @@ package org.spideruci.tacoco.testrunners;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.spideruci.tacoco.analysis.AnalysisResults;

@@ -1,38 +1,49 @@
 package org.spideruci.tacoco;
 
+import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_OPTS;
 import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.HOME;
+import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
-import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.arg;
 import static org.spideruci.tacoco.cli.AbstractCli.argEquals;
 import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
-import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
-import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_OPTS;
 
-import org.apache.maven.cli.MavenCli;
-import org.spideruci.tacoco.util.PathBuilder;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.maven.cli.MavenCli;
 import org.spideruci.tacoco.probe.AbstractBuildProbe;
+import org.spideruci.tacoco.testrunners.AbstractTestRunner;
+import org.spideruci.tacoco.testrunners.JUnitRunner;
+import org.spideruci.tacoco.testrunners.TestNGRunner;
+import org.spideruci.tacoco.util.PathBuilder;
 
 
 public class Launcher {
 
 	private final String tacocoHome;
 	private final String sutHome;
+	private AbstractBuildProbe probe;
 	
 	private Launcher(String tacocoHome, String sutHome){
 		this.tacocoHome = tacocoHome;
 		this.sutHome = sutHome;
+		this.probe = AbstractBuildProbe.getInstance(this.sutHome);
+	}
+	
+	public Launcher(String sutHome){
+		this.tacocoHome = readArgumentValue(HOME);
+		this.sutHome = sutHome;
+		this.probe = AbstractBuildProbe.getInstance(this.sutHome);
 	}
 
 	public static void main(String[] args) throws Exception{
@@ -59,6 +70,19 @@ public class Launcher {
 		String classpath = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
 		launcher.startAnalysis(projectName, classpath, launcher.sutHome, new String[0]);
 	}
+	
+	public boolean startAnalysis(){
+		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
+		String classpath="";
+		try {
+			classpath = probe.getClasspath() + File.pathSeparator + getTacocoClasspath();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		startAnalysis(projectName, classpath, sutHome, new String[0]);
+		return true;
+	}
 
 	/**
 
@@ -67,7 +91,7 @@ public class Launcher {
 	 * @param sutHome
 	 * @param jvmArgs
 	 */
-	private void startAnalysis(String projectName, String classpath, String sutHome, String[] jvmArgs) {
+	public void startAnalysis(String projectName, String classpath, String sutHome, String[] jvmArgs) {
 		final String defaultOutputPath =  
 				PathBuilder.dirs(tacocoHome, "tacoco_output").buildFilePath();
 		
@@ -136,7 +160,7 @@ public class Launcher {
 		builder.redirectError(err);
 		builder.redirectOutput(log);
 		//builder.inheritIO();
-
+		
 		final Process p;
 		try{
 			p= builder.start();
@@ -164,7 +188,7 @@ public class Launcher {
 					System.out);
 		}
 
-		final String cpDependencies = new String(Files.readAllBytes(Paths.get("cp.txt")));
+		final String cpDependencies = new String(Files.readAllBytes(Paths.get(tacocoHome+ File.separator +"cp.txt")));
 		final String tacocoTargetPath = 
 				new PathBuilder()
 				.path(tacocoHome, "target", "classes")
@@ -176,4 +200,16 @@ public class Launcher {
 				.buildClassPath();
 		return tacocoClasspath;
 	}
+	
+	
+	public String getTestSystem(){
+		
+		System.out.println(AbstractTestRunner.getInstance(this.probe));
+		
+		if(AbstractTestRunner.getInstance(this.probe) instanceof JUnitRunner) return "JUNIT";
+		else if(AbstractTestRunner.getInstance(this.probe) instanceof TestNGRunner) return "TESTNG";
+		
+		return "NOTESTS";
+	}
+	
 }

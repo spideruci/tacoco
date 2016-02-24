@@ -61,6 +61,7 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThread);
 
 		AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
+		
 		for(ITacocoTestListener listener : this.listeners) {
 			runner.listenThrough(listener);
 		}
