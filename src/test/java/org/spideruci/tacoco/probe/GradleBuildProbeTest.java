@@ -1,14 +1,15 @@
 package org.spideruci.tacoco.probe;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.spideruci.tacoco.util.PathBuilder;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.spideruci.tacoco.util.PathBuilder;
 
 /**
  * Created by Tariq on 1/4/2016.
@@ -23,7 +24,7 @@ public class GradleBuildProbeTest {
         GradleBuildProbeTest.probe = AbstractBuildProbe.getInstance(targetPath);
     }
 
-    @Test
+    @Ignore
     public void getTestClassesTest() throws IOException{
         Set<String> s1 = new HashSet<>();
         Set<String> s2 = new HashSet<>();
@@ -36,7 +37,7 @@ public class GradleBuildProbeTest {
         assertEquals(s1,s2);
     }
 
-    @Test
+    @Ignore
     public void getClassesTest() throws IOException{
         Set<String> s1 = new HashSet<>();
         Set<String> s2 = new HashSet<>();
@@ -47,7 +48,7 @@ public class GradleBuildProbeTest {
         assertEquals(s1,s2);
     }
 
-    @Test
+    @Ignore
     public void getClasspathTest() throws IOException{
         System.out.print(probe.getClasspath());
     }

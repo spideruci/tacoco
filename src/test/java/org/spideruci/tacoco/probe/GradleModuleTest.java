@@ -1,6 +1,7 @@
 package org.spideruci.tacoco.probe;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.spideruci.tacoco.module.GradleModule;
 import org.spideruci.tacoco.util.PathBuilder;
@@ -24,7 +25,7 @@ public class GradleModuleTest {
         GradleModuleTest.module = new GradleModule(targetPath);
     }
 
-    @Test
+    @Ignore
     public void getTestClassesTest(){
         Set<String> set1 = new HashSet<>();
         Set<String> set2 = new HashSet<>();
@@ -35,7 +36,7 @@ public class GradleModuleTest {
         assertEquals(set1, set2);
     }
 
-    @Test
+    @Ignore
     public void getClassesTest(){
         Set<String> set1 = new HashSet<>();
         Set<String> set2 = new HashSet<>();

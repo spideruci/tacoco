@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.spideruci.tacoco.probe.AbstractBuildProbe;
 import org.spideruci.tacoco.util.PathBuilder;
@@ -21,7 +22,7 @@ public class MavenBuilderProbeTest {
         MavenBuilderProbeTest.probe = AbstractBuildProbe.getInstance(targetPath);
 	}
 
-	@Test
+	@Ignore
 	public void getTestClassesTest() throws IOException{
 		Set<String> s1 = new HashSet<>();
 		Set<String> s2 = new HashSet<>();
@@ -34,7 +35,7 @@ public class MavenBuilderProbeTest {
 		assertEquals(s1,s2);
 	}
 
-	@Test
+	@Ignore
 	public void getClassesTest() throws IOException{
 		Set<String> s1 = new HashSet<>();
 		Set<String> s2 = new HashSet<>();
@@ -46,7 +47,7 @@ public class MavenBuilderProbeTest {
 	}
 
 
-	@Test
+	@Ignore
 	public void getClasspathTest() throws IOException{
 		System.out.print(probe.getClasspath());
 	}

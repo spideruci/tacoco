@@ -22,7 +22,7 @@ public class MavenModuleTest {
         MavenModuleTest.module = new MavenModule(targetPath);
 	}
 	
-	@Test
+	@Ignore
 	public void getTestClassesTest(){
 		Set<String> set1 = new HashSet<>();
 		Set<String> set2 = new HashSet<>();
@@ -33,7 +33,7 @@ public class MavenModuleTest {
 		assertEquals(set1, set2);	
 	}
 	
-	@Test
+	@Ignore
 	public void getClassesTest(){
 		Set<String> set1 = new HashSet<>();
 		Set<String> set2 = new HashSet<>();
@@ -43,7 +43,7 @@ public class MavenModuleTest {
 		assertEquals(set1, set2);	
 	}
 	
-	@Test
+	@Ignore
 	public void getClasspathTest(){
 		System.out.print(this.module.getClasspath());
 	}
