@@ -68,11 +68,16 @@ public class Launcher {
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.sutHome);
 		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
 		String classpath = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
-		launcher.startAnalysis(projectName, classpath, launcher.sutHome, new String[0]);
+		
+		
+		
+		final String defaultOutputPath =  
+				PathBuilder.dirs(tacocoHome, "tacoco_output").buildFilePath();
+		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
+		launcher.startAnalysis(projectName, classpath, launcher.sutHome, new String[0], outdir);
 	}
 	
-	public boolean startAnalysis(){
-		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
+	public boolean startAnalysis(String projectName, String outDir){
 		String classpath="";
 		try {
 			classpath = probe.getClasspath() + File.pathSeparator + getTacocoClasspath();
@@ -80,7 +85,7 @@ public class Launcher {
 			e.printStackTrace();
 			return false;
 		}
-		startAnalysis(projectName, classpath, sutHome, new String[0]);
+		startAnalysis(projectName, classpath, sutHome, new String[0], outDir);
 		return true;
 	}
 
@@ -91,11 +96,8 @@ public class Launcher {
 	 * @param sutHome
 	 * @param jvmArgs
 	 */
-	public void startAnalysis(String projectName, String classpath, String sutHome, String[] jvmArgs) {
-		final String defaultOutputPath =  
-				PathBuilder.dirs(tacocoHome, "tacoco_output").buildFilePath();
-		
-		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
+	public void startAnalysis(String projectName, String classpath, String sutHome, String[] jvmArgs, String outdir) {
+
 		if(!new File(outdir).exists()) {
 			new File(outdir).mkdirs();
 		}
