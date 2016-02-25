@@ -29,7 +29,7 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 		if(!new File(outDir).exists()) {
 			throw new RuntimeException("specified output directory does not exist: " + outDir);
 		}
-		exec = new File(outDir, "tacoco.exec");
+		exec = new File(outDir, name+".exec");
 		sutHome = readArgumentValue(SUT);
 		this.dbFileName = outDir + File.separator + name + ".db";
 	}
@@ -63,7 +63,7 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 				}
 				CreateSQLiteDB.dump(dbFileName, sutHome, exec.toString());
 			}
-			exec.renameTo(new File(outDir, name + ".exec"));
+			exec.delete();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

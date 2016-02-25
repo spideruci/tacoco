@@ -141,6 +141,9 @@ public class Launcher {
 			if(option.contains("$OUTDIR$")) {
 				option = option.replace("$OUTDIR$", outdir);
 			}
+			if(option.contains("$PROJECT_NAME$")) {
+				option = option.replace("$PROJECT_NAME$", projectName);
+			}
 			System.out.println(option);
 			command.add(option);
 		}
