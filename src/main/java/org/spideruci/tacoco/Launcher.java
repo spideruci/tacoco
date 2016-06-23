@@ -1,5 +1,6 @@
 package org.spideruci.tacoco;
 
+import static org.spideruci.tacoco.AnalysisOptions.CP_ARG;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_OPTS;
 import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.HOME;
@@ -15,6 +16,7 @@ import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -33,13 +35,13 @@ public class Launcher {
 	private final String tacocoHome;
 	private final String sutHome;
 	private AbstractBuildProbe probe;
-	
+
 	private Launcher(String tacocoHome, String sutHome){
 		this.tacocoHome = tacocoHome;
 		this.sutHome = sutHome;
 		this.probe = AbstractBuildProbe.getInstance(this.sutHome);
 	}
-	
+
 	public Launcher(String sutHome){
 		this.tacocoHome = readArgumentValue(HOME);
 		this.sutHome = sutHome;
@@ -51,32 +53,28 @@ public class Launcher {
 		if(System.getProperties().containsKey(HELP)) {
 			LANUCHER_CLI.printHelp();
 		}
-		
-		
-		final String userDir = System.getProperty("user.dir");
 
+		final String userDir = System.getProperty("user.dir");
 		System.setProperty("maven.multiModuleProjectDirectory", userDir); // how does this help us?
 
 		String sutHome = readArgumentValue(SUT);
 		if(sutHome.endsWith(File.separator)) {
 			sutHome = sutHome.substring(0, sutHome.length());
 		}
-		
+
 		String tacocoHome = readOptionalArgumentValue(HOME, userDir);
 		Launcher launcher = new Launcher(tacocoHome, sutHome);
-		
+
 		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.sutHome);
 		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
 		String classpath = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
-		
-		
-		
+
 		final String defaultOutputPath =  
 				PathBuilder.dirs(tacocoHome, "tacoco_output").buildFilePath();
 		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
 		launcher.startAnalysis(projectName, classpath, launcher.sutHome, new String[0], outdir);
 	}
-	
+
 	public boolean startAnalysis(String projectName, String outDir){
 		String classpath="";
 		try {
@@ -101,28 +99,10 @@ public class Launcher {
 		if(!new File(outdir).exists()) {
 			new File(outdir).mkdirs();
 		}
-		File err = new File(outdir, projectName+".err");
-		File log = new File(outdir, projectName+".log");
-		
+
 		List<String> command = new ArrayList<>();
 		command.add("java");
 
-		command.add("-cp");
-		command.add(classpath);
-		command.add(argEquals(SUT, sutHome));
-		command.add(argEquals(OUTDIR, outdir));
-		command.add(argEquals(PROJECT, projectName));
-		if(readBooleanArgument(LOG)) {
-			command.add(arg(LOG));
-		}
-		
-		for(String jvmArg : jvmArgs) {
-			if(jvmArg == null || jvmArg.isEmpty() || !jvmArg.startsWith("-")) {
-				continue;
-			}
-			command.add(jvmArg);
-		}
-		
 		String analyzerOptsFilePath = readArgumentValue(ANALYZER_OPTS);
 		File analyzerOptsFile = new File(analyzerOptsFilePath);
 		if(analyzerOptsFile == null 
@@ -134,6 +114,7 @@ public class Launcher {
 		}
 
 		ArrayList<String> javaOptions = AnalysisOptions.readOptions(analyzerOptsFile);
+
 		for(String option : javaOptions) {
 			if(option.contains("$TACOCO_HOME$")) {
 				option = option.replace("$TACOCO_HOME$", tacocoHome);
@@ -145,30 +126,50 @@ public class Launcher {
 				option = option.replace("$PROJECT_NAME$", projectName);
 			}
 			System.out.println(option);
-			command.add(option);
+
+			if(option.startsWith(CP_ARG)) {
+				option = option.substring(CP_ARG.length());
+
+				if(!option.isEmpty()) {
+					classpath += ":" + option;
+				}
+			} else {
+				command.add(option);
+			}
 		}
-		
+
+		command.add("-cp");
+		command.add(classpath);
+		command.add(argEquals(SUT, sutHome));
+		command.add(argEquals(OUTDIR, outdir));
+		command.add(argEquals(PROJECT, projectName));
+		if(readBooleanArgument(LOG)) {
+			command.add(arg(LOG));
+		}
+
+		for(String jvmArg : jvmArgs) {
+			if(jvmArg == null || jvmArg.isEmpty() || !jvmArg.startsWith("-")) {
+				continue;
+			}
+			command.add(jvmArg);
+		}
+
 		command.add("org.spideruci.tacoco.analysis.AbstractAnalyzer");
-		
+
+		System.out.println(command.toString());
+
 		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File(sutHome));
-			
-		//delete files before execution, 
-		if(err.exists()) {
-			err.delete();
-		}
 
-		if(log.exists()) {
-			log.delete();
-		}
-
-		//builder.redirectError(err);
-		//builder.redirectOutput(log);
 		builder.inheritIO();
-		
+
+		@SuppressWarnings("unused") File err = getFile(outdir, projectName+".err");
+		@SuppressWarnings("unused") File log = getFile(outdir, projectName+".log");
+
 		final Process p;
-		try{
-			p= builder.start();
+		try {
+			p = builder.start();
+
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					p.destroy();
@@ -178,7 +179,6 @@ public class Launcher {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
 	}
 
 	private String getTacocoClasspath() throws Exception {
@@ -205,16 +205,32 @@ public class Launcher {
 				.buildClassPath();
 		return tacocoClasspath;
 	}
-	
-	
+
+	private static File getFile(String dir, String name) {
+		File file = new File(dir, name);
+
+		if(file.exists()) {
+			file.delete();
+		}
+
+		try {
+			file.createNewFile();
+		} catch(IOException e) {
+			file = null;
+		}
+
+		return file;
+	}
+
+
 	public String getTestSystem(){
-		
+
 		System.out.println(AbstractTestRunner.getInstance(this.probe));
-		
+
 		if(AbstractTestRunner.getInstance(this.probe) instanceof JUnitRunner) return "JUNIT";
 		else if(AbstractTestRunner.getInstance(this.probe) instanceof TestNGRunner) return "TESTNG";
-		
+
 		return "NOTESTS";
 	}
-	
+
 }
