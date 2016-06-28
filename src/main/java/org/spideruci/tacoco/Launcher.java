@@ -162,9 +162,9 @@ public class Launcher {
 			log.delete();
 		}
 
-		builder.redirectError(err);
-		builder.redirectOutput(log);
-		//builder.inheritIO();
+		//builder.redirectError(err);
+		//builder.redirectOutput(log);
+		builder.inheritIO();
 		
 		final Process p;
 		try{
