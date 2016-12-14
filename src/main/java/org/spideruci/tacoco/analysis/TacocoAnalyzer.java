@@ -9,7 +9,9 @@ import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.spideruci.tacoco.db.CreateSQLiteDB;
 
@@ -39,15 +41,22 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 		
 		List<String> klassesStrings = this.buildProbe.getTestClasses();
 		List<Class<?>> klasses = new ArrayList<>();
+		HashSet<String> ignoreClasses = this.getIgnoreTestClassSet();
+		
 		for(String klassString : klassesStrings) {
-			Class<?> klass;
-			try {
-				klass = Class.forName(klassString);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				continue;
+			
+			//check if this class should be ignored
+			if(!ignoreClasses.contains(klassString))
+			{
+				Class<?> klass;
+				try {
+					klass = Class.forName(klassString);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+					continue;
+				}
+				klasses.add(klass);
 			}
-			klasses.add(klass);
 		}
 		this.runTests(klasses);
 	}
