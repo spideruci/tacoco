@@ -1,10 +1,13 @@
 package org.spideruci.tacoco.analysis;
 
+import static org.spideruci.tacoco.cli.AbstractCli.IGNORE_TESTS;
 import static org.spideruci.tacoco.cli.AbstractCli.LISTENERS;
 import static org.spideruci.tacoco.cli.AbstractCli.THREAD;
+import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.LauncherCli.readOptionalArgumentValue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -124,6 +127,24 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 			System.out.println(entry.getKey() + ": " + entry.getValue());
 		}
 		System.out.println("-------------------------------------------------");
+	}
+	
+	/***
+	 * Method to get list of ignore test class from config file
+	 * @return set of string of ignore test class names
+	 */
+	public HashSet<String> getIgnoreTestClassSet()
+	{
+		String ignoreTestString = readArgumentValue(IGNORE_TESTS);	
+		String [] ignoreTestArray = ignoreTestString.split(",");
+		HashSet <String> ignoreTestSet = new HashSet<String>();
+		
+		//removing the start and end whitespaces if any and then putting it in a Set
+		for (int i=0;i<ignoreTestArray.length; i++)
+		{
+			ignoreTestSet.add(ignoreTestArray[i].trim());
+		}
+		return ignoreTestSet;
 	}
 
 
