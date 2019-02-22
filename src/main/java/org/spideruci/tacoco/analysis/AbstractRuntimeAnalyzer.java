@@ -62,57 +62,64 @@ public abstract class AbstractRuntimeAnalyzer extends AbstractAnalyzer {
 
 		AbstractTestRunner runner = AbstractTestRunner.getInstance(this.buildProbe);
 		
-		for(ITacocoTestListener listener : this.listeners) {
-			runner.listenThrough(listener);
+		if(runner == null)
+		{
+			System.out.println("No test class found");
 		}
-
-		for(Class<?> testClass : klasses) {
-			try {
-				if(!runner.shouldRun(testClass)) {
+		else
+		{
+			for(ITacocoTestListener listener : this.listeners) {
+				runner.listenThrough(listener);
+			}
+	
+			for(Class<?> testClass : klasses) {
+				try {
+					if(!runner.shouldRun(testClass)) {
+						continue;
+					}
+				} catch (Throwable e) {
+					e.printStackTrace();
 					continue;
 				}
-			} catch (Throwable e) {
-				e.printStackTrace();
-				continue;
+	
+				Future<AnalysisResults> futureResults = 
+						threadPool.submit(runner.getExecutableTest(testClass));
+				futureAnalysisResults.add(futureResults);
 			}
-
-			Future<AnalysisResults> futureResults = 
-					threadPool.submit(runner.getExecutableTest(testClass));
-			futureAnalysisResults.add(futureResults);
-		}
-		threadPool.shutdown();
-
-		try {
-			threadPool.awaitTermination(Long.MAX_VALUE,TimeUnit.MILLISECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		double rTime=0;
-		int rCnt=0, fCnt=0, iCnt=0;
-		for(Future<AnalysisResults> futureResults : futureAnalysisResults) {
+			threadPool.shutdown();
+	
 			try {
-				AnalysisResults results = futureResults.get();
-				runner.printTestRunSummary(results);
-				rTime += runner.testRunTime;
-				rCnt += runner.executedTestCount;
-				fCnt += runner.failedTestCount;
-				iCnt += runner.ignoredTestCount;
-			} catch (InterruptedException | ExecutionException e) {
+				threadPool.awaitTermination(Long.MAX_VALUE,TimeUnit.MILLISECONDS);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+	
+			double rTime=0;
+			int rCnt=0, fCnt=0, iCnt=0;
+			for(Future<AnalysisResults> futureResults : futureAnalysisResults) {
+				try {
+					AnalysisResults results = futureResults.get();
+					runner.printTestRunSummary(results);
+					rTime += runner.testRunTime;
+					rCnt += runner.executedTestCount;
+					fCnt += runner.failedTestCount;
+					iCnt += runner.ignoredTestCount;
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+			}
+	
+	
+			if(this.result == null) {
+				this.result = new AnalysisResults();
+			}
+	
+			this.result.put("Runtime Execution Time (in sec)", rTime);
+			this.result.put("Test Run Counts", rCnt);
+			this.result.put("Failure Counts", fCnt);
+			this.result.put("Ignore Counts", iCnt);
+			this.result.put("Number of Thread", nThread);
 		}
-
-
-		if(this.result == null) {
-			this.result = new AnalysisResults();
-		}
-
-		this.result.put("Runtime Execution Time (in sec)", rTime);
-		this.result.put("Test Run Counts", rCnt);
-		this.result.put("Failure Counts", fCnt);
-		this.result.put("Ignore Counts", iCnt);
-		this.result.put("Number of Thread", nThread);
 	}
 
 
