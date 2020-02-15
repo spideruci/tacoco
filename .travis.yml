@@ -1,8 +1,8 @@
 language: java
 
 jdk: 
-- oraclejdk8
-- oraclejdk7
+- openjdk8
+- openjdk7
 
 before_install:
 - git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
