@@ -7,7 +7,7 @@ matrix:
       dist: trusty
     
     - jdk: openjdk8
-      dist: bionic
+      dist: xenial
     
     allow_failures:
     - jdk: openjdk11
