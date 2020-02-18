@@ -1,10 +1,14 @@
-dist: xenial
-
 language: java
 
-jdk: 
-- openjdk8
-- openjdk7
+matrix:
+    fast_finish: true
+    include:
+    - jdk: openjdk8
+      dist: xenial
+    
+    allow_failures:
+    - jdk: openjdk11
+      dist: bionic
 
 before_install:
 - git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
