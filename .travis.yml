@@ -3,9 +3,6 @@ language: java
 matrix:
     fast_finish: true
     include:
-    - jdk: openjdk7
-      dist: trusty
-    
     - jdk: openjdk8
       dist: xenial
     
