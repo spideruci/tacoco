@@ -2,12 +2,16 @@ language: java
 
 matrix:
     include:
-    - jdk: openjdk8
+    - name: java8
+      jdk: openjdk8
       dist: xenial
     
-    allow_failures:
-    - jdk: openjdk11
+    - name: java11
+      jdk: openjdk11
       dist: bionic
+
+    allow_failures:
+    - name: java11
 
 before_install:
 - git clone https://github.com/inf295uci-2015/primitive-hamcrest.git  
