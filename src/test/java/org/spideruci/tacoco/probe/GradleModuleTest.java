@@ -32,7 +32,7 @@ public class GradleModuleTest {
 
         set1.add("org.spideruci.benchmark.spiderMath.AdditionParamTest");
         set1.add("org.spideruci.benchmark.spiderMath.AdditionTest");
-        set2.addAll(this.module.getTestClasses());
+        set2.addAll(GradleModuleTest.module.getTestClasses());
         assertEquals(set1, set2);
     }
 
@@ -42,12 +42,12 @@ public class GradleModuleTest {
         Set<String> set2 = new HashSet<>();
 
         set1.add("org.spideruci.benchmark.spiderMath.Addition");
-        set2.addAll(this.module.getClasses());
+        set2.addAll(GradleModuleTest.module.getClasses());
         assertEquals(set1, set2);
     }
 
-    @Test
+    @Ignore
     public void getClasspathTest(){
-        System.out.print(this.module.getClasspath());
+        System.out.print(GradleModuleTest.module.getClasspath());
     }
 }
