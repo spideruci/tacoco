@@ -10,8 +10,9 @@ matrix:
       jdk: openjdk11
       dist: bionic
 
-    allow_failures:
-    - name: java11
+    - name: java13
+      jdk: openjdk13
+      dist: bionic
 
 before_install:
 - git clone https://github.com/spideruci/primitive-hamcrest.git  
