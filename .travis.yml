@@ -1,15 +1,22 @@
-dist: xenial
-
 language: java
 
-jdk: 
-- openjdk8
-- openjdk7
+matrix:
+    include:
+    - name: java8
+      jdk: openjdk8
+      dist: xenial
+    
+    - name: java11
+      jdk: openjdk11
+      dist: bionic
+
+    allow_failures:
+    - name: java11
 
 before_install:
 - git clone https://github.com/spideruci/primitive-hamcrest.git  
 - cd primitive-hamcrest  
-- mvn install -Dmaven.compiler.source="1.7"  -Dmaven.compiler.target="1.7"
+- mvn install
 - cd ..
 
 after_success:
