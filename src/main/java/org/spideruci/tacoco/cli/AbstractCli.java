@@ -42,7 +42,7 @@ public abstract class AbstractCli {
 	public static final String PIT_MAX_MUTATIONS_PER_CLASS = "tacoco.pit.maxMutationsPerClass";
 	public static final AnalyzerCli ANALYZER_CLI = new AnalyzerCli();
 	public static final ReaderCli READER_CLI = new ReaderCli();
-	public static final LauncherCli LANUCHER_CLI = new LauncherCli();
+	public static final LauncherCli LAUNCHER_CLI = new LauncherCli();
 	
 	public static String arg(String argName) {
 		return PREFIX + argName;

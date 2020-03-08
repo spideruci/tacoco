@@ -3,11 +3,11 @@ package org.spideruci.tacoco.cli;
 public class LauncherCli extends AbstractCli {
 
 	public static String readArgumentValue(String arg) {
-		return LANUCHER_CLI.readArgumentValueInternal(arg);
+		return LAUNCHER_CLI.readArgumentValueInternal(arg);
 	}
 
 	public static String readOptionalArgumentValue(String arg, String defolt) {
-		return LANUCHER_CLI.readOptionalArgumentValueInternal(arg, defolt);
+		return LAUNCHER_CLI.readOptionalArgumentValueInternal(arg, defolt);
 	}
 
 	@Override

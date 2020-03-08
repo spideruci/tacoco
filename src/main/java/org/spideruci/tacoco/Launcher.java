@@ -4,7 +4,7 @@ import static org.spideruci.tacoco.AnalysisOptions.CP_ARG;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_OPTS;
 import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.HOME;
-import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.LAUNCHER_CLI;
 import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
@@ -51,7 +51,7 @@ public class Launcher {
 	public static void main(String[] args) throws Exception{
 
 		if(System.getProperties().containsKey(HELP)) {
-			LANUCHER_CLI.printHelp();
+			LAUNCHER_CLI.printHelp();
 		}
 
 		final String userDir = System.getProperty("user.dir");
