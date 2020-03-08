@@ -1,6 +1,5 @@
 package org.spideruci.tacoco.analysis;
 
-import static org.spideruci.tacoco.cli.AbstractCli.IGNORE_TESTS;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER;
 import static org.spideruci.tacoco.cli.LauncherCli.readArgumentValue;
@@ -81,20 +80,6 @@ public abstract class AbstractAnalyzer {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	public HashSet<String> getIgnoreTestClassSet()
-	{
-		String ignoreTestString = readArgumentValue(IGNORE_TESTS);	
-		String [] ignoreTestArray = ignoreTestString.split(",");
-		HashSet <String> ignoreTestSet = new HashSet<String>();
-		
-		//removing the start and end whitespaces if any and then putting it in a Set
-		for (int i=0;i<ignoreTestArray.length; i++)
-		{
-			ignoreTestSet.add(ignoreTestArray[i].trim());
-		}
-		return ignoreTestSet;
 	}
 	
 	/**
