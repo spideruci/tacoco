@@ -63,14 +63,17 @@ local.properties
 
 # IntelliJ
 *.iml
-
+.idea/
 
 # TACOCO
 cp.txt
 *.cp
 tacoco_output/*
 tacoco.cp
-
+*.err
+*errlog
+*.trc
+*.log
 
 # OSX
 .DS_Store
