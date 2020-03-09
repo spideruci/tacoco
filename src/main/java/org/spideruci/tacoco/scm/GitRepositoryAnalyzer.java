@@ -1,6 +1,6 @@
 package org.spideruci.tacoco.scm;
 
-import org.spideruci.tacoco.scm.AbstractScmProbe;
+import org.spideruci.tacoco.scm.SourceRepositoryAnalyzer;
 import org.spideruci.tacoco.scm.BranchedCommit;
 
 import java.io.File;
@@ -29,17 +29,17 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Category;
 import org.apache.log4j.Level;
 
-public class GitProbe extends AbstractScmProbe {
+public class GitRepositoryAnalyzer implements SourceRepositoryAnalyzer {
 
     private final File gitRepoPath;
     private final Git repository;
 
-    static GitProbe getProbe(String gitRepoFullPath) {
+    static GitRepositoryAnalyzer getAnalyzer(String gitRepoFullPath) {
         try {
             File file = new File(gitRepoFullPath);
             if (file.exists() && file.isDirectory() && file.isAbsolute()) {
                 Git repository = Git.open(file);
-                GitProbe repoProbe = new GitProbe(file, repository);
+                GitRepositoryAnalyzer repoProbe = new GitRepositoryAnalyzer(file, repository);
                 return repoProbe;
             }
         } catch (NullPointerException | IOException e) {
@@ -49,7 +49,7 @@ public class GitProbe extends AbstractScmProbe {
         return null;
     }
 
-    private GitProbe(File repoPath, Git repo) {
+    private GitRepositoryAnalyzer(File repoPath, Git repo) {
         this.gitRepoPath = repoPath;
         this.repository = repo;
     }
@@ -194,7 +194,7 @@ public class GitProbe extends AbstractScmProbe {
         final String gitRepoDir = args[0];
         System.out.printf("GitProbe: analyzing %s\n", gitRepoDir);
 
-        GitProbe gitProbe = GitProbe.getProbe(gitRepoDir);
+        GitRepositoryAnalyzer gitProbe = GitRepositoryAnalyzer.getAnalyzer(gitRepoDir);
 
         for (String commitId : gitProbe.getLatestCommitIds(10)) {
             String commitMsg = gitProbe.getCommitMessage(commitId);

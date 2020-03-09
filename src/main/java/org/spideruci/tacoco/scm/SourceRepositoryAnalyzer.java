@@ -2,7 +2,7 @@ package org.spideruci.tacoco.scm;
 
 import java.util.List;
 
-public abstract class AbstractScmProbe {
+public interface SourceRepositoryAnalyzer {
     public abstract Iterable<String> getLatestCommitIds(int num);
     public abstract String getCommitMessage(String commitId);
     public abstract String getCommitAuthor(String commitId);

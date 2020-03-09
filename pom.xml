@@ -252,7 +252,7 @@
 						<artifactId>exec-maven-plugin</artifactId>
 						<version>1.4.0</version>
 						<configuration>
-							<mainClass>org.spideruci.tacoco.scm.GitProbe</mainClass>
+							<mainClass>org.spideruci.tacoco.scm.GitRepositoryAnalyzer</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>
