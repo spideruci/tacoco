@@ -39,6 +39,13 @@
 	</repositories>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>5.6.1.202002131546-r</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-embedder</artifactId>
@@ -133,7 +140,7 @@
             <groupId>org.gradle</groupId>
             <artifactId>gradle-tooling-api</artifactId>
             <version>2.6</version>
-        </dependency>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -230,6 +237,22 @@
 						<version>1.4.0</version>
 						<configuration>
 							<mainClass>org.spideruci.tacoco.reporting.CoverageJsonReader</mainClass>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>git</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.4.0</version>
+						<configuration>
+							<mainClass>org.spideruci.tacoco.scm.GitProbe</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>
