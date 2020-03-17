@@ -4,7 +4,7 @@ import static org.spideruci.tacoco.AnalysisOptions.CP_ARG;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_OPTS;
 import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.HOME;
-import static org.spideruci.tacoco.cli.AbstractCli.LANUCHER_CLI;
+import static org.spideruci.tacoco.cli.AbstractCli.LAUNCHER_CLI;
 import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
@@ -34,24 +34,24 @@ public class Launcher {
 
 	private final String tacocoHome;
 	private final String sutHome;
-	private AbstractBuildProbe probe;
+	private final AbstractBuildProbe probe;
 
-	private Launcher(String tacocoHome, String sutHome){
+	private Launcher(final String tacocoHome, final String sutHome){
 		this.tacocoHome = tacocoHome;
 		this.sutHome = sutHome;
 		this.probe = AbstractBuildProbe.getInstance(this.sutHome);
 	}
 
-	public Launcher(String sutHome){
+	public Launcher(final String sutHome){
 		this.tacocoHome = readArgumentValue(HOME);
 		this.sutHome = sutHome;
 		this.probe = AbstractBuildProbe.getInstance(this.sutHome);
 	}
 
-	public static void main(String[] args) throws Exception{
+	public static void main(final String[] args) throws Exception{
 
 		if(System.getProperties().containsKey(HELP)) {
-			LANUCHER_CLI.printHelp();
+			LAUNCHER_CLI.printHelp();
 		}
 
 		final String userDir = System.getProperty("user.dir");
@@ -62,24 +62,24 @@ public class Launcher {
 			sutHome = sutHome.substring(0, sutHome.length());
 		}
 
-		String tacocoHome = readOptionalArgumentValue(HOME, userDir);
-		Launcher launcher = new Launcher(tacocoHome, sutHome);
+		final String tacocoHome = readOptionalArgumentValue(HOME, userDir);
+		final Launcher launcher = new Launcher(tacocoHome, sutHome);
 
-		AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.sutHome);
-		String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
-		String classpath = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
+		final AbstractBuildProbe probe = AbstractBuildProbe.getInstance(launcher.sutHome);
+		final String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
+		final String classpath = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
 
 		final String defaultOutputPath =  
 				PathBuilder.dirs(tacocoHome, "tacoco_output").buildFilePath();
-		String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
+		final String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
 		launcher.startAnalysis(projectName, classpath, launcher.sutHome, new String[0], outdir);
 	}
 
-	public boolean startAnalysis(String projectName, String outDir){
+	public boolean startAnalysis(final String projectName, final String outDir){
 		String classpath="";
 		try {
 			classpath = probe.getClasspath() + File.pathSeparator + getTacocoClasspath();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -94,17 +94,17 @@ public class Launcher {
 	 * @param sutHome
 	 * @param jvmArgs
 	 */
-	public void startAnalysis(String projectName, String classpath, String sutHome, String[] jvmArgs, String outdir) {
+	public void startAnalysis(final String projectName, String classpath, final String sutHome, final String[] jvmArgs, final String outdir) {
 
 		if(!new File(outdir).exists()) {
 			new File(outdir).mkdirs();
 		}
 
-		List<String> command = new ArrayList<>();
+		final List<String> command = new ArrayList<>();
 		command.add("java");
 
-		String analyzerOptsFilePath = readArgumentValue(ANALYZER_OPTS);
-		File analyzerOptsFile = new File(analyzerOptsFilePath);
+		final String analyzerOptsFilePath = readArgumentValue(ANALYZER_OPTS);
+		final File analyzerOptsFile = new File(analyzerOptsFilePath);
 		if(analyzerOptsFile == null 
 				|| !analyzerOptsFile.exists()
 				|| analyzerOptsFile.isDirectory()
@@ -113,7 +113,7 @@ public class Launcher {
 					+ "is not a file -- " + analyzerOptsFilePath);
 		}
 
-		ArrayList<String> javaOptions = AnalysisOptions.readOptions(analyzerOptsFile);
+		final ArrayList<String> javaOptions = AnalysisOptions.readOptions(analyzerOptsFile);
 
 		for(String option : javaOptions) {
 			if(option.contains("$TACOCO_HOME$")) {
@@ -147,7 +147,7 @@ public class Launcher {
 			command.add(arg(LOG));
 		}
 
-		for(String jvmArg : jvmArgs) {
+		for(final String jvmArg : jvmArgs) {
 			if(jvmArg == null || jvmArg.isEmpty() || !jvmArg.startsWith("-")) {
 				continue;
 			}
@@ -158,13 +158,15 @@ public class Launcher {
 
 		System.out.println(command.toString());
 
-		ProcessBuilder builder = new ProcessBuilder(command);
+		final ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File(sutHome));
 
 		builder.inheritIO();
 
-		@SuppressWarnings("unused") File err = getFile(outdir, projectName+".err");
-		@SuppressWarnings("unused") File log = getFile(outdir, projectName+".log");
+		@SuppressWarnings("unused")
+		final File err = getFile(outdir, projectName+".err");
+		@SuppressWarnings("unused")
+		final File log = getFile(outdir, projectName+".log");
 
 		final Process p;
 		try {
@@ -176,7 +178,7 @@ public class Launcher {
 				}
 			}); 
 			p.waitFor();
-		}catch(Exception e){
+		}catch(final Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -185,7 +187,7 @@ public class Launcher {
 		final String tacocoCpPath = 
 				new PathBuilder().path(tacocoHome, "cp.txt").buildFilePath();
 		if(!new File(tacocoCpPath).exists()) {
-			MavenCli mavenCli = new MavenCli();
+			final MavenCli mavenCli = new MavenCli();
 			mavenCli.doMain(
 					new String[] {"dependency:build-classpath", "-Dmdep.outputFile=cp.txt"}, 
 					tacocoHome,
@@ -199,14 +201,14 @@ public class Launcher {
 				.path(tacocoHome, "target", "classes")
 				.buildFilePath();
 
-		String tacocoClasspath = 
+		final String tacocoClasspath = 
 				new PathBuilder()
 				.path(cpDependencies, tacocoTargetPath)
 				.buildClassPath();
 		return tacocoClasspath;
 	}
 
-	private static File getFile(String dir, String name) {
+	private static File getFile(final String dir, final String name) {
 		File file = new File(dir, name);
 
 		if(file.exists()) {
@@ -215,7 +217,7 @@ public class Launcher {
 
 		try {
 			file.createNewFile();
-		} catch(IOException e) {
+		} catch(final IOException e) {
 			file = null;
 		}
 
