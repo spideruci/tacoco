@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Absolute path to system under study
+project_dir=$1
+
+# Absolute path to tacoco
+tacoco_home=$2
+
+cd $tacoco_home
+echo "RUN TACOCO - FIND WORKING BUILD"
+mvn exec:java -Pfind-working-build -Dexec.args="$project_dir" -q
+echo "DONE TACOCO - FIND WORKING BUILD"
