@@ -7,19 +7,12 @@ import java.util.List;
  */
 public interface IModule {
 
-
     List<String> getClasses();
-
     List<String> getTestClasses();
-
     String getClasspath();
-
     String getClassDir();
-
     String getTestclassDir();
 
-
-
-
-
+    int clean();
+    int compile();
 }

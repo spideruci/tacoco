@@ -141,6 +141,11 @@
             <artifactId>gradle-tooling-api</artifactId>
             <version>2.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.shared</groupId>
+			<artifactId>maven-invoker</artifactId>
+			<version>3.0.1</version>
+		  </dependency>
 	</dependencies>
 
 	<build>
@@ -253,6 +258,22 @@
 						<version>1.4.0</version>
 						<configuration>
 							<mainClass>org.spideruci.tacoco.scm.GitRepositoryAnalyzer</mainClass>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>find-working-build</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.4.0</version>
+						<configuration>
+							<mainClass>org.spideruci.tacoco.demos.WorkingBuildFinder</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>
