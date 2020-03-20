@@ -135,6 +135,7 @@ public class GradleModule extends AbstractModule {
         return new PathBuilder().path(targetDir).
                 path("build").
                 path("classes").
+                path("java").
                 path("test").buildFilePath();
     }
 
@@ -143,6 +144,7 @@ public class GradleModule extends AbstractModule {
         return new PathBuilder().path(targetDir).
                 path("build").
                 path("classes").
+                path("java").
                 path("main").buildFilePath();
     }
 
