@@ -2,10 +2,12 @@ package org.spideruci.tacoco.module;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 import org.apache.maven.cli.MavenCli;
 import org.apache.maven.model.Model;
@@ -14,6 +16,8 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.spideruci.tacoco.util.PathBuilder;
+
+import org.apache.maven.shared.invoker.*;
 
 public class MavenModule extends AbstractModule {
 	
@@ -161,6 +165,32 @@ public class MavenModule extends AbstractModule {
     @Override
     public String getTestclassDir() {
         return new PathBuilder().path(targetDir).path("target").path("test-classes").buildFilePath();
-
+	}
+	
+	@Override
+    public int clean() {
+		return invokeMavenGoals(Arrays.asList("clean"));
     }
+
+    @Override
+ 	public int compile() {
+		return invokeMavenGoals(Arrays.asList("compile", "test-compile"));
+	}
+	
+	private int invokeMavenGoals(List<String> goals) {
+		try {
+			InvocationRequest request = new DefaultInvocationRequest();
+			request.setPomFile(new File(this.targetDir + "/pom.xml"));
+			request.setGoals(goals);
+
+			Invoker invoker = new DefaultInvoker();
+			InvocationResult result = invoker.execute(request);
+
+			return result.getExitCode();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 100;
+	}
 }

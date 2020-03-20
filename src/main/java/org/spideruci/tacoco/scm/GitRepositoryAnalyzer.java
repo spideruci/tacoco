@@ -34,7 +34,7 @@ public class GitRepositoryAnalyzer implements SourceRepositoryAnalyzer {
     private final File gitRepoPath;
     private final Git repository;
 
-    static GitRepositoryAnalyzer getAnalyzer(String gitRepoFullPath) {
+    static public GitRepositoryAnalyzer getAnalyzer(String gitRepoFullPath) {
         try {
             File file = new File(gitRepoFullPath);
             if (file.exists() && file.isDirectory() && file.isAbsolute()) {
@@ -138,11 +138,15 @@ public class GitRepositoryAnalyzer implements SourceRepositoryAnalyzer {
     }
 
     public BranchedCommit checkoutCommit(String commitId) {
-        // When checking out to an arbitary commit, it is best to reset 
-        // HEAD to MASTER. This will make sure that we are not trying to 
-        // checking out something that is already checked out.
-        if (this.commitIdForBranch("refs/heads/" + Constants.MASTER).equals(commitId) 
-            || this.checkoutBranch(Constants.MASTER) == null) {
+        if (this.commitIdForBranch("refs/heads/" + Constants.MASTER).equals(commitId)) {
+            // If MASTER is already checked out, then bail early.
+            return null;
+        }
+
+        if (this.checkoutBranch(Constants.MASTER) == null) {
+            // When checking out to an arbitary commit, it is best to reset 
+            // HEAD to MASTER. This will make sure that we are not trying to 
+            // checking out something that is already checked out.
             return null;
         }
 

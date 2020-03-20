@@ -148,4 +148,16 @@ public class GradleModule extends AbstractModule {
                 path("main").buildFilePath();
     }
 
+    @Override
+    public int clean() {
+        // TODO
+        return 1;
+    }
+
+    @Override
+    public int compile() {
+        // TODO
+        return 1;
+    }
+
 }
