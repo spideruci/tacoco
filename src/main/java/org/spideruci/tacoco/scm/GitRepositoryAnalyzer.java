@@ -31,209 +31,205 @@ import org.apache.log4j.Level;
 
 public class GitRepositoryAnalyzer implements SourceRepositoryAnalyzer {
 
-    private final File gitRepoPath;
-    private final Git repository;
+	private final File gitRepoPath;
+	private final Git repository;
 
-    static public GitRepositoryAnalyzer getAnalyzer(String gitRepoFullPath) {
-        try {
-            File file = new File(gitRepoFullPath);
-            if (file.exists() && file.isDirectory() && file.isAbsolute()) {
-                Git repository = Git.open(file);
-                GitRepositoryAnalyzer repoProbe = new GitRepositoryAnalyzer(file, repository);
-                return repoProbe;
-            }
-        } catch (NullPointerException | IOException e) {
-            return null;
-        }
+	static public GitRepositoryAnalyzer getAnalyzer(String gitRepoFullPath) {
+		try {
+			File file = new File(gitRepoFullPath);
+			if (file.exists() && file.isDirectory() && file.isAbsolute()) {
+				Git repository = Git.open(file);
+				GitRepositoryAnalyzer repoProbe = new GitRepositoryAnalyzer(file, repository);
+				return repoProbe;
+			}
+		} catch (NullPointerException | IOException e) {
+			return null;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    private GitRepositoryAnalyzer(File repoPath, Git repo) {
-        this.gitRepoPath = repoPath;
-        this.repository = repo;
-    }
+	private GitRepositoryAnalyzer(File repoPath, Git repo) {
+		this.gitRepoPath = repoPath;
+		this.repository = repo;
+	}
 
-    /*
-        Calls Git Log
-    */
-    public Iterable<String> getLatestCommitIds(int num) {
-        ArrayList<String> commitIds = new ArrayList<>();
+	/*
+	 * Calls Git Log
+	 */
+	public Iterable<String> getLatestCommitIds(int num) {
+		ArrayList<String> commitIds = new ArrayList<>();
 
-        try {
-            Iterable<RevCommit> commits = repository.log().setMaxCount(num).call();
-            for (RevCommit commit : commits) {
-                String commidId = ObjectId.toString(commit.getId());
-                commitIds.add(commidId);
-            }
-        } catch (GitAPIException e) {
-            e.printStackTrace();
-        }
+		try {
+			Iterable<RevCommit> commits = repository.log().setMaxCount(num).call();
+			for (RevCommit commit : commits) {
+				String commidId = ObjectId.toString(commit.getId());
+				commitIds.add(commidId);
+			}
+		} catch (GitAPIException e) {
+			e.printStackTrace();
+		}
 
-        return commitIds;
-    }
+		return commitIds;
+	}
 
-    private RevCommit getCommit(String shaStringRepr) {
-        RevWalk revWalk = new RevWalk(repository.getRepository());
-        ObjectId objectId = ObjectId.fromString(shaStringRepr);
-        try {
-            RevCommit commit = revWalk.lookupCommit(objectId);
-            revWalk.parseBody(commit);
-            return commit;
-        } catch (NullPointerException | IOException e) {
-            e.printStackTrace();
-        }
+	private RevCommit getCommit(String shaStringRepr) {
+		RevWalk revWalk = new RevWalk(repository.getRepository());
+		ObjectId objectId = ObjectId.fromString(shaStringRepr);
+		try {
+			RevCommit commit = revWalk.lookupCommit(objectId);
+			revWalk.parseBody(commit);
+			return commit;
+		} catch (NullPointerException | IOException e) {
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public String getCommitMessage(String commitId) {
-        RevCommit commit = this.getCommit(commitId);
-        return commit == null ? "" : commit.getShortMessage();
-    }
+	public String getCommitMessage(String commitId) {
+		RevCommit commit = this.getCommit(commitId);
+		return commit == null ? "" : commit.getShortMessage();
+	}
 
-    public String getCommitAuthor(String commitId) {
-        RevCommit commit = this.getCommit(commitId);
-        return commit == null ? "" : commit.getAuthorIdent().getName();
-    }
+	public String getCommitAuthor(String commitId) {
+		RevCommit commit = this.getCommit(commitId);
+		return commit == null ? "" : commit.getAuthorIdent().getName();
+	}
 
-    protected String commitIdForBranch(String branchName) {
-        try {
-            String commitdId = null;
-            ListBranchCommand listBranch = repository.branchList();
-            List<Ref> refs = listBranch.setListMode(ListBranchCommand.ListMode.ALL).call();
-            for (Ref ref : refs) {
-                if (ref == null)
-                    continue;
+	protected String commitIdForBranch(String branchName) {
+		try {
+			String commitdId = null;
+			ListBranchCommand listBranch = repository.branchList();
+			List<Ref> refs = listBranch.setListMode(ListBranchCommand.ListMode.ALL).call();
+			for (Ref ref : refs) {
+				if (ref == null)
+					continue;
 
-                System.err.println("[DEBUG] ref: " + ref.getName());
-                
-                if (branchName.equals(ref.getName())) {
-                    commitdId = ObjectId.toString(ref.getObjectId());
-                    break;
-                }
-            }
+				System.err.println("[DEBUG] ref: " + ref.getName());
 
-            return commitdId;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }  
+				if (branchName.equals(ref.getName())) {
+					commitdId = ObjectId.toString(ref.getObjectId());
+					break;
+				}
+			}
 
-    public List<String> deleteBranch(String branchName) {
-        try {
-            DeleteBranchCommand deleteBranch = repository.branchDelete();
-            List<String> deletedBranchNames = deleteBranch.setBranchNames(branchName).call();
-            for(String deletedBranchName : deletedBranchNames) {
-                System.out.printf("[DEBUG] Deleted branch name: %s \n", deletedBranchName);
-            }
+			return commitdId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-            return deletedBranchNames;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	public List<String> deleteBranch(String branchName) {
+		try {
+			DeleteBranchCommand deleteBranch = repository.branchDelete();
+			List<String> deletedBranchNames = deleteBranch.setBranchNames(branchName).call();
+			for (String deletedBranchName : deletedBranchNames) {
+				System.out.printf("[DEBUG] Deleted branch name: %s \n", deletedBranchName);
+			}
 
-        return null;
-    }
+			return deletedBranchNames;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    public BranchedCommit checkoutCommit(String commitId) {
-        if (this.commitIdForBranch("refs/heads/" + Constants.MASTER).equals(commitId)) {
-            // If MASTER is already checked out, then bail early.
-            return null;
-        }
+		return null;
+	}
 
-        if (this.checkoutBranch(Constants.MASTER) == null) {
-            // When checking out to an arbitary commit, it is best to reset 
-            // HEAD to MASTER. This will make sure that we are not trying to 
-            // checking out something that is already checked out.
-            return null;
-        }
+	public BranchedCommit checkoutCommit(String commitId) {
+		if (this.commitIdForBranch("refs/heads/" + Constants.MASTER).equals(commitId)) {
+			// If MASTER is already checked out, then bail early.
+			return null;
+		}
 
-        try {
-            CheckoutCommand checkout = repository.checkout();
-            RevCommit commit = this.getCommit(commitId);
-            if (commit != null) {
-                final String commitName = commit.name();
-                final String newBranchName = "tacoco-b-" + commitName;
+		if (this.checkoutBranch(Constants.MASTER) == null) {
+			// When checking out to an arbitary commit, it is best to reset
+			// HEAD to MASTER. This will make sure that we are not trying to
+			// checking out something that is already checked out.
+			return null;
+		}
 
-                this.deleteBranch(newBranchName);
-                
-                Ref ref = checkout.setCreateBranch(true)
-                                  .setName(newBranchName)
-                                  .setStartPoint(commit)
-                                  .call();
+		try {
+			CheckoutCommand checkout = repository.checkout();
+			RevCommit commit = this.getCommit(commitId);
+			if (commit != null) {
+				final String commitName = commit.name();
+				final String newBranchName = "tacoco-b-" + commitName;
 
-                System.out.println("[DEBUG] Is ref null? " + (ref == null));
-                System.out.println("[DEBUG] Checked out ref-name: " + ref.getName());
-                final String refObjectIdName = ObjectId.toString(ref.getObjectId());
+				this.deleteBranch(newBranchName);
 
-                return new BranchedCommit(newBranchName, refObjectIdName);
-            }
-        } catch (GitAPIException e) {
-            e.printStackTrace();
-        }
+				Ref ref = checkout.setCreateBranch(true).setName(newBranchName).setStartPoint(commit).call();
 
-        return null;
-    }
+				System.out.println("[DEBUG] Is ref null? " + (ref == null));
+				System.out.println("[DEBUG] Checked out ref-name: " + ref.getName());
+				final String refObjectIdName = ObjectId.toString(ref.getObjectId());
 
-    public BranchedCommit checkoutBranch(String branchName) {
-        try {
-            CheckoutCommand checkout = repository.checkout();
-            Ref ref = checkout.setName(branchName).call();
-            String commitId = ObjectId.toString(ref.getObjectId());
-            return new BranchedCommit(branchName, commitId);
-        } catch (GitAPIException e) {
-            e.printStackTrace();
-        }
+				return new BranchedCommit(newBranchName, refObjectIdName);
+			}
+		} catch (GitAPIException e) {
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    static {
-        Logger.getRootLogger().setLevel(Level.OFF);
-    }
+	public BranchedCommit checkoutBranch(String branchName) {
+		try {
+			CheckoutCommand checkout = repository.checkout();
+			Ref ref = checkout.setName(branchName).call();
+			String commitId = ObjectId.toString(ref.getObjectId());
+			return new BranchedCommit(branchName, commitId);
+		} catch (GitAPIException e) {
+			e.printStackTrace();
+		}
 
-    public static void main(String[] args) {
-        final String gitRepoDir = args[0];
-        System.out.printf("GitProbe: analyzing %s\n", gitRepoDir);
+		return null;
+	}
 
-        GitRepositoryAnalyzer gitProbe = GitRepositoryAnalyzer.getAnalyzer(gitRepoDir);
+	static {
+		Logger.getRootLogger().setLevel(Level.OFF);
+	}
 
-        for (String commitId : gitProbe.getLatestCommitIds(10)) {
-            String commitMsg = gitProbe.getCommitMessage(commitId);
-            String commitAuthor = gitProbe.getCommitAuthor(commitId);
-            System.out.printf("%s: %s [%s]\n", commitId, commitMsg, commitAuthor);
-        }
+	public static void main(String[] args) {
+		final String gitRepoDir = args[0];
+		System.out.printf("GitProbe: analyzing %s\n", gitRepoDir);
 
-        Iterator<String> commitIds = gitProbe.getLatestCommitIds(2).iterator();
+		GitRepositoryAnalyzer gitProbe = GitRepositoryAnalyzer.getAnalyzer(gitRepoDir);
 
-        ArrayList<BranchedCommit> branchedCommits = new ArrayList<>();
+		for (String commitId : gitProbe.getLatestCommitIds(10)) {
+			String commitMsg = gitProbe.getCommitMessage(commitId);
+			String commitAuthor = gitProbe.getCommitAuthor(commitId);
+			System.out.printf("%s: %s [%s]\n", commitId, commitMsg, commitAuthor);
+		}
 
-        while (commitIds.hasNext()) {
-            String commitId = commitIds.next();
-            BranchedCommit branchedCommit = gitProbe.checkoutCommit(commitId);
+		Iterator<String> commitIds = gitProbe.getLatestCommitIds(2).iterator();
 
-            if (branchedCommit == null) {
-                System.out.printf("[WARNING] %s already checked out. Skipping check out.\n", commitId);
-                continue;
-            }
+		ArrayList<BranchedCommit> branchedCommits = new ArrayList<>();
 
-            branchedCommits.add(branchedCommit);
-            System.out.println(branchedCommit.toString());
-        }
+		while (commitIds.hasNext()) {
+			String commitId = commitIds.next();
+			BranchedCommit branchedCommit = gitProbe.checkoutCommit(commitId);
 
-        BranchedCommit masterBranch = gitProbe.checkoutBranch(Constants.MASTER);
-        System.out.println(masterBranch.toString());
+			if (branchedCommit == null) {
+				System.out.printf("[WARNING] %s already checked out. Skipping check out.\n", commitId);
+				continue;
+			}
 
-        for (BranchedCommit branchedCommit : branchedCommits) {
-            if (branchedCommit == null) {
-                continue;
-            }
+			branchedCommits.add(branchedCommit);
+			System.out.println(branchedCommit.toString());
+		}
 
-            System.out.printf("Deleting %s\n", branchedCommit.branchName);
-            gitProbe.deleteBranch(branchedCommit.branchName);
-        }
-    }
+		BranchedCommit masterBranch = gitProbe.checkoutBranch(Constants.MASTER);
+		System.out.println(masterBranch.toString());
+
+		for (BranchedCommit branchedCommit : branchedCommits) {
+			if (branchedCommit == null) {
+				continue;
+			}
+
+			System.out.printf("Deleting %s\n", branchedCommit.branchName);
+			gitProbe.deleteBranch(branchedCommit.branchName);
+		}
+	}
 }
-
