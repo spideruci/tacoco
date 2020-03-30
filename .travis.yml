@@ -20,5 +20,5 @@ before_install:
 - mvn install
 - cd ..
 
-after_success:
-- mvn clean verify jacoco:report coveralls:report
+script:
+- mvn clean integration-test
