@@ -14,19 +14,19 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 
 	private String targetDir = null;
 	private List<GradleModule> submodules;
-	
+
 	public GradleBuildProbe(String absolutTargetPath) {
 		targetDir = absolutTargetPath;
 		submodules = getSubmodules(absolutTargetPath);
 	}
 
-    @Override
+	@Override
 	public List<String> getTestClasses() {
-        List<String> testClasses = new ArrayList<>();
-        for(GradleModule module: this.submodules){
-            testClasses.addAll(module.getTestClasses());
-        }
-        return testClasses;
+		List<String> testClasses = new ArrayList<>();
+		for (GradleModule module : this.submodules) {
+			testClasses.addAll(module.getTestClasses());
+		}
+		return testClasses;
 	}
 
 	@Override
@@ -36,11 +36,11 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 
 	@Override
 	public String getClasspath() {
-        StringBuilder sb = new StringBuilder();
-        for(GradleModule module: this.submodules){
-            sb.append(module.getClasspath() + File.pathSeparator);
-        }
-        return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		for (GradleModule module : this.submodules) {
+			sb.append(module.getClasspath() + File.pathSeparator);
+		}
+		return sb.toString();
 	}
 
 	@Override
@@ -49,75 +49,73 @@ public class GradleBuildProbe extends AbstractBuildProbe {
 		return eclipseProject != null && !eclipseProject.getChildren().isEmpty();
 	}
 
-
 	@Override
 	public String getId() {
-        EclipseProject eclipseProject = getGradleModel(targetDir);
+		EclipseProject eclipseProject = getGradleModel(targetDir);
 		return eclipseProject.getName();
 	}
 
 	@Override
 	public List<String> getClasses() {
-        List<String> classes = new ArrayList<>();
-        for(GradleModule module: this.submodules){
-            classes.addAll(module.getClasses());
-        }
-        return classes;
+		List<String> classes = new ArrayList<>();
+		for (GradleModule module : this.submodules) {
+			classes.addAll(module.getClasses());
+		}
+		return classes;
 	}
 
 	@Override
 	public List<String> getClassDirs() {
-        List<String> classDirs = new ArrayList<>();
-        for(GradleModule module: this.submodules){
-            classDirs.add(module.getClassDir());
-        }
-        return classDirs;
+		List<String> classDirs = new ArrayList<>();
+		for (GradleModule module : this.submodules) {
+			classDirs.add(module.getClassDir());
+		}
+		return classDirs;
 	}
 
 	@Override
 	public List<String> getTestClassDirs() {
-        List<String> testClassDirs = new ArrayList<>();
-        for(GradleModule module: this.submodules){
-            testClassDirs.add(module.getTestclassDir());
-        }
-        return testClassDirs;
+		List<String> testClassDirs = new ArrayList<>();
+		for (GradleModule module : this.submodules) {
+			testClassDirs.add(module.getTestclassDir());
+		}
+		return testClassDirs;
 	}
 
-    private List<GradleModule> getSubmodules(final String absoluteTargetPath) {
-        final List<GradleModule> modules = new ArrayList<>();
-        GradleModule rootModule = new GradleModule(absoluteTargetPath);
-        modules.add(rootModule);
+	private List<GradleModule> getSubmodules(final String absoluteTargetPath) {
+		final List<GradleModule> modules = new ArrayList<>();
+		GradleModule rootModule = new GradleModule(absoluteTargetPath);
+		modules.add(rootModule);
 
-        EclipseProject eclipseProject = getGradleModel(absoluteTargetPath);
-        if(eclipseProject != null && !eclipseProject.getChildren().isEmpty()) {
-            for(EclipseProject childProject : eclipseProject.getChildren()) {
-                String childDir = new PathBuilder().path(this.targetDir).path(childProject.getName()).buildFilePath();
-                modules.add(new GradleModule(childDir));
-            }
-        }
+		EclipseProject eclipseProject = getGradleModel(absoluteTargetPath);
+		if (eclipseProject != null && !eclipseProject.getChildren().isEmpty()) {
+			for (EclipseProject childProject : eclipseProject.getChildren()) {
+				String childDir = new PathBuilder().path(this.targetDir).path(childProject.getName()).buildFilePath();
+				modules.add(new GradleModule(childDir));
+			}
+		}
 
-        return modules;
-    }
+		return modules;
+	}
 
-    private EclipseProject getGradleModel(final String absoluteTargetPath) {
+	private EclipseProject getGradleModel(final String absoluteTargetPath) {
 
-        GradleConnector connector = GradleConnector.newConnector();
-        File target = new File(absoluteTargetPath);
-        connector.forProjectDirectory(target);
-        ProjectConnection connection = null;
-        EclipseProject eclipseProject = null;
-        try {
-            connection = connector.connect();
+		GradleConnector connector = GradleConnector.newConnector();
+		File target = new File(absoluteTargetPath);
+		connector.forProjectDirectory(target);
+		ProjectConnection connection = null;
+		EclipseProject eclipseProject = null;
+		try {
+			connection = connector.connect();
 
-            eclipseProject = connection.getModel(EclipseProject.class);
+			eclipseProject = connection.getModel(EclipseProject.class);
 
-
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return eclipseProject;
-    }
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
+		}
+		return eclipseProject;
+	}
 
 }
