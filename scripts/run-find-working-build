@@ -6,7 +6,19 @@ project_dir=$1
 # Absolute path to tacoco
 tacoco_home=$2
 
+epoch=$3
+
+# Last commit and date
+present_sha=$(cd ${project_dir} && git log --format="%H" -n 1)
+present_date=$(cd ${project_dir} && git log --date=iso --format="%aD" -n 1)
+
+# Note I am using gdate here (GNU Date)
+past_date=$(gdate -R --date="${present_date} -${epoch} days")
+past_sha=$(cd ${project_dir} && git log --format="%H" --before="${past_date}" -n 1)
+
+echo "$present_date, $present_sha"
+echo "$past_date, $past_sha"
 cd $tacoco_home
 echo "RUN TACOCO - FIND WORKING BUILD"
-mvn exec:java -Pfind-working-build -Dexec.args="$project_dir" -q
+mvn exec:java -Pfind-working-build -Dexec.args="--sut $project_dir --commit $past_sha" -q
 echo "DONE TACOCO - FIND WORKING BUILD"
