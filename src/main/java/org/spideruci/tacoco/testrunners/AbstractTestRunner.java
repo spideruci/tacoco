@@ -2,11 +2,6 @@ package org.spideruci.tacoco.testrunners;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.spideruci.tacoco.analysis.AnalysisResults;
@@ -17,7 +12,7 @@ import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
 
 public abstract class AbstractTestRunner {
 	
-	public static enum TestType {JUNIT, TESTNG, UNKNOWN};
+	public static enum TestType {JUNIT, TESTNG, UNIFIED, UNKNOWN};
 	public static boolean LOGGING = false;
 
 	
@@ -31,39 +26,44 @@ public abstract class AbstractTestRunner {
 	public abstract Callable<AnalysisResults> getExecutableTest(Class<?> test);
 	public abstract void printTestRunSummary(AnalysisResults results);
 	
-	public static AbstractTestRunner getInstance(AbstractBuildProbe probe) {
-		for(String test : probe.getTestClasses()){
+	public static AbstractTestRunner getInstance(final AbstractBuildProbe probe) {
+		for(final String test : probe.getTestClasses()){
 			try {
 				switch(getTestType(Class.forName(test))){
 				case JUNIT:
 					return new JUnitRunner();
 				case TESTNG:
 					return new TestNGRunner();
+				case UNIFIED:
+					return new UnifiedTestRunner();
 				case UNKNOWN:
 					continue;
 				}
-			} catch (ClassNotFoundException e) {
+			} catch (final ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
 		return null;
 	}
 	
-	private static TestType getTestType(Class<?> test){
+	private static TestType getTestType(final Class<?> test){
 		
-		if(test == null) {
+		if(test == null || Modifier.isAbstract(test.getModifiers())) {
 			return TestType.UNKNOWN;
 		}
-		
-		if(Modifier.isAbstract(test.getModifiers())) {
-			return TestType.UNKNOWN;
+
+		if (UnifiedTestRunner.containsExecutableTest(test)) {
+			// We are going to give the UnifiedTestRunner first dibs.
+			// If it is able to find any executable test, then we run with it
+			// else, fall back on the individual test types
+			return TestType.UNIFIED; // UnifiedTestRunner
 		}
 		
 		if(junit.framework.TestCase.class.isAssignableFrom(test)) {
 			return TestType.JUNIT; //JUnit3
 		}
 
-		for(Method testMethod : test.getMethods()) {
+		for(final Method testMethod : test.getMethods()) {
 			if(testMethod.getAnnotation(org.junit.Test.class) != null){
 				return TestType.JUNIT; //JUnit4
 			}

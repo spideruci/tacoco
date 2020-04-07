@@ -1,0 +1,47 @@
+#!/bin/bash
+
+tacoco_home=$(pwd)
+projects4testing=$tacoco_home/projects4testing
+
+ls -alh .
+ls -alh $projects4testing/
+
+cd $projects4testing/spiderMath_Gradle && gradle build
+cd $projects4testing/spiderMath_JUnit4 && mvn clean compile test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+cd $projects4testing/spiderMath_TestNG && mvn clean compile test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+
+cd $tacoco_home
+
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_Gradle -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_Gradle -Danalyzer.opts="configs/tacoco-analyzer.config"
+
+if [ $? -ne 0 ];
+then
+    echo "Tacoco failed with spiderMath_Gradle..."
+    exit 1
+fi
+
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_TestNG -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_TestNG -Danalyzer.opts="configs/tacoco-analyzer.config" 
+
+if [ $? -ne 0 ];
+then
+    echo "Tacoco failed with spiderMath_TestNG..."
+    exit 1
+fi
+
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_JUnit4 -Danalyzer.opts="configs/tacoco-analyzer.config"
+
+if [ $? -ne 0 ];
+then
+    echo "Tacoco failed with spiderMath_JUnit4..."
+    exit 1
+fi
+
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_JUnit4_single_module -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_JUnit4_single_module -Danalyzer.opts="configs/tacoco-analyzer.config"
+
+if [ $? -ne 0 ];
+then
+    echo "Tacoco failed with spiderMath_JUnit4_single_module..."
+    exit 1
+fi
+
+exit 0

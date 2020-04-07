@@ -11,6 +11,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<junit.jupiter.version>5.6.0</junit.jupiter.version>
+		<junit4.version>4.12</junit4.version>
 	</properties>
 
 	<name>tacoco the per testcase junit runner</name>
@@ -147,9 +149,37 @@
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-invoker</artifactId>
-    		<version>3.0.1</version>
+			<version>3.0.1</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+
+		<!-- 
+			Runtime dependencies to inject Test Engines
+			to be used by the UnifiedTestRunner.
+		 -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.testng-team</groupId>
+			<artifactId>testng-junit5</artifactId>
+			<version>0.0.1</version>
+			<scope>runtime</scope>
+		</dependency>
+ </dependencies>
 
 	<build>
 		<plugins>
@@ -197,6 +227,22 @@
 						<goals>
 							<goal>check</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${basedir}/tacoco-diagnoses</executable>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
