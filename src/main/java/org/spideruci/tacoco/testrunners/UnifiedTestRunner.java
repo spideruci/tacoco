@@ -24,17 +24,25 @@ public class UnifiedTestRunner extends AbstractTestRunner {
     final Launcher launcher = LauncherFactory.create();
 
     public static boolean containsExecutableTest(final Class<?> test) {
-        LauncherDiscoveryRequest discoveryRequest = request().selectors(selectClass(test))
-                                                             .build();
-        final Launcher launcher = LauncherFactory.create();
-        TestPlan testplan = launcher.discover(discoveryRequest);
-        return testplan.containsTests();
+        try {
+            final LauncherDiscoveryRequest discoveryRequest = request().selectors(selectClass(test)).build();
+            final Launcher launcher = LauncherFactory.create();
+            final TestPlan testplan = launcher.discover(discoveryRequest);
+            final boolean containsTests = testplan.containsTests();
+            return containsTests;
+        } catch (final Exception e) {
+            return false;
+        }
     }
 
     private LauncherDiscoveryRequest discoveryRequest(final Class<?> test) {
-        LauncherDiscoveryRequest discoveryRequest = request().selectors(selectClass(test))
-                                                             .build();
-        return discoveryRequest;
+        try {
+            final LauncherDiscoveryRequest discoveryRequest = request().selectors(selectClass(test)).build();
+            return discoveryRequest;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -58,16 +66,24 @@ public class UnifiedTestRunner extends AbstractTestRunner {
 
             @Override
             public AnalysisResults call() throws Exception {
-                final SummaryGeneratingListener sGeneratingListener = new SummaryGeneratingListener();
+                try {
+                    if (discoveryRequest == null) {
+                        return null;
+                    }
 
-                launcher.execute(discoveryRequest, sGeneratingListener);
-                TestExecutionSummary summary = sGeneratingListener.getSummary();
+                    final SummaryGeneratingListener sGeneratingListener = new SummaryGeneratingListener();
 
-                AnalysisResults results = new AnalysisResults();
-                results.put(TEST_CLASS_NAME, testClassName);
-                results.put(TEST_SUMMARY, summary);
-
-                return results;
+                    launcher.execute(discoveryRequest, sGeneratingListener);
+                    final TestExecutionSummary summary = sGeneratingListener.getSummary();
+    
+                    final AnalysisResults results = new AnalysisResults();
+                    results.put(TEST_CLASS_NAME, testClassName);
+                    results.put(TEST_SUMMARY, summary);
+                    return results;
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
         };
 
@@ -76,33 +92,48 @@ public class UnifiedTestRunner extends AbstractTestRunner {
 
     @Override
     public void printTestRunSummary(final AnalysisResults results) {
-        TestExecutionSummary summary = results.get(TEST_SUMMARY);
-        
-		this.testRunTime = (summary.getTimeFinished() - summary.getTimeStarted())/1000.0;
-		this.executedTestCount = (int) summary.getTestsStartedCount();
-        this.failedTestCount = (int) (summary.getTestsFailedCount() + summary.getTestsAbortedCount());
-		this.ignoredTestCount = (int) summary.getTestsSkippedCount();
-		String testName = results.get(TEST_CLASS_NAME);
-		
-		System.out.println("Finishing "+ testName
-				+" Tests run: "+executedTestCount
-				+" Failures: "+failedTestCount
-				+" Errors: "+summary.getTestsAbortedCount()
-				+" Skipped: "+ignoredTestCount
-				+" Time elapsed: "+ testRunTime +"sec");
-		
-		if(this.failedTestCount !=0) {
-			System.out.println("---------------------Failures--------------------");
-			for(Failure f: summary.getFailures()){
-                System.out.println("Test Name: " + f.getTestIdentifier().getDisplayName());
-                System.out.println("Test Identifier: " + f.getTestIdentifier().getUniqueId());
+        if (results == null || results.iterator() == null || !results.iterator().hasNext()) {
+            return;
+        }
 
-				System.out.println("Message: " + f.getException().getMessage());
-				System.out.println("Description: " + f.getException().getCause());
-                System.out.println("Trace: ");
-                f.getException().printStackTrace();	
-			}
-		}
+        final TestExecutionSummary summary = results.get(TEST_SUMMARY);
+        if (summary == null) {
+            return;
+        }
+
+        final String testName = results.get(TEST_CLASS_NAME);
+        if (testName == null) {
+            return;
+        }
+
+        try {
+            this.testRunTime = (summary.getTimeFinished() - summary.getTimeStarted()) / 1000.0;
+            this.executedTestCount = (int) summary.getTestsStartedCount();
+            this.failedTestCount = (int) (summary.getTestsFailedCount() + summary.getTestsAbortedCount());
+            this.ignoredTestCount = (int) summary.getTestsSkippedCount();
+    
+            System.out.println("Finishing " + testName + " Tests run: " + executedTestCount + " Failures: "
+                    + failedTestCount + " Errors: " + summary.getTestsAbortedCount() + " Skipped: " + ignoredTestCount
+                    + " Time elapsed: " + testRunTime + "sec");
+    
+            if (this.failedTestCount != 0) {
+                System.out.println("---------------------Failures--------------------");
+                for (final Failure f : summary.getFailures()) {
+                    System.out.println("Test Name: " + f.getTestIdentifier().getDisplayName());
+                    System.out.println("Test Identifier: " + f.getTestIdentifier().getUniqueId());
+    
+                    System.out.println("Message: " + f.getException().getMessage());
+                    System.out.println("Description: " + f.getException().getCause());
+                    System.out.println("Trace: ");
+                    f.getException().printStackTrace();	
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("---------------------Tacoco Error--------------------");
+            System.err.printf("Failed to parse Analysis Results for testName: %s\n", testName);
+            e.printStackTrace();
+        }
+
     }
 
 }
