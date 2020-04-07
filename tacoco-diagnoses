@@ -29,11 +29,19 @@ then
 fi
 
 mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_JUnit4 -Danalyzer.opts="configs/tacoco-analyzer.config"
-mvn exec:java -Panalyzer -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.exec=$tacoco_home/tacoco_output/spiderMath_JUnit4.exec -Dtacoco.fmt=LOOSE -Dtacoco.pp
 
 if [ $? -ne 0 ];
 then
     echo "Tacoco failed with spiderMath_JUnit4..."
+    exit 1
+fi
+
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_JUnit4_single_module -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_JUnit4_single_module -Danalyzer.opts="configs/tacoco-analyzer.config"
+mvn exec:java -Panalyzer -Dtacoco.sut=$projects4testing/spiderMath_JUnit4_single_module -Dtacoco.exec=$tacoco_home/tacoco_output/spiderMath_JUnit4_single_module.exec -Dtacoco.fmt=LOOSE -Dtacoco.pp
+
+if [ $? -ne 0 ];
+then
+    echo "Tacoco failed with spiderMath_JUnit4_single_module..."
     exit 1
 fi
 
