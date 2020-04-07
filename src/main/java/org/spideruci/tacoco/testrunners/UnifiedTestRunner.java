@@ -23,16 +23,30 @@ public class UnifiedTestRunner extends AbstractTestRunner {
 
     final Launcher launcher = LauncherFactory.create();
 
-    public static boolean containsExecutableTest(final Class<?> test) {
+
+    public static boolean containsExecutableTest(final Class<?> test, final boolean doSanityDryRun) {
         try {
             final LauncherDiscoveryRequest discoveryRequest = request().selectors(selectClass(test)).build();
             final Launcher launcher = LauncherFactory.create();
             final TestPlan testplan = launcher.discover(discoveryRequest);
             final boolean containsTests = testplan.containsTests();
+
+            if (containsTests && doSanityDryRun) {
+                // the idea here is this: if this *silent* execute call
+                // throws any exception then we will return false in the catch
+                // block below. This is a silent execute call because it does 
+                // not register any listeners at any point.
+                launcher.execute(testplan);
+            }
+
             return containsTests;
         } catch (final Exception e) {
             return false;
         }
+    }
+
+    public static boolean containsExecutableTest(final Class<?> test) {
+        return containsExecutableTest(test, false);
     }
 
     private LauncherDiscoveryRequest discoveryRequest(final Class<?> test) {
