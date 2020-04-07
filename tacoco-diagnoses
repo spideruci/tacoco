@@ -2,13 +2,8 @@
 
 tacoco_home=$(pwd)
 
-cp -r ../projects4testing .
-
-if [ $? -ne 0 ];
-then
-    echo "Failed to copy files from projects4testing..."
-    exit 1
-fi
+ls -alh .
+ls -alh $tacoco_home/projects4testing/
 
 cd $tacoco_home/projects4testing/spiderMath_Gradle && gradle build
 cd $tacoco_home/projects4testing/spiderMath_JUnit4 && mvn clean compile test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
