@@ -1,16 +1,18 @@
 #!/bin/bash
 
 tacoco_home=$(pwd)
+projects4testing=$tacoco_home/projects4testing
 
 ls -alh .
-ls -alh $tacoco_home/projects4testing/
+ls -alh $projects4testing/
 
-cd $tacoco_home/projects4testing/spiderMath_Gradle && gradle build
-cd $tacoco_home/projects4testing/spiderMath_JUnit4 && mvn clean compile test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
-cd $tacoco_home/projects4testing/spiderMath_TestNG && mvn clean compile test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+cd $projects4testing/spiderMath_Gradle && gradle build
+cd $projects4testing/spiderMath_JUnit4 && mvn clean compile test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+cd $projects4testing/spiderMath_TestNG && mvn clean compile test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 cd $tacoco_home
-mvn exec:java -Plauncher -Dtacoco.sut=$(pwd)/projects4testing/spiderMath_Gradle -Dtacoco.home=$(pwd) -Dtacoco.project=spiderMath_Gradle -Danalyzer.opts="configs/tacoco-analyzer.config"
+
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_Gradle -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_Gradle -Danalyzer.opts="configs/tacoco-analyzer.config"
 
 if [ $? -ne 0 ];
 then
@@ -18,7 +20,7 @@ then
     exit 1
 fi
 
-mvn exec:java -Plauncher -Dtacoco.sut=$(pwd)/projects4testing/spiderMath_TestNG -Dtacoco.home=$(pwd) -Dtacoco.project=spiderMath_TestNG -Danalyzer.opts="configs/tacoco-analyzer.config" 
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_TestNG -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_TestNG -Danalyzer.opts="configs/tacoco-analyzer.config" 
 
 if [ $? -ne 0 ];
 then
@@ -26,7 +28,8 @@ then
     exit 1
 fi
 
-mvn exec:java -Plauncher -Dtacoco.sut=$(pwd)/projects4testing/spiderMath_JUnit4 -Dtacoco.home=$(pwd) -Dtacoco.project=spiderMath_JUnit4 -Danalyzer.opts="configs/tacoco-analyzer.config"
+mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_JUnit4 -Danalyzer.opts="configs/tacoco-analyzer.config"
+mvn exec:java -Panalyer -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.exec=$tacoco_home/tacoco_output/spiderMath_JUnit4.exec -Dtacoco.fmt=LOOSE -Dtacoco.pp
 
 if [ $? -ne 0 ];
 then
