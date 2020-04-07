@@ -29,7 +29,7 @@ then
 fi
 
 mvn exec:java -Plauncher -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.home=$tacoco_home -Dtacoco.project=spiderMath_JUnit4 -Danalyzer.opts="configs/tacoco-analyzer.config"
-mvn exec:java -Panalyer -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.exec=$tacoco_home/tacoco_output/spiderMath_JUnit4.exec -Dtacoco.fmt=LOOSE -Dtacoco.pp
+mvn exec:java -Panalyzer -Dtacoco.sut=$projects4testing/spiderMath_JUnit4 -Dtacoco.exec=$tacoco_home/tacoco_output/spiderMath_JUnit4.exec -Dtacoco.fmt=LOOSE -Dtacoco.pp
 
 if [ $? -ne 0 ];
 then
