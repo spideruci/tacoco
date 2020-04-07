@@ -21,4 +21,5 @@ before_install:
 - cd ..
 
 script:
+- git clone https://github.com/spideruci/projects4testing.git
 - mvn clean integration-test
