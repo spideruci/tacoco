@@ -15,7 +15,6 @@ matrix:
       dist: bionic
 
 before_install:
-- git clone https://github.com/spideruci/projects4testing.git
 - git clone https://github.com/spideruci/primitive-hamcrest.git
 - cd primitive-hamcrest  
 - mvn install
