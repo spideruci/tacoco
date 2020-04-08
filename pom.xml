@@ -46,6 +46,17 @@
 			<id>repo.gradle.org</id>
 			<url>https://repo.gradle.org/gradle/libs-releases/</url>
 		</repository>
+		<repository>
+			<id>github-projects4testing</id>
+			<name>github projects4testing</name>
+			<url>https://maven.pkg.github.com/spideruci/projects4testing</url>
+			<releases>
+			  <enabled>true</enabled>
+			</releases>
+			<snapshots>
+			  <enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<dependencies>
