@@ -15,11 +15,13 @@ matrix:
       dist: bionic
 
 before_install:
-- git clone https://github.com/spideruci/projects4testing.git
 - git clone https://github.com/spideruci/primitive-hamcrest.git
 - cd primitive-hamcrest  
 - mvn install
 - cd ..
+
+install:
+- cp .travis.settings.xml $HOME/.m2/settings.xml
 
 script:
 - mvn clean integration-test

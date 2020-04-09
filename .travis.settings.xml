@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+<!-- Based on solutions offered at
+    1. https://blog.travis-ci.com/2017-03-30-deploy-maven-travis-ci-packagecloud/
+    2. https://xebia.com/blog/unpacking-the-possibilities-of-github-packages/
+-->
+
+    <activeProfiles>
+    <activeProfile>github</activeProfile>
+    </activeProfiles>
+
+    <profiles>
+    <profile>
+        <id>github</id>
+        <repositories>
+            <repository>
+            <id>github</id>
+            <name>GitHub spideruci Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/spideruci/projects4testing</url>
+            </repository>
+        </repositories>
+    </profile>
+    </profiles>
+
+  <servers>
+    <server>
+        <id>github</id>
+        <username>vijay.0288@gmail.com</username>
+        <password>${env.GH_TOKEN}</password>
+      </server>
+  </servers>
+</settings>

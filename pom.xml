@@ -7,6 +7,14 @@
 	<version>0.1</version>
 	<packaging>jar</packaging>
 
+	<!-- Used with `mvn deploy` -->
+	<distributionManagement>
+		<repository>
+		  <id>github</id>
+		  <name>GitHub spideruci Apache Maven Packages</name>
+		  <url>https://maven.pkg.github.com/spideruci/tacoco</url>
+		</repository>
+	 </distributionManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,6 +45,17 @@
 		<repository>
 			<id>repo.gradle.org</id>
 			<url>https://repo.gradle.org/gradle/libs-releases/</url>
+		</repository>
+		<repository>
+			<id>github-projects4testing</id>
+			<name>github projects4testing</name>
+			<url>https://maven.pkg.github.com/spideruci/projects4testing</url>
+			<releases>
+			  <enabled>true</enabled>
+			</releases>
+			<snapshots>
+			  <enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 
@@ -246,6 +265,36 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.2</version>
+				<executions>
+				  <execution>
+					<id>unpack</id>
+					<phase>package</phase>
+					<goals>
+					  <goal>unpack</goal>
+					</goals>
+					<configuration>
+					  <artifactItems>
+						<artifactItem>
+						  <groupId>org.spideruci.projects4testing</groupId>
+						  <artifactId>projects4testing</artifactId>
+						  <version>1.0.0</version>
+						  <type>jar</type>
+						  <overWrite>false</overWrite>
+						  <outputDirectory>${project.basedir}/projects4testing</outputDirectory>
+						  <destFileName>projects4testing.jar</destFileName>
+						</artifactItem>
+					  </artifactItems>
+					  <outputDirectory>${project.basedir}/projects4testing</outputDirectory>
+					  <overWriteReleases>false</overWriteReleases>
+					  <overWriteSnapshots>true</overWriteSnapshots>
+					</configuration>
+				  </execution>
+				</executions>
+			  </plugin>
 		</plugins>
 	</build>
 

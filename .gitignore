@@ -5,6 +5,7 @@
 *.class
 *swp
 /target
+projects4testing/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
