@@ -156,7 +156,12 @@ public class Launcher {
 
 		command.add("org.spideruci.tacoco.analysis.AbstractAnalyzer");
 
-		System.out.println(command.toString());
+		StringBuilder cmdStringBuilder = new StringBuilder();
+		for (String cmd : command) {
+			cmdStringBuilder.append(" ").append(cmd);
+		}
+
+		System.out.println(String.format("[RUN-COMMAND] %s", cmdStringBuilder));
 
 		final ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File(sutHome));
