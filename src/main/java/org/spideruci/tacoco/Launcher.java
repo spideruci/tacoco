@@ -8,6 +8,7 @@ import static org.spideruci.tacoco.cli.AbstractCli.LAUNCHER_CLI;
 import static org.spideruci.tacoco.cli.AbstractCli.LOG;
 import static org.spideruci.tacoco.cli.AbstractCli.OUTDIR;
 import static org.spideruci.tacoco.cli.AbstractCli.PROJECT;
+import static org.spideruci.tacoco.cli.AbstractCli.DEBUG;
 import static org.spideruci.tacoco.cli.AbstractCli.SUT;
 import static org.spideruci.tacoco.cli.AbstractCli.arg;
 import static org.spideruci.tacoco.cli.AbstractCli.argEquals;
@@ -102,6 +103,11 @@ public class Launcher {
 
 		final List<String> command = new ArrayList<>();
 		command.add("java");
+
+		// Added an option to stop let the process wait for a debugger to attach.
+		if (System.getProperty(DEBUG) != null) {
+			command.add("-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000");
+		}
 
 		final String analyzerOptsFilePath = readArgumentValue(ANALYZER_OPTS);
 		final File analyzerOptsFile = new File(analyzerOptsFilePath);
