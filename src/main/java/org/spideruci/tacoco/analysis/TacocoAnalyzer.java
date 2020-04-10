@@ -62,8 +62,10 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 					dbFile.delete();
 				}
 				CreateSQLiteDB.dump(dbFileName, sutHome, exec.toString());
+
+				// Remove exec file only if the content is placed in the database, else keep it!
+				exec.delete();
 			}
-			exec.delete();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,5 +75,4 @@ public class TacocoAnalyzer extends AbstractRuntimeAnalyzer {
 	public String getName() {
 		return "TACOCO";
 	}
-
 }

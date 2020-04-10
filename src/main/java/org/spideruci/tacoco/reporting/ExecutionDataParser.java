@@ -37,12 +37,11 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
 		tempDirRef = null;
 	}
 
+	@Override
 	public void visitClassExecution(final ExecutionData data) {
-		if(data == null) return;
-		//    System.out.printf("adding exec-data for: %s %d%n", 
-		//        data.getName(), 
-		//        getHitCount(data.getProbes()));
-		execDataStore.put(data);
+		if(data != null){
+			execDataStore.put(data);
+		}
 	}
 
 	public void resetExecDataStore(String nextSessionName) {
@@ -120,7 +119,4 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
 	public void close() {
 		this.printManager.closeJsonStream();
 	}
-
-
-
 }
