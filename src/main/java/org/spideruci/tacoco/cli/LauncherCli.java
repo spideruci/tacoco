@@ -42,6 +42,7 @@ public class LauncherCli extends AbstractCli {
 				+ PREFIX + PIT+"\t\t\tRun PIT mutation test\n"
 				+ PREFIX + NOJUNIT+"\t\t\tDo not run junit test\n"
 				+ PREFIX + PITDB+"\t\t\tUpdate TacocoDB with PIT mutation info\n"
+				+ PREFIX + DEBUG+ "\t\t\tLaunches the process, but waits for debugger to attach.\n"
 				+ PREFIX + HELP+ "\t\t\tPrints this message and exits (with 0).\n"
 				;
 		if (error != null) {
