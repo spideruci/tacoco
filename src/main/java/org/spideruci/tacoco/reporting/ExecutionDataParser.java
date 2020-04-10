@@ -3,6 +3,8 @@ package org.spideruci.tacoco.reporting;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jacoco.core.analysis.Analyzer;
 import org.jacoco.core.analysis.CoverageBuilder;
@@ -11,30 +13,30 @@ import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.IExecutionDataVisitor;
 
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 
 public class ExecutionDataParser implements IExecutionDataVisitor {
 
-	private final File classesDirectory;
+	private final List<File> classesDirectories;
 	private final ExecDataPrintManager printManager;
 	private String coverageTitle;
 	private ExecutionDataStore execDataStore = new ExecutionDataStore();
 
-	public ExecutionDataParser(final File projectDirectory,
+	public ExecutionDataParser(final AbstractBuildProbe project,
 			final ExecDataPrintManager printManager) {
-		this.coverageTitle = projectDirectory.getName();
-		File tempDirRef = new File(projectDirectory, "target/classes");
-		if(!tempDirRef.exists() || !tempDirRef.isDirectory()) {
-			tempDirRef = new File(projectDirectory, "bin");
-			if(!tempDirRef.exists() || !tempDirRef.isDirectory()) {
-				throw new RuntimeException("unable to find `target/classes/` or `bin/` "
-						+ "directories in the specified project-directory:" 
-						+ projectDirectory.getPath());
+
+		this.coverageTitle = project.getId();
+		this.classesDirectories = new ArrayList();
+
+		for (String classDirectory: project.getClassDirs()) {
+
+			File classDirectoryFile = new File(classDirectory);
+			if (classDirectoryFile.exists()) {
+				this.classesDirectories.add(classDirectoryFile);
 			}
 		}
-
-		this.classesDirectory = tempDirRef;
+		
 		this.printManager = printManager;
-		tempDirRef = null;
 	}
 
 	public void visitClassExecution(final ExecutionData data) {
@@ -102,7 +104,11 @@ public class ExecutionDataParser implements IExecutionDataVisitor {
 			throws IOException {
 		final CoverageBuilder coverageBuilder = new CoverageBuilder();
 		final Analyzer analyzer = new Analyzer(data, coverageBuilder);
-		analyzer.analyzeAll(classesDirectory);
+
+		for (File classDirectory : this.classesDirectories) {
+			analyzer.analyzeAll(classDirectory);
+		}
+		
 		return coverageBuilder.getBundle(coverageTitle);
 	}
 
