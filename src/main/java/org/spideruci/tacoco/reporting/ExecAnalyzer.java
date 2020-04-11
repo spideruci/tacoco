@@ -11,6 +11,7 @@ import static org.spideruci.tacoco.cli.AnalyzerCli.readArgumentValue;
 import static org.spideruci.tacoco.cli.AnalyzerCli.readOptionalArgumentValue;
 import static org.spideruci.tacoco.cli.AbstractCli.readBooleanArgument;
 import static org.spideruci.tacoco.reporting.ExecDataPrintManager.createPrintManager;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,7 +44,7 @@ public final class ExecAnalyzer {
 	private static ExecAnalyzer processArgs(String[] args) {
 
 		String sut = readArgumentValue(SUT);
-		File projectRoot = new File(sut);
+		AbstractBuildProbe projectRoot = AbstractBuildProbe.getInstance(sut);
 
 		String exec = readArgumentValue(EXEC);
 		File execFile = new File(exec);
