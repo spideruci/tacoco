@@ -22,27 +22,38 @@ public class UnifiedTestListenerAdapter implements TestExecutionListener {
 
     @Override
     public void executionStarted(final TestIdentifier testIdentifier) {
+        if (testIdentifier.isContainer()) {
+            return;
+        }
+
         final String testUniqueName = getUniqueTestName(testIdentifier);
         listener.onTestStart(testUniqueName);
     }
 
     @Override
     public void executionSkipped(final TestIdentifier testIdentifier, final String reason) {
+        if (testIdentifier.isContainer()) {
+            return;
+        }
+
         listener.onTestSkipped();
     }
 
     @Override
     public void executionFinished(final TestIdentifier testIdentifier, final TestExecutionResult testExecutionResult) {
+        if (testIdentifier.isContainer()) {
+            return;
+        }
         final Status status = testExecutionResult.getStatus();
 
         switch (status) {
-        case SUCCESSFUL:
-            listener.onTestPassed();
-            break;
-        case FAILED:
-        case ABORTED:
-            listener.onTestFailed();
-            break;
+            case SUCCESSFUL:
+                listener.onTestPassed();
+                break;
+            case FAILED:
+            case ABORTED:
+                listener.onTestFailed();
+                break;
         }
 
         listener.onTestEnd();
