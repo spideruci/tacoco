@@ -198,7 +198,8 @@ public class CoverageJsonReader {
 				int lastLine = sourcefile.getLastLine();
 				SourceFile source = new SourceFile(filename, firstLine, lastLine);
 
-				if (sourcefile.getLinesCoverage() != null) {
+				Object[] lines = sourcefile.getLinesCoverage();
+				if (lines != null && lines.length > 0) {
 					int[] codedLineCoverage = getLineCoverage(covFormat, coder, sourcefile);
 					covMat.addStmtCoverage(source, testCaseName, codedLineCoverage);
 				} else {
@@ -217,10 +218,9 @@ public class CoverageJsonReader {
 			LineCoverageCoder coder, SourceFileCoverage sourcefile) {
 		ArrayList<Integer> lineCoverages = new ArrayList<>();
 
-		Object[] lines = sourcefile.getLinesCoverage();
-		assert lines != null;
+		assert null != sourcefile.getLinesCoverage();
 		
-		for(Object line : lines) {
+		for(Object line : sourcefile.getLinesCoverage()) {
 			if(covFormat == LineCoverageFormat.LOOSE) {
 				Map insnCounter = (Map) ((Map)line).get("instructions");
 				int ic = readDoubleObjectAsInt(insnCounter.get("covered"));
