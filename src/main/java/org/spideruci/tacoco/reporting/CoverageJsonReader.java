@@ -198,9 +198,12 @@ public class CoverageJsonReader {
 				int lastLine = sourcefile.getLastLine();
 				SourceFile source = new SourceFile(filename, firstLine, lastLine);
 
-				int[] codedLineCoverage = getLineCoverage(covFormat, coder, sourcefile);
-
-				covMat.addStmtCoverage(source, testCaseName, codedLineCoverage);
+				if (sourcefile.getLinesCoverage() != null) {
+					int[] codedLineCoverage = getLineCoverage(covFormat, coder, sourcefile);
+					covMat.addStmtCoverage(source, testCaseName, codedLineCoverage);
+				} else {
+					System.err.printf("[DEBUG] Sourcefile %s, has no lines that are covered...%n", filename);
+				}
 			}
 			this.endReadingTestCase();
 			System.out.println();
