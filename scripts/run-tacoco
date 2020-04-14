@@ -16,4 +16,4 @@ echo "READING COVERAGE MATRIX"
 mvn exec:java -Preader -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
 echo "READING COVERAGE MATRIX --- DONE"
 
-open "tacoco_output/$project_name-cov-matrix.json"
+# open "tacoco_output/$project_name-cov-matrix.json"
