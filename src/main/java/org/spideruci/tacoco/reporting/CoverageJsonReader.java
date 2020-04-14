@@ -216,7 +216,11 @@ public class CoverageJsonReader {
 	private int[] getLineCoverage(LineCoverageFormat covFormat, 
 			LineCoverageCoder coder, SourceFileCoverage sourcefile) {
 		ArrayList<Integer> lineCoverages = new ArrayList<>();
-		for(Object line : sourcefile.getLinesCoverage()) {
+
+		Object[] lines = sourcefile.getLinesCoverage();
+		assert lines != null;
+		
+		for(Object line : lines) {
 			if(covFormat == LineCoverageFormat.LOOSE) {
 				Map insnCounter = (Map) ((Map)line).get("instructions");
 				int ic = readDoubleObjectAsInt(insnCounter.get("covered"));
