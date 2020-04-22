@@ -153,7 +153,7 @@ public class GradleModule extends AbstractModule {
 	}
 
 	@Override
-	public int compile() {
+	public int compile(Properties properties) {
 		// TODO
 		return 1;
 	}

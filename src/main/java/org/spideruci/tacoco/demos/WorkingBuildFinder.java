@@ -1,6 +1,7 @@
 package org.spideruci.tacoco.demos;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -51,12 +52,16 @@ public class WorkingBuildFinder {
 			gitAnalyzer.checkoutCommit(commit_sha);
 		}
 
+		Properties properties = new Properties();
+		properties.put("maven.compiler.source", "1.8");
+		properties.put("maven.compiler.target", "1.8");
+
 		final int cleanExitStatus = module.clean();
-		final int compileExitStatus = module.compile();
+		final int compileExitStatus = module.compile(properties);
 
 		System.out.printf("[EXIT STATUSES] mvn clean: %s; mvn test-compile: %s\n", cleanExitStatus, compileExitStatus);
 
-		int cleanCompileExitStatus = cleanExitStatus + compileExitStatus;
+		int cleanCompileExitStatus = compileExitStatus;
 
 		if (cleanCompileExitStatus == 0) {
 			String commitId = gitAnalyzer.getLatestCommitIds(1).iterator().next();
@@ -76,7 +81,7 @@ public class WorkingBuildFinder {
 
 				System.out.printf("[TRYING NEXT COMMIT] %s \n", commitId);
 
-				cleanCompileExitStatus = module.clean() + module.compile();
+				cleanCompileExitStatus = module.compile(properties);
 				if (cleanCompileExitStatus == 0) {
 					System.out.printf("[FOUND IT!] %s, %s\n", targetDir, commitId);
 					break;

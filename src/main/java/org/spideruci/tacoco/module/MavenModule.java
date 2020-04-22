@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Properties;
 
 import org.apache.maven.cli.MavenCli;
 import org.apache.maven.model.Model;
@@ -174,15 +175,16 @@ public class MavenModule extends AbstractModule {
 	}
 
 	@Override
-	public int compile() {
-		return invokeMavenGoals(Arrays.asList("compile", "test-compile"));
+	public int compile(Properties properties) {
+		return invokeMavenGoals(Arrays.asList("compile", "test-compile"), properties);
 	}
 
-	private int invokeMavenGoals(List<String> goals) {
+	private int invokeMavenGoals(List<String> goals, Properties properties) {
 		try {
 			InvocationRequest request = new DefaultInvocationRequest();
 			request.setPomFile(new File(this.targetDir + "/pom.xml"));
 			request.setGoals(goals);
+			request.setProperties(properties);
 
 			Invoker invoker = new DefaultInvoker();
 			InvocationResult result = invoker.execute(request);

@@ -13,5 +13,5 @@ public interface IModule {
 	String getClassDir();
 	String getTestclassDir();
 	int clean();
-	int compile();
+	int compile(Properties properties);
 }
