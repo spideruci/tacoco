@@ -171,7 +171,7 @@ public class MavenModule extends AbstractModule {
 
 	@Override
 	public int clean() {
-		return invokeMavenGoals(Arrays.asList("clean"));
+		return invokeMavenGoals(Arrays.asList("clean"), new Properties());
 	}
 
 	@Override

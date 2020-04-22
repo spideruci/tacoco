@@ -1,6 +1,8 @@
 package org.spideruci.tacoco.module;
 
 import java.util.List;
+import java.util.Properties;
+
 
 /**
  * Created by Tariq on 1/7/2016.
