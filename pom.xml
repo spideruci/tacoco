@@ -272,7 +272,7 @@
 				<executions>
 				  <execution>
 					<id>unpack</id>
-					<phase>integration-test</phase>
+					<phase>package</phase>
 					<goals>
 					  <goal>unpack</goal>
 					</goals>
