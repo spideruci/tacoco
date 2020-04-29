@@ -260,6 +260,7 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<skip>${skipITs}</skip>
 							<executable>${basedir}/tacoco-diagnoses</executable>
 						</configuration>
 					</execution>
@@ -277,6 +278,7 @@
 					  <goal>unpack</goal>
 					</goals>
 					<configuration>
+					  <skip>${skipITs}</skip>
 					  <artifactItems>
 						<artifactItem>
 						  <groupId>org.spideruci.projects4testing</groupId>
