@@ -1,5 +1,6 @@
 package org.spideruci.tacoco.demos;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -9,13 +10,24 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-
+import org.spideruci.tacoco.module.GradleModule;
 import org.spideruci.tacoco.module.IModule;
 import org.spideruci.tacoco.module.MavenModule;
+import org.spideruci.tacoco.probe.AbstractBuildProbe;
 import org.spideruci.tacoco.scm.GitRepositoryAnalyzer;
 import org.spideruci.tacoco.scm.BranchedCommit;
 
 public class WorkingBuildFinder {
+
+	public static IModule detectBuilder(final String absoluteTargetPath) {
+		if (new File(absoluteTargetPath, "pom.xml").exists()) {
+			return new MavenModule(absoluteTargetPath);
+		}
+		if (new File(absoluteTargetPath, "build.gradle").exists()) {
+			return new GradleModule(absoluteTargetPath);
+		}
+		return null;
+	}
 
 	public static void main(String[] args) throws ParseException {
 		Options options = new Options();
@@ -44,7 +56,12 @@ public class WorkingBuildFinder {
 			commit_sha = null;
 		}
 
-		IModule module = new MavenModule(targetDir);
+		IModule module = detectBuilder(targetDir);
+		if (module == null) {
+			System.out.println("[Error] build system not detected...");
+			System.exit(1);
+		}
+
 		GitRepositoryAnalyzer gitAnalyzer = GitRepositoryAnalyzer.getAnalyzer(targetDir);
 		gitAnalyzer.checkoutBranch("master");
 
