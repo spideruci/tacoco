@@ -5,6 +5,8 @@ import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
 import org.gradle.tooling.model.ExternalDependency;
 import org.gradle.tooling.model.eclipse.EclipseProject;
+import org.gradle.tooling.BuildException;
+import org.gradle.tooling.BuildLauncher;
 import org.spideruci.tacoco.util.PathBuilder;
 
 import java.io.File;
@@ -149,14 +151,35 @@ public class GradleModule extends AbstractModule {
 
 	@Override
 	public int clean() {
-		// TODO
-		return 1;
+		return runGradleCommand("clean", new String[]{});
 	}
 
 	@Override
 	public int compile(Properties properties) {
-		// TODO
-		return 1;
+		return runGradleCommand("build", new String[]{"-x", "test"});
 	}
 
+	private int runGradleCommand(String task, String[] arguments) {
+		int result = 0;
+
+		ProjectConnection connection = GradleConnector.newConnector().forProjectDirectory(new File(this.targetDir))
+				.connect();
+
+		try {
+			BuildLauncher build = connection.newBuild();
+
+			// select tasks to run:
+			build.forTasks("build");
+
+			// include some build arguments:
+			build.withArguments(arguments);
+
+			build.run();
+		} catch (BuildException e) {
+			result = 1;
+		} finally {
+			connection.close();
+		}
+		return result;
+	}
 }
