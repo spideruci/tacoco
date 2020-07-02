@@ -33,13 +33,15 @@ public class WorkingBuildFinder {
 		Options options = new Options();
 
 		options.addOption("s", "sut", true, "Path to the system under study.");
-		options.addOption("c", "commit", true, "Starting commit");
+		options.addOption("c", "commit", true, "Starting commit.");
+		options.addOption("n", "number", true, "Number of commits to try out after starting commit.");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = parser.parse(options, args);
 
 		final String targetDir;
 		final String commit_sha;
+		final int numberOfCommits;
 
 		if (cmd.hasOption("sut")) {
 			targetDir = cmd.getOptionValue("sut");
@@ -55,6 +57,14 @@ public class WorkingBuildFinder {
 		} else {
 			commit_sha = null;
 		}
+
+		if (cmd.hasOption("number")) {
+            numberOfCommits = Integer.parseInt(cmd.getOptionValue("number"));    
+        } else {
+            numberOfCommits = 0;
+        }
+
+		System.out.println("[DEBUG] Compile starting commit and " + numberOfCommits + " additional commits.");
 
 		IModule module = detectBuilder(targetDir);
 		if (module == null) {
@@ -85,7 +95,7 @@ public class WorkingBuildFinder {
 			System.out.printf("[FOUND IT!] %s, %s\n", targetDir, commitId);
 
 		} else {
-			Iterable<String> commitIds = gitAnalyzer.getLatestCommitIds(10);
+			Iterable<String> commitIds = gitAnalyzer.getLatestCommitIds(numberOfCommits);
 			ArrayList<BranchedCommit> branchedCommits = new ArrayList<>();
 
 			for (String commitId : commitIds) {
