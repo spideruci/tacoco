@@ -14,3 +14,7 @@ mvn exec:java -Plauncher\
  -Dtacoco.exec=$project_name.exec\
  -Dtacoco.log
 echo "RUNNING TACOCO --- DONE"
+
+# mvn exec:java -Plauncher -Dtacoco.sut=$1 -Dtacoco.home=$2 -Dtacoco.project=$project_name -Danalyzer.opts="configs/tacoco-analyzer.config"
+# /Users/vpalepu/git/program-execution-artifacts/programs/commons-cli
+# /Users/vpalepu/git/tacoco

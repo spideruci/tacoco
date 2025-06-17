@@ -107,3 +107,7 @@ Temporary Items
 .checkstyle
 test-output/*
 
+
+#OSX hidden files
+.DS_Store/
+.DS_Store
