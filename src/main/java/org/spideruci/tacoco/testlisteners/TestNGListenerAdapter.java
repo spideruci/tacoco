@@ -20,6 +20,38 @@ public class TestNGListenerAdapter extends TestListenerAdapter{
 	@Override
 	public void onTestStart(ITestResult result) {
 
+
+		this.listener.onTestStart(testName(result));
+	}
+
+	@Override
+	public void onTestFailure(ITestResult result) {
+		this.listener.onTestFailed(testName(result));
+		endTest(result);
+	}
+
+
+	@Override
+	public void onTestSkipped(ITestResult result) {
+		this.listener.onTestSkipped(testName(result));
+		endTest(result);
+	}
+
+	@Override
+	public void onTestSuccess(ITestResult result) {
+		endTest(result);
+	}
+
+	private void endTest(ITestResult result) {
+		this.listener.onTestEnd(testName(result));
+	}
+
+	@Override
+	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
+
+	}
+
+	private String testName(ITestResult result) {
 		String method = result.getMethod().getMethodName();
 		String klass = result.getTestClass().getName();
 		StringBuilder sb = new StringBuilder();
@@ -32,34 +64,7 @@ public class TestNGListenerAdapter extends TestListenerAdapter{
 		}
 
 		String sessionId = method+sb.toString()+"("+klass+")";
-		this.listener.onTestStart(sessionId);
-	}
-
-	@Override
-	public void onTestFailure(ITestResult result) {
-		this.listener.onTestFailed();
-		endTest(result);
-	}
-
-
-	@Override
-	public void onTestSkipped(ITestResult result) {
-		this.listener.onTestSkipped();
-		endTest(result);
-	}
-
-	@Override
-	public void onTestSuccess(ITestResult result) {
-		endTest(result);
-	}
-
-	private void endTest(ITestResult result) {
-		this.listener.onTestEnd();
-	}
-
-	@Override
-	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
-
+		return sessionId;
 	}
 
 

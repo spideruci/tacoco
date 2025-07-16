@@ -20,23 +20,23 @@ public class JacocoListener implements ITacocoTestListener{
 	}
 
 	@Override
-	public void onTestPassed() {
+	public void onTestPassed(String testName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onTestFailed() {
+	public void onTestFailed(String testName) {
 		this.agent.setSessionId(agent.getSessionId()+"_F");
 	}
 
 	@Override
-	public void onTestSkipped() {
+	public void onTestSkipped(String testName) {
 		this.agent.setSessionId(agent.getSessionId()+"_I");
 	}
 
 	@Override
-	public void onTestEnd() {
+	public void onTestEnd(String testName) {
 		try {
 			this.agent.dump(true);
 		} catch (IOException e) {

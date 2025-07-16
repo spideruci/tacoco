@@ -39,25 +39,25 @@ public class BlinkyListener implements ITacocoTestListener {
 	}
 
 	@Override
-	public void onTestPassed() {
+	public void onTestPassed(String testName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onTestFailed() {
+	public void onTestFailed(String testName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onTestSkipped() {
+	public void onTestSkipped(String testName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onTestEnd() {
+	public void onTestEnd(String testName) {
 		// TODO Auto-generated method stub
 		
 	}

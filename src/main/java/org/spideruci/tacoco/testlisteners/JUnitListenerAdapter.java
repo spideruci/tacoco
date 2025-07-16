@@ -27,24 +27,27 @@ public class JUnitListenerAdapter extends RunListener {
 
 	@Override
 	public void testStarted(Description description) {
-		this.listener.onTestStart(description.getDisplayName());
+		this.listener.onTestStart(testName(description));
 	}
 
 	@Override
 	public void testFinished(Description description) {
-		this.listener.onTestEnd();
+		this.listener.onTestEnd(testName(description));
 	}
 
 	@Override
 	public void testFailure(Failure failure) throws Exception {
-		this.listener.onTestFailed();
+		this.listener.onTestFailed(testName(failure.getDescription()));
 		super.testFailure(failure);
 	}
 
 	@Override
 	public void testIgnored(Description description) throws Exception {
-		this.listener.onTestSkipped();
+		this.listener.onTestSkipped(testName(description));
 		super.testIgnored(description);
 	}
 
+	private String testName(Description description) {
+		return description.getDisplayName();
+	}
 }

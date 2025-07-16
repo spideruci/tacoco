@@ -36,7 +36,8 @@ public class UnifiedTestListenerAdapter implements TestExecutionListener {
             return;
         }
 
-        listener.onTestSkipped();
+        final String testUniqueName = getUniqueTestName(testIdentifier);
+        listener.onTestSkipped(testUniqueName);
     }
 
     @Override
@@ -45,18 +46,19 @@ public class UnifiedTestListenerAdapter implements TestExecutionListener {
             return;
         }
         final Status status = testExecutionResult.getStatus();
+        final String testUniqueName = getUniqueTestName(testIdentifier);
 
         switch (status) {
             case SUCCESSFUL:
-                listener.onTestPassed();
+                listener.onTestPassed(testUniqueName);
                 break;
             case FAILED:
             case ABORTED:
-                listener.onTestFailed();
+                listener.onTestFailed(testUniqueName);
                 break;
         }
 
-        listener.onTestEnd();
+        listener.onTestEnd(testUniqueName);
     }
 
     public void testPlanExecutionStarted(final TestPlan testPlan) {
