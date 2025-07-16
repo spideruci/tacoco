@@ -8,7 +8,7 @@ public class InstrumenterConfig {
 	private final String xbootpath;
 	private final boolean prependBootpath;
 
-	private final static String JAVAAGENT = "-javaagent:";
+	public final static String JAVAAGENT = "-javaagent:";
 	private final static String XBOOTCLASSPATH_P = "-Xbootclasspath/p:";
 	private final static String XBOOTCLASSPATH_A = "-Xbootclasspath/a:";
 

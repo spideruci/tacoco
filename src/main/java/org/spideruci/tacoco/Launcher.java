@@ -1,6 +1,7 @@
 package org.spideruci.tacoco;
 
 import static org.spideruci.tacoco.AnalysisOptions.CP_ARG;
+import static org.spideruci.tacoco.AnalysisOptions.AGENT_ARGS;
 import static org.spideruci.tacoco.cli.AbstractCli.ANALYZER_OPTS;
 import static org.spideruci.tacoco.cli.AbstractCli.HELP;
 import static org.spideruci.tacoco.cli.AbstractCli.HOME;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.maven.cli.MavenCli;
+import org.spideruci.tacoco.analysis.InstrumenterConfig;
 import org.spideruci.tacoco.probe.AbstractBuildProbe;
 import org.spideruci.tacoco.testrunners.AbstractTestRunner;
 import org.spideruci.tacoco.testrunners.JUnitRunner;
@@ -138,6 +140,15 @@ public class Launcher {
 
 				if(!option.isEmpty()) {
 					classpath += ":" + option;
+				}
+			} else if (option.startsWith(InstrumenterConfig.JAVAAGENT)) {
+				// 
+				final String javaagentArgs = readArgumentValue(AGENT_ARGS);
+				if (javaagentArgs != null && !javaagentArgs.isEmpty()) {
+					final String javaagent = option + "=" + javaagentArgs;
+					command.add(javaagent);
+				} else {
+					command.add(option);
 				}
 			} else {
 				command.add(option);
