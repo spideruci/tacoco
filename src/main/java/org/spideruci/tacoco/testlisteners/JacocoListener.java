@@ -10,7 +10,7 @@ public class JacocoListener implements ITacocoTestListener{
 	private IAgent agent;
 
 	@Override
-	public void onStart() {
+	public void onStart(String testClassName) {
 		agent = RT.getAgent();
 	}
 
@@ -46,7 +46,7 @@ public class JacocoListener implements ITacocoTestListener{
 	}
 
 	@Override
-	public void onEnd() {
+	public void onEnd(String testClassName) {
 		agent.setSessionId("end");
 	}
 

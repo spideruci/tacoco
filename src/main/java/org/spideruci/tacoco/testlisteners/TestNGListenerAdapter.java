@@ -4,7 +4,7 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
-public class TestNGListenerAdapter extends TestListenerAdapter{
+public class TestNGListenerAdapter extends TestListenerAdapter {
 
 	private ITacocoTestListener listener;
 	
@@ -14,31 +14,39 @@ public class TestNGListenerAdapter extends TestListenerAdapter{
 
 	@Override
 	public void onStart(ITestContext testContext) {
-		this.listener.onStart();
+		super.onStart(testContext);
+		this.listener.onStart(testContext.getName());
+	}
+
+	@Override
+	public void onFinish(ITestContext testContext) {
+		super.onFinish(testContext);
+		this.listener.onEnd(testContext.getName());
 	}
 
 	@Override
 	public void onTestStart(ITestResult result) {
-
-
+		super.onTestStart(result);
 		this.listener.onTestStart(testName(result));
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
+		super.onTestFailure(result);
 		this.listener.onTestFailed(testName(result));
 		endTest(result);
 	}
 
-
 	@Override
 	public void onTestSkipped(ITestResult result) {
+		super.onTestSkipped(result);
 		this.listener.onTestSkipped(testName(result));
 		endTest(result);
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
+		super.onTestSuccess(result);
 		endTest(result);
 	}
 

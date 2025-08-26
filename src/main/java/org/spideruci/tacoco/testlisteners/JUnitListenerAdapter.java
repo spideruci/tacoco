@@ -10,6 +10,7 @@ public class JUnitListenerAdapter extends RunListener {
 
 	
 	private ITacocoTestListener listener;
+	private String lastKnownTestClassName = "";
 	
 	public JUnitListenerAdapter(ITacocoTestListener listener) { 
 		this.listener = listener;
@@ -17,12 +18,14 @@ public class JUnitListenerAdapter extends RunListener {
 
 	@Override
 	public void testRunStarted(Description description) {
-		listener.onStart();
+		lastKnownTestClassName = testClassName(description);
+		listener.onStart(lastKnownTestClassName);
 	}
 
 	@Override
 	public void testRunFinished(Result result) {
-		listener.onEnd();
+		String testClassName = lastKnownTestClassName == null ? "" : lastKnownTestClassName;
+		listener.onEnd(testClassName);
 	}
 
 	@Override
@@ -49,5 +52,9 @@ public class JUnitListenerAdapter extends RunListener {
 
 	private String testName(Description description) {
 		return description.getDisplayName();
+	}
+
+	private String testClassName(Description description) {
+		return description.getClassName();
 	}
 }

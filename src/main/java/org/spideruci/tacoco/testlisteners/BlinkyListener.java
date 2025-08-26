@@ -27,7 +27,7 @@ public class BlinkyListener implements ITacocoTestListener {
 	}
 	*/
 	@Override
-	public void onStart() {
+	public void onStart(String testClassName) {
 		// do nothing
 		
 	}
@@ -63,7 +63,7 @@ public class BlinkyListener implements ITacocoTestListener {
 	}
 
 	@Override
-	public void onEnd() {
+	public void onEnd(String testClassName) {
 		// TODO Auto-generated method stub
 		
 	}

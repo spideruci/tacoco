@@ -1,10 +1,14 @@
 package org.spideruci.tacoco.testlisteners;
 
+import java.util.Iterator;
+
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestExecutionResult.Status;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
+import org.spideruci.tacoco.testrunners.AbstractTestRunner.TestType;
+import org.junit.platform.engine.TestDescriptor.Type;
 
 public class UnifiedTestListenerAdapter implements TestExecutionListener {
 
@@ -14,10 +18,10 @@ public class UnifiedTestListenerAdapter implements TestExecutionListener {
     }
 
     private String getUniqueTestName(TestIdentifier testIdentifier) {
-        final String testUid = testIdentifier.getUniqueId();
-        final String testName = testIdentifier.getDisplayName();
-        final String testUniqueName = String.format("%s.%s", testName, testUid);
-        return testUniqueName;
+        // final String testUid = testIdentifier.getUniqueId();
+        // final String testName = testIdentifier.getDisplayName();
+        // final String testUniqueName = String.format("%s.%s", testName, testUid);
+        return testIdentifier.getLegacyReportingName();
     }
 
     @Override
@@ -62,10 +66,24 @@ public class UnifiedTestListenerAdapter implements TestExecutionListener {
     }
 
     public void testPlanExecutionStarted(final TestPlan testPlan) {
-        listener.onStart();
+        listener.onStart(testClassName(testPlan));
     }
 
     public void testPlanExecutionFinished(final TestPlan testPlan) {
-        listener.onEnd();
+        listener.onEnd(testClassName(testPlan));
 	}
+
+    private String testClassName(final TestPlan testPlan) {
+        Iterator<TestIdentifier> testItr = testPlan.getRoots().iterator();
+        while (testItr.hasNext()) {
+            TestIdentifier testId = testItr.next();
+            for (TestIdentifier childTestIdentifier : testPlan.getChildren(testId)) {
+                if (childTestIdentifier.getType() == Type.CONTAINER && childTestIdentifier.getUniqueId().contains("[runner:")) {
+                    return childTestIdentifier.getLegacyReportingName();
+                }
+            }
+        }
+
+        return "";
+    }
 }
