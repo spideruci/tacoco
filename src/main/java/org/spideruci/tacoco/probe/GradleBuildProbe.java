@@ -12,12 +12,16 @@ import java.util.List;
 
 public class GradleBuildProbe extends AbstractBuildProbe {
 
-	private String targetDir = null;
+	final private String targetDir;
 	private List<GradleModule> submodules;
 
-	public GradleBuildProbe(String absolutTargetPath) {
-		targetDir = absolutTargetPath;
-		submodules = getSubmodules(absolutTargetPath);
+	public GradleBuildProbe(String absoluteTargetPath) {
+		targetDir = absoluteTargetPath;
+		submodules = getSubmodules(absoluteTargetPath);
+	}
+
+	public String getAbsoluteTargetPath() {
+		return this.targetDir;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import org.spideruci.tacoco.util.PathBuilder;
 
 public class MavenBuildProbe extends AbstractBuildProbe {
 
-	private String targetDir;
+	final private String targetDir;
 	private List<MavenModule> submodules;
 
 	public MavenBuildProbe(String absolutTargetPath) {
@@ -28,6 +28,11 @@ public class MavenBuildProbe extends AbstractBuildProbe {
 				this.submodules.add(new MavenModule(childDir));
 			}
 		}
+	}
+
+	@Override
+	public String getAbsoluteTargetPath() {
+		return this.targetDir;
 	}
 
 	@Override

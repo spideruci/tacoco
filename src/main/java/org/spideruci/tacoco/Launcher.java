@@ -143,7 +143,7 @@ public class Launcher {
 				}
 			} else if (option.startsWith(InstrumenterConfig.JAVAAGENT)) {
 				// 
-				final String javaagentArgs = readArgumentValue(AGENT_ARGS);
+				final String javaagentArgs = readOptionalArgumentValue(AGENT_ARGS, null);
 				if (javaagentArgs != null && !javaagentArgs.isEmpty()) {
 					final String javaagent = option + "=" + javaagentArgs;
 					command.add(javaagent);

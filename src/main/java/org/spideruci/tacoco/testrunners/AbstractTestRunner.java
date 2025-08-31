@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import org.spideruci.tacoco.analysis.AnalysisResults;
 import org.spideruci.tacoco.probe.AbstractBuildProbe;
 import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
+import org.spideruci.tacoco.testrunners.micro.MicroHarnessTest;
 
 
 
@@ -25,6 +26,24 @@ public abstract class AbstractTestRunner {
 	public abstract void listenThrough(ITacocoTestListener listener);
 	public abstract Callable<AnalysisResults> getExecutableTest(Class<?> test);
 	public abstract void printTestRunSummary(AnalysisResults results);
+
+	public Callable<AnalysisResults> getExecutableMicroHarnessTest(MicroHarnessTest test) {
+		return new Callable<AnalysisResults>() {
+			@Override
+			public AnalysisResults call() {
+				try {
+					//System.out.println("Starting "+test);
+					test.test();
+					AnalysisResults results = new AnalysisResults();
+					return results;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+				
+			}
+		};
+	}
 	
 	public static AbstractTestRunner getInstance(final AbstractBuildProbe probe) {
 		for(final String test : probe.getTestClasses()){
