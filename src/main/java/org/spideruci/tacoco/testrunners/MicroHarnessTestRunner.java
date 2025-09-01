@@ -10,16 +10,7 @@ import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
 import org.spideruci.tacoco.testrunners.micro.MicroHarnessSpec;
 import org.spideruci.tacoco.testrunners.micro.MicroHarnessTest;
 
-import com.thoughtworks.xstream.XStream;
-
-// vpalepu: Do we even need an explicit test runner for the micro-harness?
 public class MicroHarnessTestRunner extends AbstractTestRunner {
-
-    private final ArrayList<String> harnessPathStrings = new ArrayList<>();
-
-    public MicroHarnessTestRunner(String harnessPathString) {
-        harnessPathStrings.add(harnessPathString);
-    }
 
     public ArrayList<MicroHarnessTest> tests(ArrayList<MicroHarnessSpec> specs) {
         ArrayList<MicroHarnessTest> microTests = new ArrayList<>();

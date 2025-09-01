@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +26,7 @@ public class MicroTestAnalyzer extends AbstractAnalyzer {
     public void analyze() {
         int cores = Runtime.getRuntime().availableProcessors(); logDebug("core count: " + (cores));
         ExecutorService threadExecutorService = Executors.newFixedThreadPool(cores);
-        List<Future<Integer[]>> futureAnalysisResults = new ArrayList<>();
+        List<Future<MicroHarnessSpec>> futureAnalysisResults = new ArrayList<>();
 
         System.out.println("Starting analysis");
         Path sutPath = sutPath(); logDebug("sutPath:" + sutPath);
@@ -40,16 +42,14 @@ public class MicroTestAnalyzer extends AbstractAnalyzer {
             
             for (Path harnessClusterPath : harnessClusters) {
                 for (Path specPath : getHarnessSpecPaths(harnessClusterPath)) {
-                    Callable<Integer[]> callable = new Callable<Integer[]>() {
+                    Callable<MicroHarnessSpec> callable = new Callable<MicroHarnessSpec>() {
                         @Override
-                        public Integer[] call() throws Exception {
+                        public MicroHarnessSpec call() throws Exception {
                             MicroHarnessSpec harnessSpec = MicroHarnessSpec.create(specPath);
-                            final int usableCount = harnessSpec == null ? 0 : 1;
-
-                            return new Integer[] { 1 /*count*/, usableCount };
+                            return harnessSpec;
                         }
                     };
-                    Future<Integer[]> future = threadExecutorService.submit(callable);
+                    Future<MicroHarnessSpec> future = threadExecutorService.submit(callable);
                     futureAnalysisResults.add(future);
                 }
             }
@@ -58,19 +58,39 @@ public class MicroTestAnalyzer extends AbstractAnalyzer {
             threadExecutorService.shutdown();
 
             try {
+                // this is a blocking call; and it means that we cannot operate on the Futures
+                // till all Futures complete.
                 threadExecutorService.awaitTermination(Long.MAX_VALUE,TimeUnit.MILLISECONDS);
 
                 int count = 0;
                 int usableCount = 0;
 
-                for (Future<Integer[]> future : futureAnalysisResults) {
-                    Integer[] counts = future.get();
-                    count += counts[0];
-                    usableCount += counts[1];
-                }
+                HashMap<String /*methodName*/, ArrayList<MicroHarnessSpec>> indexedMicroHarnesses = new HashMap<>();
 
+                for (Future<MicroHarnessSpec> future : futureAnalysisResults) {
+                    count += 1;
+                    MicroHarnessSpec harnessSpec = future.get();
+                    
+                    if (harnessSpec != null) {
+                        usableCount += 1;
+
+                        String methodName = harnessSpec.methodName;
+                        if (!indexedMicroHarnesses.containsKey(methodName)) {
+                            indexedMicroHarnesses.put(methodName, new ArrayList<>());
+                        }
+
+                        indexedMicroHarnesses.get(methodName).add(harnessSpec);
+                    }
+                }
+                
                 System.out.println(count);
                 System.out.println(usableCount);
+
+                System.out.println(indexedMicroHarnesses.size());
+
+                for (Entry<String, ArrayList<MicroHarnessSpec>> entry : indexedMicroHarnesses.entrySet()) {
+                    System.out.println("\t" + String.format("%6d", entry.getValue().size()) + "\t" + entry.getKey());
+                }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
