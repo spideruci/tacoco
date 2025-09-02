@@ -1,6 +1,9 @@
 package org.spideruci.tacoco.testrunners.micro;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.Xpp3Driver;
+import com.thoughtworks.xstream.security.PrimitiveTypePermission;
+import com.thoughtworks.xstream.security.TypePermission;
 
 public class MethodArgument {
     public final String value; 
@@ -27,6 +30,18 @@ public class MethodArgument {
     }
 
     public Object getObject() {
-        return new XStream().fromXML(value);
+        XStream xstream = new XStream(new Xpp3Driver());
+        xstream.addPermission(PrimitiveTypePermission.PRIMITIVES);
+        xstream.addPermission(new AllowAllTypes());
+        return xstream.fromXML(value);
     }
+}
+
+class AllowAllTypes implements TypePermission {
+
+    @Override
+    public boolean allows(Class type) {
+        return true;
+    }
+
 }

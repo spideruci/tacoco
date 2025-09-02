@@ -34,6 +34,7 @@ public abstract class AbstractCli {
 	public static final String ANALYZER = "tacoco.analyzer";
 	public static final String ANALYZER_OPTS = "analyzer.opts";
 	public static final String DEBUG = "tacoco.debug";
+	public static final String ANALYZER_METHOD_UNDER_TEST = "tacoco.analyzer.mut";
 
 	static final String PREFIX = "-D";
 	

@@ -205,6 +205,23 @@
             <artifactId>xstream</artifactId>
             <version>1.4.21</version>
         </dependency>
+        <dependency>
+            <groupId>org.spideruci.analysis</groupId>
+            <artifactId>blinky-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+		<!-- XML Pull Parser API -->
+		<dependency>
+			<groupId>xmlpull</groupId>
+			<artifactId>xmlpull</artifactId>
+			<version>1.1.3.1</version>
+		</dependency>
+		<!-- XPP3 Minimal Implementation -->
+		<dependency>
+			<groupId>xpp3</groupId>
+			<artifactId>xpp3_min</artifactId>
+			<version>1.1.4c</version>
+		</dependency>
  </dependencies>
 
 	<build>

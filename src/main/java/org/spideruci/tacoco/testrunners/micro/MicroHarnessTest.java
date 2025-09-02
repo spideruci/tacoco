@@ -1,5 +1,7 @@
 package org.spideruci.tacoco.testrunners.micro;
 
+import org.spideruci.tacoco.analysis.AnalysisResults;
+
 public interface MicroHarnessTest {
-    public void test();
+    public AnalysisResults test();
 }

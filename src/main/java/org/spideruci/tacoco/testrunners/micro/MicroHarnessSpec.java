@@ -6,7 +6,14 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.spideruci.tacoco.analysis.MicroTestAnalyzer;
+import org.spideruci.tacoco.cli.AbstractCli;
+import org.spideruci.tacoco.cli.AnalyzerCli;
+import org.spideruci.analysis.dynamic.util.MethodDescSplitter;
+
 
 public class MicroHarnessSpec {
     public final String methodName;
@@ -50,11 +57,11 @@ public class MicroHarnessSpec {
             return null;
         }
 
+
         String methodName = lines.get(0);
         boolean isStatic = lines.get(1).equals("isStatic:0");
         int argCount = Integer.parseInt(lines.get(2)); 
         String correlId = lines.get(3);
-
         ArrayList<MethodArgument> methodArguments = new ArrayList<>();
 
         // parse Argument sections
@@ -91,6 +98,34 @@ public class MicroHarnessSpec {
             lineIdx += 1;
         }
 
+        // last argument
+        if (argumentInProgress != null) {
+            String argumentValue = argumentInProgress.toString();
+            MethodArgument argument = new MethodArgument(
+                argumentValue, 
+                ++argIndex,
+                correlId,
+                methodName,
+                isStatic,
+                argCount
+            );
+            methodArguments.add(argument);
+        }
+
+        reader.close();
+
+        if (argCount != methodArguments.size()) {
+            String mut =  AnalyzerCli.readOptionalArgumentValue(AbstractCli.ANALYZER_METHOD_UNDER_TEST, null);
+            if (mut != null && mut.equals(methodName)) {
+                for (String line : lines) {
+                    MicroTestAnalyzer.logDebug(line);
+                }
+                MicroTestAnalyzer.logDebug("");
+            }
+
+            return null;
+        }
+
         MicroHarnessSpec microHarnessSpec = new MicroHarnessSpec(
             methodName,
             isStatic,
@@ -99,27 +134,109 @@ public class MicroHarnessSpec {
             methodArguments.toArray(new MethodArgument[methodArguments.size()])
         );
 
-        reader.close();
+        
         return microHarnessSpec;
     }
 
     public String methodClassName() {
-        return methodName.split(".")[0].replaceAll("/", ".");
+        int splitIndex = methodName.indexOf('.', 0);
+        String className = methodName.substring(0, splitIndex).replaceAll("/", ".");
+        MicroTestAnalyzer.logDebug("methodClassName:" + className);
+        return className;
+    }
+
+    public String shortmethodName() {
+        int splitIndex = methodName.indexOf('.', 0);
+        String shortMehthodName = methodName.substring(splitIndex + 1, methodName.length());
+        MicroTestAnalyzer.logDebug("short methodName:" + shortMehthodName);
+        return shortMehthodName;
+    }
+
+    public String justMethodName() {
+        String shortMethodName = shortmethodName();
+        int index = shortMethodName.indexOf('(');
+        return shortMethodName.substring(0, index);
+    }
+
+    public String methodParamString() {
+        String shortMethodName = shortmethodName();
+        int openBraceIndex = shortMethodName.indexOf('(');
+        int closeBraceIndex = shortMethodName.indexOf(')');
+        if (openBraceIndex + 1 == closeBraceIndex) { 
+            return "";
+        }
+
+        return shortMethodName.substring(openBraceIndex + 1, closeBraceIndex);
+    }
+
+    public String methodReturnType() {
+        String shortMethodName = shortmethodName();
+        int closeBraceIndex = shortMethodName.indexOf(')');
+        return shortMethodName.substring(closeBraceIndex + 1, shortMethodName.length());
     }
 
     public Method reflectedMethod(Class<?> methodClass) {
+        String justMethodName = justMethodName();
+        Class<?>[] paramClasses = null;
         try {
-            Method method = methodClass.getMethod(methodName, null);
+            paramClasses = methodParametertypes();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        try {
+            MicroTestAnalyzer.logDebug("reflectedMethod: " + methodName);
+            Method method = methodClass.getMethod(justMethodName, paramClasses);
             return method;
         } catch (NoSuchMethodException | SecurityException e) {
             // we may have run into a private method
             try {
-                Method method = methodClass.getDeclaredMethod(methodName, null);
+                Method method = methodClass.getDeclaredMethod(justMethodName, paramClasses);
+                method.setAccessible(true);
                 return method;
             } catch (NoSuchMethodException | SecurityException e1) {
                 // failued to fetch the method. 
+                e.printStackTrace();
                 return null;
             }
         }
+    }
+
+    private Class<?>[] methodParametertypes() throws ClassNotFoundException {
+        String shortMethodName = shortmethodName();
+        String[] paramsSplit = MethodDescSplitter.getArgTypeSplit(shortMethodName);
+        ArrayList<Class<?>> paramClasses = new ArrayList<>();
+        for (String param : paramsSplit) {
+            switch(param) {
+            case "Z": paramClasses.add(boolean.class); break;
+            case "B": paramClasses.add(byte.class); break;
+            case "C": paramClasses.add(char.class); break;
+            case "S": paramClasses.add(short.class); break;
+            case "I": paramClasses.add(int.class); break;
+            case "F": paramClasses.add(float.class); break;
+            case "J": paramClasses.add(long.class); break;
+            case "D": paramClasses.add(double.class); break;
+            default:
+                if (param.startsWith("[")) {
+                    // this should theoretically handle and work for cases like "[I" or "[[J"
+                    String arrayClassDescriptor = param.replace('/', '.');
+                    Class<?> arrayClass = Class.forName(arrayClassDescriptor);
+                    paramClasses.add(arrayClass);
+                    break;
+                }
+
+                if (param.startsWith("L")) {
+                    String arrayClassDescriptor = param.substring(1, param.length() - 1) // skip the leading L and trailing ;
+                                                       .replace('/', '.');
+                    Class<?> arrayClass = Class.forName(arrayClassDescriptor);
+                    paramClasses.add(arrayClass);
+                    break;
+                }
+            }
+
+        }
+
+        return paramClasses.toArray(new Class<?>[paramClasses.size()]);
     }
 }

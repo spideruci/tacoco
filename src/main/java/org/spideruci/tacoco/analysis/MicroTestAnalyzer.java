@@ -15,7 +15,11 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
+import org.spideruci.tacoco.cli.AbstractCli;
+import org.spideruci.tacoco.cli.AnalyzerCli;
+import org.spideruci.tacoco.testrunners.MicroHarnessTestRunner;
 import org.spideruci.tacoco.testrunners.micro.MicroHarnessSpec;
+import org.spideruci.tacoco.testrunners.micro.MicroHarnessTest;
 
 // import org.apache.tools.ant.taskdefs.Exec;
 
@@ -24,11 +28,16 @@ public class MicroTestAnalyzer extends AbstractAnalyzer {
 
     @Override
     public void analyze() {
+        System.out.println("Starting analysis");
+
+        String analyzerMUT = AnalyzerCli.readOptionalArgumentValue(AbstractCli.ANALYZER_METHOD_UNDER_TEST, null);
+        logDebug("MUT: " + analyzerMUT);
+        
         int cores = Runtime.getRuntime().availableProcessors(); logDebug("core count: " + (cores));
         ExecutorService threadExecutorService = Executors.newFixedThreadPool(cores);
         List<Future<MicroHarnessSpec>> futureAnalysisResults = new ArrayList<>();
 
-        System.out.println("Starting analysis");
+        
         Path sutPath = sutPath(); logDebug("sutPath:" + sutPath);
         final String sutName = sutName(); logDebug("sutPath:" + sutName);
         final String harnessPrefix = sutName + "-"; logDebug("harnessPrefix:" + harnessPrefix);
@@ -91,13 +100,21 @@ public class MicroTestAnalyzer extends AbstractAnalyzer {
                 for (Entry<String, ArrayList<MicroHarnessSpec>> entry : indexedMicroHarnesses.entrySet()) {
                     System.out.println("\t" + String.format("%6d", entry.getValue().size()) + "\t" + entry.getKey());
                 }
+
+                if (analyzerMUT != null) {
+                    logDebug("running " + analyzerMUT);
+                    ArrayList<MicroHarnessSpec> testsForMethodUnderTest = indexedMicroHarnesses.get(analyzerMUT);
+                    if (testsForMethodUnderTest != null) {
+                        MicroHarnessTestRunner testRunner = new MicroHarnessTestRunner();
+                        ArrayList<MicroHarnessTest> microTests = testRunner.tests(testsForMethodUnderTest);
+                        for (MicroHarnessTest microTest : microTests) {
+                            microTest.test();
+                        }
+                    }
+                }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-
-
-
-            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,9 +158,9 @@ public class MicroTestAnalyzer extends AbstractAnalyzer {
         // do nothing for now
     }
     
-    private void logDebug(String message) {
+    public static void logDebug(String message) {
         if (DEBUG) {
-            System.out.println(message);
+            System.out.println("[µTest DEBUG] " + message);
         }
     }
 }
