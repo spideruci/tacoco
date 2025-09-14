@@ -1,12 +1,13 @@
 package org.spideruci.tacoco.testrunners;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 import org.spideruci.tacoco.analysis.AnalysisResults;
-import org.spideruci.tacoco.analysis.MicroTestAnalyzer;
 import org.spideruci.tacoco.testlisteners.ITacocoTestListener;
 import org.spideruci.tacoco.testrunners.micro.MethodArgument;
 import org.spideruci.tacoco.testrunners.micro.MicroHarnessSpec;
@@ -22,6 +23,7 @@ public class MicroHarnessTestRunner extends AbstractTestRunner {
         for (MicroHarnessSpec spec : specs) {
             MicroHarnessTest test = new MicroHarnessTest() {
                 public AnalysisResults test() {
+                    AnalysisResults results = new AnalysisResults();
                     StringBuilder beforeArgs = new StringBuilder();
                     StringBuilder afterArgs = new StringBuilder();
 
@@ -29,8 +31,8 @@ public class MicroHarnessTestRunner extends AbstractTestRunner {
                         Class<?> methodClass = Class.forName(spec.methodClassName());
                         Method method = spec.reflectedMethod(methodClass);
                         if (method == null) {
-                            MicroTestAnalyzer.logDebug("Method not found");
-                            return null;
+                            results.put("[error 🆘]", "Method not found");
+                            return results;
                         }
 
                         int argCount = spec.arguments.length;
@@ -89,19 +91,35 @@ public class MicroHarnessTestRunner extends AbstractTestRunner {
                         
 
                         if (!beforeArgsString.equals(afterArgsString)) {
-                            System.out.println("Before");
-                            System.out.println(beforeArgsString.indent(1));
-                            System.out.println("After");
-                            System.out.println(afterArgsString.indent(1));
+                            StringBuilder diffString = new StringBuilder();
+                            diffString.append("Before\n");
+                            diffString.append(beforeArgsString.indent(1)); 
+                            diffString.append("\n");
+                            diffString.append("After\n");
+                            diffString.append(afterArgsString.indent(1)); 
+                            diffString.append("\n");
+                            results.put("[diff 🆎]", diffString.toString());
                         }
                     } catch (ClassNotFoundException | SecurityException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
-                        System.out.println("Before");
-                        System.out.println(beforeArgs.toString().indent(1));
-                        System.out.println("After");
-                        e.printStackTrace(System.out);
+                        StringBuilder diffString = new StringBuilder();
+
+                        StringWriter stackTraceWriter = new StringWriter();
+                        PrintWriter p = new PrintWriter(stackTraceWriter, true);
+                        e.printStackTrace(p);
+                        p.flush();
+                        stackTraceWriter.flush();
+
+                        diffString.append("Before\n");
+                        diffString.append(beforeArgs.toString().indent(1)); 
+                        diffString.append("\n");
+                        diffString.append("After\n");
+                        diffString.append(stackTraceWriter.toString().indent(1)); 
+                        diffString.append("\n");
+
+                        results.put("[diff 🆎]", diffString.toString());
                     }
 
-                    return null;
+                    return results;
                 }
             };
             microTests.add(test);

@@ -44,4 +44,8 @@ public class AnalysisResults implements Iterable<Entry<String, Object>> {
 		return resultTable.entrySet().iterator();
 	}
 
+	public int size() {
+		return resultTable.size();
+	}
+
 }

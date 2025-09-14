@@ -21,19 +21,22 @@ public class MicroHarnessSpec {
     public final int argCount;
     public final String corelId; 
     public final MethodArgument[] arguments;
+    public final Path specPath;
 
     public MicroHarnessSpec(
         String methodName,
         boolean methodIsStatic,
         int argCount,
         String corelId,
-        MethodArgument[] arguments
+        MethodArgument[] arguments,
+        Path specPath
     ) {
         this.methodName = methodName;
         this.methodIsStatic = methodIsStatic;
         this.argCount = argCount;
         this.corelId = corelId;
         this.arguments = arguments;
+        this.specPath = specPath;
     }
 
     /*
@@ -131,7 +134,8 @@ public class MicroHarnessSpec {
             isStatic,
             argCount,
             correlId,
-            methodArguments.toArray(new MethodArgument[methodArguments.size()])
+            methodArguments.toArray(new MethodArgument[methodArguments.size()]),
+            specPath
         );
 
         

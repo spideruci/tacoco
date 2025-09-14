@@ -111,3 +111,6 @@ test-output/*
 #OSX hidden files
 .DS_Store/
 .DS_Store
+
+# Microharness log files
+micro-test-log.txt
