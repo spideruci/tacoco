@@ -23,6 +23,7 @@
 		<junit.testng.version>0.0.1</junit.testng.version>
 		<junit4.version>4.13.1</junit4.version>
 		<jacoco.version>0.8.5</jacoco.version>
+		<pit.version>1.1.7</pit.version>
 	</properties>
 
 	<name>tacoco the per testcase junit runner</name>
@@ -30,7 +31,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- We inline Maven's dependency management section to align dependency 
+			<!-- We inline Maven's dependency management section to align dependency
 				versions from Maven's core -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -134,7 +135,7 @@
 		<dependency>
 			<groupId>org.pitest</groupId>
 			<artifactId>pitest-command-line</artifactId>
-			<version>1.1.7</version>
+			<version>${pit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -178,7 +179,7 @@
 			<version>1.6.0</version>
 		</dependency>
 
-		<!-- 
+		<!--
 			Runtime dependencies to inject Test Engines
 			to be used by the UnifiedTestRunner.
 		 -->
