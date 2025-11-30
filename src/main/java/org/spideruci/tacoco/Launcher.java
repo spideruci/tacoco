@@ -72,7 +72,7 @@ public class Launcher {
 		final String projectName = readOptionalArgumentValue(PROJECT, probe.getId());
 		final String classpath = probe.getClasspath() + File.pathSeparator + launcher.getTacocoClasspath();
 
-		final String defaultOutputPath =  
+		final String defaultOutputPath =
 				PathBuilder.dirs(tacocoHome, "tacoco_output").buildFilePath();
 		final String outdir = readOptionalArgumentValue(OUTDIR, defaultOutputPath);
 		launcher.startAnalysis(projectName, classpath, launcher.sutHome, new String[0], outdir);
@@ -113,7 +113,7 @@ public class Launcher {
 
 		final String analyzerOptsFilePath = readArgumentValue(ANALYZER_OPTS);
 		final File analyzerOptsFile = new File(analyzerOptsFilePath);
-		if(analyzerOptsFile == null 
+		if(analyzerOptsFile == null
 				|| !analyzerOptsFile.exists()
 				|| analyzerOptsFile.isDirectory()
 				|| !analyzerOptsFile.isFile()) {
@@ -142,7 +142,7 @@ public class Launcher {
 					classpath += ":" + option;
 				}
 			} else if (option.startsWith(InstrumenterConfig.JAVAAGENT)) {
-				// 
+				//
 				final String javaagentArgs = readOptionalArgumentValue(AGENT_ARGS, null);
 				if (javaagentArgs != null && !javaagentArgs.isEmpty()) {
 					final String javaagent = option + "=" + javaagentArgs;
@@ -198,32 +198,35 @@ public class Launcher {
 				public void run() {
 					p.destroy();
 				}
-			}); 
+			});
 			p.waitFor();
 		}catch(final Exception e){
 			e.printStackTrace();
 		}
+
+		// TODO: capture pid here for running a VM attach, for agent-main
+		// p.pid()
 	}
 
 	private String getTacocoClasspath() throws Exception {
-		final String tacocoCpPath = 
+		final String tacocoCpPath =
 				new PathBuilder().path(tacocoHome, "cp.txt").buildFilePath();
 		if(!new File(tacocoCpPath).exists()) {
 			final MavenCli mavenCli = new MavenCli();
 			mavenCli.doMain(
-					new String[] {"dependency:build-classpath", "-Dmdep.outputFile=cp.txt"}, 
+					new String[] {"dependency:build-classpath", "-Dmdep.outputFile=cp.txt"},
 					tacocoHome,
-					System.out, 
+					System.out,
 					System.out);
 		}
 
 		final String cpDependencies = new String(Files.readAllBytes(Paths.get(tacocoHome+ File.separator +"cp.txt")));
-		final String tacocoTargetPath = 
+		final String tacocoTargetPath =
 				new PathBuilder()
 				.path(tacocoHome, "target", "classes")
 				.buildFilePath();
 
-		final String tacocoClasspath = 
+		final String tacocoClasspath =
 				new PathBuilder()
 				.path(cpDependencies, tacocoTargetPath)
 				.buildClassPath();
